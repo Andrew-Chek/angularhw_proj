@@ -1,0 +1,15 @@
+@import '../../../scss/variables';
+.account {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    &-link {
+        text-align: end;
+        cursor: pointer;
+        color: $obligatory-color;
+        transition: .5s;
+    }
+    &-link:hover {
+        color: $text-color;
+    }
+}

@@ -1,0 +1,74 @@
+@import '../../../scss/variables';
+.container {
+    display: grid;
+    grid-template-areas: "login image";
+    grid-template-columns: 1fr 50%;
+    height: 100vh;
+    .description {
+        -webkit-text-stroke-width: .7px;
+    }
+    .login {
+        grid-area: login;
+        &__content {
+            margin: 0 10vw;
+            text-align: start;
+        }
+        .general {
+            margin: 5vh 0;
+            &-dashboard {
+                font-size: 40px;
+                width: 40px;
+                height: 40px;
+                margin-bottom: 20px;
+            }
+            &-title {
+                font-weight: 900;
+                font-size: 40px;
+                padding: 20px 0;
+            }
+        }
+    }
+    .register {
+        display: flex;
+        justify-content: space-between;
+    }
+    .img-section {
+        grid-area: image;
+        background-color: #010102;
+        opacity: 1;
+        background-image: linear-gradient(45deg, $gradient-color1 50%, $gradient-color2 50%);
+        background-size: 600px 600px;
+        &__image {
+            object-fit: cover;
+            filter: contrast(3);
+        }
+        .analysis-image {
+            filter: contrast(3) grayscale(1);
+            min-width: 40%;
+            position: relative;
+            top: 20%;
+        }
+        .time-image {
+            min-width: 25%;
+            position: relative;
+            top: 10%;
+            right: 10%;
+        }
+        .info {
+            position: relative;
+            top: 30%;
+            margin: 0 25%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            &-title {
+                color: $input-color;
+                font-weight: 900;
+                font-size: 30px;
+            }
+            &-general {
+                color: $input-color;
+            }
+        }
+    }
+}
