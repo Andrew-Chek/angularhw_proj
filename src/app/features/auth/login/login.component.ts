@@ -9,4 +9,10 @@ export class LoginComponent {
 
   constructor(
   ) { }
+
+  openRegisterPopup()
+  {
+    const registerPopup : any = document.querySelector('#register');
+    registerPopup.style.transform = 'translate(0, -100%)';
+  }
 }

@@ -1,0 +1,22 @@
+@import '../../../scss/variables';
+@import '../../../scss/mixins';
+.custom {
+    &-fieldset {
+        display: flex;
+        flex-direction: column;
+    }
+    &-label {
+        -webkit-text-stroke-width: .5px;
+        text-align: start;
+        padding-bottom: 15px;
+        .obligatory {
+            color: $obligatory-color;
+        }
+    }
+    &-input {
+        @include btn-params;
+    }
+    &-input::placeholder {
+        color: $placeholder-color;
+    }
+}

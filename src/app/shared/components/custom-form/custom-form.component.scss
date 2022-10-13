@@ -1,0 +1,13 @@
+.custom {
+    &-field {
+        display: flex;
+        align-items: flex-start;
+        .field-info {
+            width: 100%;
+            margin: 15px 20px;
+        }
+    }
+    &-submit {
+        padding: 10px 30px;
+    }
+}

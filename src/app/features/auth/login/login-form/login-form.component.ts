@@ -21,4 +21,9 @@ export class LoginFormComponent {
       take(1)
     ).subscribe()
   }
+  openForgetPopup()
+  {
+    const registerPopup : any = document.querySelector('#forget');
+    registerPopup.style.transform = 'translate(0, -110%)';
+  }
 }

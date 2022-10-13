@@ -9,9 +9,18 @@
             <app-login-form></app-login-form>
             <section class="register">
                 <p class="register-description description">Not registered yet?</p>
-                <app-account-btn class="register-btn" text="Create an Account"></app-account-btn>
+                <app-account-btn (click)="openRegisterPopup()" class="register-btn" text="Create an Account"></app-account-btn>
             </section>
         </div>
+        <app-custom-form form="Reset Password Form" btnName="Reset password" class="login-form forget-form" id="forget" 
+            [fieldValues]="[{fieldText: 'Email', placeholder: 'andrii_chekurda@epam.com'}, 
+                            {fieldText: 'Old password', placeholder: '1234'},
+                            {fieldText: 'New password', placeholder: '1234'}]">
+        </app-custom-form>
+        <app-custom-form form="Sign Up Form" btnName="Sign Up" class="login-form register-form" id="register" 
+        [fieldValues]="[{fieldText: 'Email', placeholder: 'andrii_chekurda@epam.com'}, 
+                        {fieldText: 'Password', placeholder: '1234'}]">
+        </app-custom-form>
     </section>
     <section class="img-section">
         <img class="img-section__image analysis-image" src="/assets/images/task_analysis.png" alt="">

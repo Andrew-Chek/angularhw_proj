@@ -6,14 +6,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./account-btn.component.scss']
 })
 export class AccountBtnComponent implements OnInit {
-  public buttonText = '';
+  	public buttonText = '';
 
 	@Input()
 	set text(name: string) {
 		this.buttonText = name;
 	}
-	get name(): string {
-    return this.buttonText;
+	get text(): string {
+	return this.buttonText;
 	}
 
 	@Output() btnClick = new EventEmitter();
@@ -24,8 +24,8 @@ export class AccountBtnComponent implements OnInit {
 		this.btnClick.emit();
 	}
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 
-  }
+	}
 
 }

@@ -1,0 +1,7 @@
+<form class="custom">
+    <app-form-header titleName="{{formName}}"></app-form-header>
+    <article class="custom-field" *ngFor="let field of fields">
+        <app-form-field class="field-info" text="{{field.fieldText}}" inpPlaceholder="{{field.placeholder}}"></app-form-field>
+    </article>
+    <app-submit-btn text="{{buttonName}}" class="custom-submit"></app-submit-btn>
+</form>

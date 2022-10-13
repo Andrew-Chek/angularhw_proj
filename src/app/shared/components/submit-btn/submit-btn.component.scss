@@ -2,11 +2,12 @@
 @import '../../../scss/mixins';
 .submit {
     &-btn {
-        width: 100%;
         background-color: $obligatory-color;
         @include btn-params;
         color: $input-color;
         transition: .5s;
+        width: 95%;
+        margin: 0 5px;
     }
     &-btn:hover {
         background-color: $text-color;

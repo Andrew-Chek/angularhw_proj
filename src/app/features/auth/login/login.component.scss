@@ -27,6 +27,18 @@
                 padding: 20px 0;
             }
         }
+        &-form {
+            position: fixed;
+            width: 50%;
+            z-index: 2;
+            background-color: #fff;
+            border-radius: 30px;
+            transition: .5s;
+            text-shadow: $text-shadow;
+            box-shadow: .3px .5px 4px $placeholder-color;
+            transform: translate(0, -1000%);
+            // visibility: hidden;
+        }
     }
     .register {
         display: flex;
