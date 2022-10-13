@@ -6,10 +6,10 @@
     &-link {
         text-align: end;
         cursor: pointer;
-        color: $obligatory-color;
+        color: $gradient-color1;
         transition: .5s;
     }
     &-link:hover {
-        color: $text-color;
+        color: $obligatory-color;
     }
 }
