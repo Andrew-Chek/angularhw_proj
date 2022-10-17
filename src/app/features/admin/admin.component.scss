@@ -1,0 +1,15 @@
+.admin {
+    display: grid;
+    height: 90vh;
+    grid-template-areas: "icons menu main";
+    grid-template-columns: .15fr .7fr 3fr;
+    &-icon {
+        grid-area: icons;
+    }
+    &-menu {
+        grid-area: menu;
+    }
+    &-main {
+        grid-area: main;
+    }
+}

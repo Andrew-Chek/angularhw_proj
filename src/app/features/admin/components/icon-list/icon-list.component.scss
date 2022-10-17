@@ -1,0 +1,22 @@
+@import '../../../../scss/variables';
+.icon-list {
+    background-color: $obligatory-color;
+    color: $dark-gray;
+    height: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    .icon {
+        transition: .5s;
+        box-sizing: content-box;
+        padding: 7px;
+        border-radius: 60px;
+    }
+    .icon:hover {
+        color: $input-color;
+        background-color: $darker-gray;
+        cursor: pointer;
+    }
+}

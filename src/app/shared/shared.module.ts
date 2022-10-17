@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { SubmitBtnComponent } from './components/submit-btn/submit-btn.component';
 import { AccountBtnComponent } from './components/account-btn/account-btn.component';
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
-import { FormHeaderComponent } from './components/form-header/form-header.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 
 
 
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     AccountBtnComponent,
     FormFieldComponent,
     CustomFormComponent,
-    FormHeaderComponent
+    AdminHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
     AccountBtnComponent,
     FormFieldComponent,
     CustomFormComponent,
-    FormHeaderComponent
+    AdminHeaderComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule implements NgModule { }

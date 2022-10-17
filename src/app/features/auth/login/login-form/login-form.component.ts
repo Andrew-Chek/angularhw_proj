@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { map, take } from 'rxjs';
 import { Router } from '@angular/router';
@@ -15,6 +15,8 @@ export class LoginFormComponent {
     private router: Router
   ) { }
 
+  @Output() outResetPassForm = new EventEmitter<boolean>();
+
   login() {
     this.authService.login().pipe(
       map(() => this.router.navigateByUrl(this.authService.redirectUrl)),
@@ -23,7 +25,6 @@ export class LoginFormComponent {
   }
   openForgetPopup()
   {
-    const registerPopup : any = document.querySelector('#forget');
-    registerPopup.style.transform = 'translate(0, -110%)';
+    this.outResetPassForm.emit(this.authService.setResetFlag());
   }
 }

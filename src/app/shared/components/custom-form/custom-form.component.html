@@ -1,5 +1,8 @@
 <form class="custom">
-    <app-form-header titleName="{{formName}}"></app-form-header>
+    <section class="custom-header">
+        <h2 class="custom-title">{{formName}}</h2>
+        <mat-icon class="custom-icon icon" (click)="closePopup()">close</mat-icon>
+    </section>
     <article class="custom-field" *ngFor="let field of fields">
         <app-form-field class="field-info" text="{{field.fieldText}}" inpPlaceholder="{{field.placeholder}}"></app-form-field>
     </article>

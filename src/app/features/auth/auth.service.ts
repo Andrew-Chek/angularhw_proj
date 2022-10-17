@@ -7,7 +7,9 @@ import {delay, Observable, of, tap} from 'rxjs';
 
 export class AuthService {
   isAuthorized = false;
-  redirectUrl: string = '';
+  redirectUrl: string = '/admin';
+  resetFlag: boolean = false;
+  registerFlag: boolean = false;
 
   constructor() {}
 
@@ -25,5 +27,15 @@ export class AuthService {
       delay(300),
       tap(() => this.isAuthorized = false)
     );
+  }
+  setResetFlag(): boolean
+  {
+    this.resetFlag = !this.resetFlag;
+    return this.resetFlag;
+  }
+  setRegisterFlag(): boolean
+  {
+    this.registerFlag = !this.registerFlag;
+    return this.registerFlag;
   }
 }

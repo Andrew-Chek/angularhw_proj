@@ -1,0 +1,91 @@
+@import '../../../../scss/variables';
+.board-menu {
+    padding: 0 30px;
+    &-main {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        margin-bottom: 30px;
+    }
+    &-title {
+        font: {
+            size: 32px;
+            weight: 600;
+        }
+    }
+    &-icon {
+        margin-top: 5px;
+    }
+    &-label {
+        color: $gray;
+        cursor: pointer;
+        font: {
+            size: 18px;
+            weight: 600;
+        }
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .list-icon {
+            display: none;
+        }
+    }
+    &-checkbox {
+        display: none;
+    }
+    &-boards {
+        text-align: start;
+        transition: .5s all ease;
+        margin-bottom: 15px;
+        &-list {
+            color: $input-color;
+            display: flex;
+            flex-direction: column;
+            transition: all .5s ease;
+            position: absolute;
+            transform: translate(0, -500%);
+            a {
+                color: $gray;
+                width: 100%;
+                padding: 4px 15px;
+            }
+        }
+        .b_list {
+            position: relative;
+            transform: translate(0, 0);
+        }
+        .board__label {
+            transition: .5s all ease;
+            color: $text-color;
+        }
+        .board__right, .board__down {
+            display: block;
+        }
+    }
+    &-tasks {
+        text-align: start;
+        &-list {
+            a {
+                color: $gray;
+                width: 100%;
+                padding: 4px 15px;
+            }
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            transition: all .5s ease;
+            transform: translate(0, -500%);
+        }
+        .t_list {
+            position: relative;
+            transform: translate(0, 0);
+        }
+        .task__label {
+            transition: .5s all ease;
+            color: $text-color;
+        }
+        .task__right, .task__down {
+            display: block;
+        }
+    }
+}

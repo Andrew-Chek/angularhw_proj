@@ -5,6 +5,11 @@ import { BoardsComponent } from './components/boards/boards.component';
 import { BoardComponent } from './components/boards/board/board.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskComponent } from './components/tasks/task/task.component';
+import { MatIconModule } from '@angular/material/icon';
+import { AdminComponent } from './admin.component';
+import { BoardMenuComponent } from './components/board-menu/board-menu.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AdminRoutingModule } from './admin-routing.module';
 
 
 
@@ -14,10 +19,15 @@ import { TaskComponent } from './components/tasks/task/task.component';
     BoardsComponent,
     BoardComponent,
     TasksComponent,
-    TaskComponent
+    TaskComponent,
+    AdminComponent,
+    BoardMenuComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    SharedModule,
+    AdminRoutingModule
   ]
 })
 export class AdminModule { }

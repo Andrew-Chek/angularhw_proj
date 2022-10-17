@@ -38,6 +38,9 @@
             box-shadow: .3px .5px 4px $placeholder-color;
             transform: translate(0, -1000%);
         }
+        .open__register, .open__reset {
+            transform: translate(0, -100%);
+        }
     }
     .register {
         display: flex;
