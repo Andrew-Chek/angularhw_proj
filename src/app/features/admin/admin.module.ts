@@ -10,6 +10,7 @@ import { AdminComponent } from './admin.component';
 import { BoardMenuComponent } from './components/board-menu/board-menu.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
+import { AdminService } from './admin.service';
 
 
 
@@ -28,6 +29,9 @@ import { AdminRoutingModule } from './admin-routing.module';
     MatIconModule,
     SharedModule,
     AdminRoutingModule
+  ],
+  providers: [
+    AdminService
   ]
 })
 export class AdminModule { }

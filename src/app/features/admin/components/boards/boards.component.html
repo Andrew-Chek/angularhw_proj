@@ -17,6 +17,6 @@
         </aside>
     </section>
     <section class="dashboard-boards">
-        <app-board class="dashboard-board" *ngFor="let board of boards" [boardValue]="board"></app-board>
+        <app-board class="dashboard-board" *ngFor="let board of boards$ | async" [boardValue]="board"></app-board>
     </section>
 </article>

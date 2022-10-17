@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Board } from 'src/app/Board';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-tasks',
@@ -7,8 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TasksComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private adminService:AdminService) { }
   ngOnInit(): void {
   }
 

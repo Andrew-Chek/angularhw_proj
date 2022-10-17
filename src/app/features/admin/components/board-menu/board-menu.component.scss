@@ -15,6 +15,11 @@
     }
     &-icon {
         margin-top: 5px;
+        cursor: pointer;
+        transition: .5s all;
+    }
+    &-icon:hover {
+        transform: rotate(90deg);
     }
     &-label {
         color: $gray;
@@ -44,10 +49,16 @@
             transition: all .5s ease;
             position: absolute;
             transform: translate(0, -500%);
-            a {
+            .boards-link {
                 color: $gray;
                 width: 100%;
                 padding: 4px 15px;
+                transition: .5s all ease;
+                cursor: pointer;
+                text-decoration: none;
+            }
+            .boards-link:hover{
+                color: $text-color;
             }
         }
         .b_list {

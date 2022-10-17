@@ -11,10 +11,8 @@
             </label>
         </div>
         <div class="board-menu-boards-list" [ngClass]="{'b_list' : openBoards}">
-            <a class="link boards-link">All boards(count)</a>
-            <a class="link boards-link">Board1</a>
-            <a class="link boards-link">Board2</a>
-            <a class="link boards-link">Board3</a>
+            <a class="link boards-link">All boards({{boards.length}})</a>
+            <a class="link boards-link" [routerLink]="['board', board.id]" *ngFor="let board of boards">{{board.name}}</a>
         </div>
     </section>
     <section class="board-menu-tasks">
