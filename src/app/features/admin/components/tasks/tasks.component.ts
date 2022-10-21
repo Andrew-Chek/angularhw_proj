@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Board } from 'src/app/Board';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { mergeMap, Observable, of } from 'rxjs';
+import { Task } from 'src/app/Task';
 import { AdminService } from '../../admin.service';
 
 @Component({
@@ -10,8 +11,16 @@ import { AdminService } from '../../admin.service';
 })
 export class TasksComponent implements OnInit {
 
-  constructor(private adminService:AdminService) { }
+  constructor(private adminService:AdminService) {
+
+  }
+  public statuses = ['To do', 'In progress', 'Done']
   ngOnInit(): void {
+    
   }
 
+  openCreateTaskForm()
+  {
+    //TODO
+  }
 }

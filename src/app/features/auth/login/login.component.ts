@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
 
   public checkRegister:boolean = false;
   public checkReset:boolean = false;
+  
   constructor(
     private authService: AuthService,
   ) 

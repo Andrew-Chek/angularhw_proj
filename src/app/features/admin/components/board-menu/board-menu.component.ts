@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { mergeMap, Observable, of } from 'rxjs';
 import { Board } from 'src/app/Board';
+import { AdminService } from '../../admin.service';
 
 @Component({
   selector: 'app-board-menu',
@@ -19,16 +21,18 @@ export class BoardMenuComponent implements OnInit {
   public tDown:boolean = false;
   public tLabel:boolean = false;
 
-  public boards:Board[] = [
-    {id:0, name: 'Board1', description: '123456', creation_date: '19/12/2020'}, 
-    {id:1, name: 'Board2', description: 'asdfgh', creation_date: '15/12/2015'},
-    {id:2, name: 'Board3', description: 'zxcvbn', creation_date: '11/08/2017'},
-    {id:3, name: 'Board4', description: '123qwe', creation_date: '15/04/2003'},
-    {id:4, name: 'Board5', description: 'asdqwe', creation_date: '06/03/2019'}];
-  constructor() { }
+  public boardCount:number = 0;
+
+  public boards$:Observable<Board[]>;
+  constructor(private adminService:AdminService) {
+    this.boards$ = this.adminService.boards$;
+  }
 
   ngOnInit(): void {
-
+    this.adminService.displayBoardsSubject.subscribe((boards$) => {
+      this.boards$ = boards$;
+      boards$.subscribe((boards) => this.boardCount = boards.length)
+    })
   }
 
   openTaskList()
@@ -47,4 +51,8 @@ export class BoardMenuComponent implements OnInit {
     this.bDown = !this.bDown;
   }
 
+  openCreateForm()
+  {
+    this.adminService.openCreateBoardForm();
+  }
 }

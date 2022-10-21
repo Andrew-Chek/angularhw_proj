@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {delay, Observable, of, tap} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,13 @@ export class AuthService {
   resetFlag: boolean = false;
   registerFlag: boolean = false;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  login(): Observable<boolean> {
-    return of(true).pipe(
-      delay(1000),
-      tap(() => {
-        this.isAuthorized = true;
-      })
-    );
+  login(): Observable<Token> {
+    this.isAuthorized=true;
+    return this.http.post<Token>(
+      'http://localhost:8080/api/auth/login', 
+      {email:'andrii_chekurda@epam.com', password:'1234'})
   }
 
   logout(): Observable<boolean> {
@@ -39,3 +38,11 @@ export class AuthService {
     return this.registerFlag;
   }
 }
+
+export class Token{
+  constructor(token:string){
+    this.jwt_token = token
+  }
+  public jwt_token:string;
+}
+

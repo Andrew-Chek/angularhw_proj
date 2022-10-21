@@ -11,7 +11,6 @@ export class CustomFormComponent implements OnInit {
   public fields: {fieldText: string, placeholder: string}[] = [];
   public buttonName: string = ''
   public formName: string = ''
-  public close: boolean = true;
 
   constructor(
     private authService: AuthService

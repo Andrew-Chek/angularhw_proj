@@ -1,0 +1,35 @@
+@import '../../../scss/variables';
+.approve {
+    width: 300px;
+    height: 200px;
+    border: 1px solid $gray;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    &-title {
+        text-align: center;
+        margin-top: 10px;
+        font: {
+            size: 18px;
+            weight: 600;
+        }
+    }
+    &-btns {
+        margin-bottom: 30px;
+        &-btn {
+            padding: 15px 20px;
+            border: 1px solid $gray;
+            border-radius: 15px;
+            margin: 0 5px;
+            color: $gray;
+            background-color: #fff;
+            transition: .5s all ease;
+        }
+        &-btn:hover {
+            color: $obligatory-color;
+        }
+    }
+}

@@ -1,6 +1,7 @@
 @import '../../../../../scss/_variables';
 .board {
     width: 300px;
+    height: 200px;
     border: .5px solid $gray;
     border-radius: 30px;
     padding: 15px 20px;
@@ -9,6 +10,7 @@
         display: flex;
         justify-content: space-between;
         .general__name {
+            cursor: pointer;
             font-size: 18px;
             font-weight: 600;
         }
@@ -32,8 +34,9 @@
                 top: 10px;
                 transition: .5s all ease;
                 position: relative;
+                visibility: hidden;
                 top: 5px;
-                transform: translate(0, -1200%);
+                transform: translate(0, -1200px);
                 &-item {
                     cursor: pointer;
                     transition: .5s all ease;
@@ -45,6 +48,7 @@
             }
             .visible {
                 transform: translate(0, 0);
+                visibility: visible;
             }
         }
     }
@@ -63,5 +67,15 @@
             font-weight: 600;
             background-color: $light-gray;
         }
+    }
+    &-form {
+        position: absolute;
+        top: 30%;
+        left: 40%;
+        transition: .5s all ease;
+        transform: translate(0, -500%);
+    }
+    .edit__board {
+        transform: translate(0, 0);
     }
 }

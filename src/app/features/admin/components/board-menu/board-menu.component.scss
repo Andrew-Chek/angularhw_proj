@@ -48,7 +48,7 @@
             flex-direction: column;
             transition: all .5s ease;
             position: absolute;
-            transform: translate(0, -500%);
+            transform: translate(0, -1000%);
             .boards-link {
                 color: $gray;
                 width: 100%;
@@ -85,7 +85,7 @@
             flex-direction: column;
             position: absolute;
             transition: all .5s ease;
-            transform: translate(0, -500%);
+            transform: translate(0, -1000%);
         }
         .t_list {
             position: relative;

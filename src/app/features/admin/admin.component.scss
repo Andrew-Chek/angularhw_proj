@@ -1,3 +1,4 @@
+@import '../../scss/variables';
 .admin {
     display: grid;
     height: 90vh;
@@ -11,5 +12,27 @@
     }
     &-main {
         grid-area: main;
+    }
+    &-form {
+        position: absolute;
+        top: 30%;
+        left: 40%;
+        transition: .5s all ease;
+        transform: translate(0, -500%);
+    }
+    &-message {
+        position: absolute;
+        background-color: #fff;
+        width: 300px;
+        border-radius: 30px;
+        top: 30%;
+        left: 40%;
+        transform: translate(0, -1200%);
+        transition: .5s all ease;
+        border: 1px solid $gray;
+    }
+    .create__board, .open__message, 
+    .edit__board, .delete__board {
+        transform: translate(0, 0);
     }
 }

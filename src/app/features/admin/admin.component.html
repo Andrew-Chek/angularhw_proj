@@ -7,4 +7,9 @@
             <router-outlet></router-outlet>
         </div>
     </section>
+    <app-board-form class="admin-form" [ngClass]="{create__board: openCreateBoard}" 
+    (sentData)="sendCreateRequest($event)" id="create-board-form" setSubmit="Create Board"></app-board-form>
+    <app-board-form class="admin-form" (sentData)="sendEditRequest($event)" [ngClass]="{edit__board: openEditBoard}" id="edit-board-form" setSubmit="Edit Board"></app-board-form>
+    <app-approve-form class="admin-form" [ngClass]="{delete__board: openDeleteBoard}"></app-approve-form>
+    <!-- <app-message class="admin-message" [ngClass]="{open__message: openMessage}"></app-message> -->
 </main>

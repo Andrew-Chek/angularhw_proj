@@ -2,7 +2,7 @@
     <section class="dashboard-header">
         <div class="dashboard-add">
             <h2 class="dashboard-title">Dashboard</h2>
-            <div class="dashboard-add-btn">
+            <div class="dashboard-add-btn" (click)="openCreateForm()">
                 <mat-icon class="add-icon">add_circle_outline</mat-icon>
                 <p class="add-name">Add New</p>
             </div>
@@ -17,6 +17,6 @@
         </aside>
     </section>
     <section class="dashboard-boards">
-        <app-board class="dashboard-board" *ngFor="let board of boards$ | async" [boardValue]="board"></app-board>
+        <app-board class="dashboard-board" *ngFor="let board of boards$ |async" [boardValue]="board"></app-board>
     </section>
 </article>

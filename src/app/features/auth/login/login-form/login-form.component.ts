@@ -19,9 +19,10 @@ export class LoginFormComponent {
 
   login() {
     this.authService.login().pipe(
-      map(() => this.router.navigateByUrl(this.authService.redirectUrl)),
-      take(1)
-    ).subscribe()
+      map((token) => {
+        window.localStorage.setItem('jwt_token', token.jwt_token)
+        this.router.navigateByUrl(this.authService.redirectUrl)
+      })).subscribe();
   }
   openForgetPopup()
   {

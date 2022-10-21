@@ -1,0 +1,31 @@
+<form class="board-form" [formGroup]="boardForm">
+    <section class="board-form-header">
+        <h2 class="board-title">{{submitText}}</h2>
+        <mat-icon class="board-icon icon" (click)="closePopup()">close</mat-icon>
+    </section>
+    <section class="board-form-value">
+        <label for="board-name" class="form-label">Name: </label>
+        <input id="board-name" class="form-input" type="text" formControlName="name" required [(ngModel)]="board.name">
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert alert-danger">
+        <div *ngIf="name?.errors?.['required']">
+            Name is required.
+        </div>
+        <div *ngIf="name?.errors?.['minlength']">
+            Name must be at least 4 characters long.
+        </div>
+    </div>
+    </section>
+    <section class="board-form-value">
+        <label for="board-description" class="form-label">Description: </label>
+        <input id="board-description" class="form-input" [readonly]="readonlyFlag" type="text" formControlName="description" required [(ngModel)]="board.description">
+        <div *ngIf="description?.invalid && (description?.dirty || description?.touched)" class="alert alert-danger">
+            <div *ngIf="name?.errors?.['required']">
+                Description is required.
+            </div>
+            <div *ngIf="name?.errors?.['minlength']">
+                Description must be at least 4 characters long.
+            </div>
+        </div>
+    </section>
+   <app-submit-btn class="board-form-submit" text="{{submitText}}" (btnClick)="sendForm()"></app-submit-btn>
+</form>

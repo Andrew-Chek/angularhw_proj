@@ -7,8 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SubmitBtnComponent implements OnInit {
 
-  public buttonText:string = ''
-  @Input()
+	public buttonText:string = ''
+	@Input()
 	set text(name: string) {
 		this.buttonText = name;
 	}
@@ -23,8 +23,7 @@ export class SubmitBtnComponent implements OnInit {
 	onClick() {
 		this.btnClick.emit();
 	}
-  ngOnInit(): void {
-    
-  }
-
+	ngOnInit(): void {
+		
+	}
 }

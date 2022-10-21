@@ -1,0 +1,39 @@
+@import '../../../scss/variables';
+.message {
+    height: 200px;
+    width: 300px;
+    &-header {
+        display: flex;
+        height: 50px;
+        width: 100%;
+        justify-content: space-between;
+        color: $input-color;
+        background-color: $obligatory-color;
+        padding: 20px;
+        border-radius: 30px 30px 0 0;
+        .message-title {
+            color: $input-color;
+            font: {
+                size: 18px;
+                weight: 600;
+            }
+        }
+        .message-icon {
+            text-shadow: none;
+        }
+        .message-icon:hover {
+            cursor: pointer;
+        }
+    }
+    &-main {
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        .message-info {
+            font: {
+                size: 18px;
+                weight: 600;
+            };
+        }
+    }
+}

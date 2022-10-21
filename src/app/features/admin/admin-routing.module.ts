@@ -12,8 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: BoardsComponent,
-    canActivate: [AuthGuard]
+    redirectTo: '/admin',
   },
   {
     path: 'board/:id',

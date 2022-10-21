@@ -1,0 +1,12 @@
+<article class="status-board">
+    <section class="status-board-header">
+        <h2 class="status-board-title">{{status}}</h2>
+        <div class="status-board-add" (click)="openCreateTaskForm()">
+            <mat-icon class="add-icon">add_circle_outline</mat-icon>
+            <p class="add-name">Add New</p>
+        </div>
+    </section>
+    <section class="status-board-main">
+        <app-task class="status-board-task" *ngFor="let task of tasks$ | async" [taskValue]="task"></app-task>
+    </section>
+</article>

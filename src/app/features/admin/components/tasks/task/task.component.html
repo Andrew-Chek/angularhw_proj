@@ -1,1 +1,16 @@
-<p>task works!</p>
+<article class="task">
+    <section class="task-general">
+        <h3 class="general__name">{{task.name}}</h3>
+        <div class="task-more more">
+            <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
+            <div class="more-list" [ngClass]="{visible: isPressed}">
+                <p class="more-list-item" (click)="openEditForm()">Edit</p>
+                <p class="more-list-item">Delete</p>
+            </div>
+        </div>
+    </section>
+    <section class="task-info">
+        <p class="info-desc">{{task.description}}</p>
+        <p class="info-date">{{date}}</p>
+    </section>
+</article>

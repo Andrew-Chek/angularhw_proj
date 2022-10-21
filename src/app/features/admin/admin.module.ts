@@ -10,7 +10,7 @@ import { AdminComponent } from './admin.component';
 import { BoardMenuComponent } from './components/board-menu/board-menu.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminService } from './admin.service';
+import { StatusBoardComponent } from './components/tasks/status-board/status-board.component';
 
 
 
@@ -22,16 +22,14 @@ import { AdminService } from './admin.service';
     TasksComponent,
     TaskComponent,
     AdminComponent,
-    BoardMenuComponent
+    BoardMenuComponent,
+    StatusBoardComponent,
   ],
   imports: [
     CommonModule,
     MatIconModule,
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
   ],
-  providers: [
-    AdminService
-  ]
 })
 export class AdminModule { }

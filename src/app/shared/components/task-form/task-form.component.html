@@ -1,0 +1,31 @@
+<form class="task-form" [formGroup]="taskForm">
+    <section class="task-form-header">
+        <h2 class="task-title">{{submitText}}</h2>
+        <mat-icon class="task-icon icon" (click)="closePopup()">close</mat-icon>
+    </section>
+    <section class="task-form-value">
+        <label for="task-name" class="form-label">Name: </label>
+        <input id="task-name" class="form-input" type="text" formControlName="name" required [(ngModel)]="task.name">
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert alert-danger">
+        <div *ngIf="name?.errors?.['required']">
+            Name is required.
+        </div>
+        <div *ngIf="name?.errors?.['minlength']">
+            Name must be at least 4 characters long.
+        </div>
+    </div>
+    </section>
+    <section class="task-form-value">
+        <label for="task-description" class="form-label">Description: </label>
+        <input id="task-description" class="form-input" [readonly]="readonlyFlag" type="text" formControlName="description" required [(ngModel)]="task.description">
+        <div *ngIf="description?.invalid && (description?.dirty || description?.touched)" class="alert alert-danger">
+            <div *ngIf="name?.errors?.['required']">
+                Description is required.
+            </div>
+            <div *ngIf="name?.errors?.['minlength']">
+                Description must be at least 4 characters long.
+            </div>
+        </div>
+    </section>
+   <app-submit-btn class="task-form-submit" text="{{submitText}}" (btnClick)="sendForm()"></app-submit-btn>
+</form>

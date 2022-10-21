@@ -1,0 +1,65 @@
+@import '../../../../scss/variables';
+.taskboard {
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        color: $gray;
+        padding: 10px 40px;
+        .taskboard-add {
+            display: flex;
+            .taskboard-title {
+                font: {
+                    size: 24px;
+                    weight: 900;
+                }
+            }
+            &-btn {
+                display: flex;
+                justify-content: baseline;
+                align-items: flex-end;
+                padding: 0 30px;
+                cursor: pointer;
+                color: $gray;
+                transition: .5s all ease;
+                .add-name {
+                    padding-left: 5px;
+                    color: $gray;
+                    transition: .5s all ease;
+                }
+            }
+            &-btn:hover {
+                color: $text-color;
+                .add-name {
+                    color: $text-color;
+                }
+            }
+        }
+        .tools {
+            display: flex;
+            justify-content: baseline;
+            align-items: flex-end;
+            &-list {
+                display: flex;
+                justify-content: baseline;
+                align-items: flex-end;
+                &-li {
+                    padding: 0 10px;
+                    color: $gray;
+                    transition: .5s all ease;
+                    cursor: pointer;
+                }
+                &-li:hover {
+                    color: $text-color;
+                }
+            }
+        }
+    }
+    &-tasks {
+        display: flex;
+        justify-content: center;
+        padding: 10px 30px;
+        .taskboard-status-board {
+            width: 30%;
+        }
+    }
+}
