@@ -1,21 +1,5 @@
 <article class="taskboard" *ngIf="tasks$">
-    <section class="taskboard-header">
-        <div class="taskboard-add">
-            <h2 class="taskboard-title">{{board.name}}</h2>
-            <div class="taskboard-add-btn" (click)="openCreateTaskForm()">
-                <mat-icon class="add-icon">add_circle_outline</mat-icon>
-                <p class="add-name">Add New</p>
-            </div>
-        </div>
-        <aside class="taskboard-tools tools">
-            <ul class="tools-list">
-                <li class="tools-list-li">Filter</li>
-                <li class="tools-list-li">Sort by Dropdown</li>
-                <li class="tools-list-li">Asc</li>
-                <li class="tools-list-li">Desc</li>
-            </ul>
-        </aside>
-    </section>
+    <app-dashboard-header setHeader="task"></app-dashboard-header>
     <section class="taskboard-tasks">
         <app-status-board class="taskboard-status-board" *ngFor="let status of statuses" statusValue="{{status}}" [boardValue]="board"></app-status-board>
     </section>

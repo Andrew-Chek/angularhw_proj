@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { SubmitBtnComponent } from './components/submit-btn/submit-btn.component';
-import { AccountBtnComponent } from './components/account-btn/account-btn.component';
 import { FormFieldComponent } from './components/form-field/form-field.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,20 +10,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MessageComponent } from './components/message/message.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ApproveFormComponent } from './components/approve-form/approve-form.component';
+import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
 
 
 
 @NgModule({
   declarations: [
     SubmitBtnComponent,
-    AccountBtnComponent,
     FormFieldComponent,
     CustomFormComponent,
     AdminHeaderComponent,
     BoardFormComponent,
     MessageComponent,
     TaskFormComponent,
-    ApproveFormComponent
+    ApproveFormComponent,
+    DashboardHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -33,14 +33,14 @@ import { ApproveFormComponent } from './components/approve-form/approve-form.com
   ],
   exports: [
     SubmitBtnComponent,
-    AccountBtnComponent,
     FormFieldComponent,
     CustomFormComponent,
     AdminHeaderComponent,
     BoardFormComponent,
     MessageComponent,
     TaskFormComponent,
-    ApproveFormComponent
+    ApproveFormComponent,
+    DashboardHeaderComponent
   ]
 })
 export class SharedModule implements NgModule { }

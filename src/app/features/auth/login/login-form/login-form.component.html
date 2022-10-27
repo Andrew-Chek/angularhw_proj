@@ -8,7 +8,7 @@
         <input type="text" class="form-input" id="pass-input" placeholder="Min. 8 characters">
     </section>
     <section class="form-item btns">
-        <app-account-btn (click)="openForgetPopup()" class="form-btn" text="Forget password?"></app-account-btn>
+        <app-submit-btn (click)="openForgetPopup()" class="form-btn" [styleFlag]="true" text="Forget password?"></app-submit-btn>
         <app-submit-btn text="Sign In" (click)="login()"></app-submit-btn>
     </section>
 </article>

@@ -1,5 +1,6 @@
 @import 'src/styles/_mixins';
 .submit {
+    color: red;
     &-btn {
         background-color: var(--obligatory-color);
         @include --btn-params;
@@ -10,5 +11,21 @@
     }
     &-btn:hover {
         background-color: var(--gradient-color2);
+    }
+}
+.account {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    &-btn {
+        text-align: end;
+        cursor: pointer;
+        color: var(--gradient-color1);
+        transition: .5s;
+        @include --btn-params;
+        background-color: #fff;
+    }
+    &-btn:hover {
+        color: var(--obligatory-color);
     }
 }
