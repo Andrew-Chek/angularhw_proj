@@ -10,13 +10,13 @@
         <aside class="dashboard-tools tools">
             <ul class="tools-list">
                 <li class="tools-list-li">Filter</li>
-                <li class="tools-list-li">Sort by Dropdown</li>
+                <li class="tools-list-li" (click)="sortByDropDown()">Sort by Dropdown</li>
                 <li class="tools-list-li">Asc</li>
                 <li class="tools-list-li">Desc</li>
             </ul>
         </aside>
     </section>
     <section class="dashboard-boards">
-        <app-board class="dashboard-board" *ngFor="let board of boards$ |async" [boardValue]="board"></app-board>
+        <app-board class="dashboard-board" *ngFor="let board of boards$ | async sortBy" [boardValue]="board"></app-board>
     </section>
 </article>

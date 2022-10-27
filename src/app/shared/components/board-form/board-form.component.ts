@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Board } from 'src/app/Board';
 import { AdminService } from 'src/app/features/admin/admin.service';
+import { PopupService } from '../../popup.service';
 
 @Component({
   selector: 'app-board-form',
@@ -10,14 +11,16 @@ import { AdminService } from 'src/app/features/admin/admin.service';
 })
 export class BoardFormComponent implements OnInit {
 
-  constructor(private adminService:AdminService) { }
-  public board:Board = {_id:'', name: '', description: '', created_date: new Date()};
+  constructor(private popupService:PopupService, private adminService: AdminService) { }
+  public board: Board = {_id:'', name: '', description: '', created_date: new Date()};
+
+  public visible = false;
 
   public boardForm = new FormGroup({
-    name: new FormControl(this.board.name, [
+    name: new FormControl(this.board?.name, [
       Validators.required,
       Validators.minLength(4)]),
-    description: new FormControl(this.board.description, [
+    description: new FormControl(this.board?.description, [
       Validators.required,
       Validators.minLength(4),
     ]),
@@ -56,17 +59,19 @@ export class BoardFormComponent implements OnInit {
   {
     if(this.submitText == 'Edit Board')
     {
-      this.adminService.openEditBoardForm();
+      this.popupService.openEditBoardForm();
     }
     else
     {
-      this.adminService.openCreateBoardForm();
+      this.popupService.openCreateBoardForm();
     }
+    this.board.name = '';
+    this.board.description = '';
   }
 
   sendForm()
   {
-    if(this.name?.value != null && this.description?.value != null)
+    if(this.name?.value != null && this.description?.value != null && this.board != undefined)
     {
       this.board.name = this.name.value;
       this.board.description = this.description.value;
@@ -77,16 +82,27 @@ export class BoardFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adminService.currentBoardSubject.subscribe((value) => this.board = value);
+    this.adminService.state$.subscribe((value) => {
+      if(value.board != undefined)
+      {
+        this.board = value.board
+      }
+    });
     if(this.submitText == 'Create Board')
     {
       this.readonlyFlag = false;
+      this.popupService.state$.subscribe(value => {
+        this.visible = value.openCreateBoard
+      })
     }
     else if(this.submitText == 'Edit Board')
     {
-      this.boardForm.get('name')?.setValue(this.board.name);
-      this.boardForm.get('description')?.setValue(this.board.description);
+      this.boardForm.get('name')?.setValue(this.board?.name);
+      this.boardForm.get('description')?.setValue(this.board?.description);
       this.readonlyFlag = true;
+      this.popupService.state$.subscribe(value => {
+        this.visible = value.openEditBoard
+      })
     }
   }
 }

@@ -1,4 +1,3 @@
-@import '../../../scss/variables';
 .custom {
     &-field {
         display: flex;
@@ -12,13 +11,13 @@
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        color: $input-color;
-        background-color: $obligatory-color;
+        color: var(--input-color);
+        background-color: var(--obligatory-color);
         padding: 20px;
         border-radius: 30px 30px 0 0;
     }
     &-title {
-        color: $input-color;
+        color: var(--input-color);
     }
     &-icon {
         text-shadow: none;

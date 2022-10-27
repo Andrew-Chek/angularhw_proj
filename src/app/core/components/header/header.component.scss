@@ -1,14 +1,13 @@
-@import '../../../scss/variables';
 .header {
     height: 10vh;
-    background-color: $obligatory-color;
+    background-color: var(--obligatory-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
     .navigation {
         margin: 0 20px;
         &__item {
-            color: $input-color;
+            color: var(--input-color);
             text-decoration: none;
             font-size: 24px;
         }
@@ -16,7 +15,7 @@
     .icons {
         margin: 0 20px;
         &-info {
-            color: $input-color;
+            color: var(--input-color);
             font-weight: 600;
             display: flex;
             align-items: center;

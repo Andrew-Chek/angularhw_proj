@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { mergeMap, of, Observable } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute} from '@angular/router';
+import { mergeMap, of, Observable, map, Subscription, take, firstValueFrom } from 'rxjs';
+import { Board } from 'src/app/Board';
+import { PopupService } from 'src/app/shared/popup.service';
 import { Task } from 'src/app/Task';
 import { AdminService } from '../../../admin.service';
 
@@ -9,22 +11,15 @@ import { AdminService } from '../../../admin.service';
   templateUrl: './status-board.component.html',
   styleUrls: ['./status-board.component.scss']
 })
-export class StatusBoardComponent implements OnInit {
+export class StatusBoardComponent implements OnInit, OnDestroy {
 
-  public tasks$:Observable<Task[]>;
-  public board_id: string;
+  public tasks$: Observable<Task[]> = this.adminService.tasks$;
+  public board: Board = {_id:'', name: '', description: '', created_date: new Date()};
   public status: string = '';
+  public adminStateSubscription = new Subscription()
 
-  constructor(public adminService:AdminService, 
+  constructor(private adminService:AdminService, private popupService: PopupService,
     private route:ActivatedRoute) {
-    this.board_id = '';
-    this.route.params.subscribe(params => {
-      this.board_id = params['id'];
-    })
-    this.tasks$ = this.adminService.getTasksByStatus(this.board_id, this.status).pipe(
-      mergeMap((tasksObj)=> {
-        return of(tasksObj.tasks);
-    }));
   }
 
   @Input()
@@ -37,16 +32,31 @@ export class StatusBoardComponent implements OnInit {
     return this.status;
   }
 
-
-  openCreateTaskForm()
+  @Input()
+  set boardValue(board:Board)
   {
-    // this.adminService.openCreateTaskForm();
+    this.board = board;
+  }
+  get boardValue()
+  {
+    return this.board;
+  }
+
+  async openCreateTaskForm()
+  {
+    this.popupService.openCreateTaskForm();
   }
 
   ngOnInit(): void {
-    this.tasks$ = this.adminService.getTasksByStatus(this.board_id, this.status).pipe(
-      mergeMap((tasksObj)=> {
-        return of(tasksObj.tasks);
-    }));
+    this.adminService.state$.subscribe((value) => {
+      console.log(`we are in status-board: '${value.tasks}'`)
+      const filteredTasks = value.tasks.filter(task => task.status === this.status)
+      this.tasks$ = of(filteredTasks)
+    })
+  }
+
+  ngOnDestroy()
+  {
+    this.adminStateSubscription.unsubscribe();
   }
 }

@@ -4,8 +4,8 @@
         <div class="task-more more">
             <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
             <div class="more-list" [ngClass]="{visible: isPressed}">
-                <p class="more-list-item" (click)="openEditForm()">Edit</p>
-                <p class="more-list-item">Delete</p>
+                <p class="more-list-item" (click)="openEditTaskForm()">Edit</p>
+                <p class="more-list-item" (click)="openDeleteTaskForm()">Delete</p>
             </div>
         </div>
     </section>

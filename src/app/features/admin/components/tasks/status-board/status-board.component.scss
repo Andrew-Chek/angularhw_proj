@@ -1,6 +1,5 @@
-@import '../../../../../scss/variables';
 .status-board {
-    border: 1px solid $gray;
+    border: 1px solid var(--gray);
     border-radius: 15px;
     margin: 0 20px;
     &-header {
@@ -18,18 +17,18 @@
             justify-content: baseline;
             align-items: flex-end;
             cursor: pointer;
-            color: $gray;
+            color: var(--gray);
             transition: .5s all ease;
             .add-name {
                 padding-left: 5px;
-                color: $gray;
+                color: var(--gray);
                 transition: .5s all ease;
             }
         }
         .status-board-add:hover {
-            color: $text-color;
+            color: var(--text-color);
             .add-name {
-                color: $text-color;
+                color: var(--text-color);
             }
         }
     }

@@ -1,4 +1,3 @@
-@import '../../../scss/variables';
 .account {
     display: flex;
     justify-content: flex-end;
@@ -6,10 +5,10 @@
     &-link {
         text-align: end;
         cursor: pointer;
-        color: $gradient-color1;
+        color: var(--gradient-color1);
         transition: .5s;
     }
     &-link:hover {
-        color: $obligatory-color;
+        color: var(--obligatory-color);
     }
 }

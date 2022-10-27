@@ -1,45 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, map, BehaviorSubject, mergeMap, of, take } from 'rxjs';
+import { Observable, map, BehaviorSubject, mergeMap, of, take, tap, concatMap } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { Message } from 'src/app/Message';
+import { DashboardState, Store } from 'src/app/Store';
 import { Task } from 'src/app/Task';
+import { BoardsService } from './components/boards/boards.service';
+import { TasksService } from './components/tasks/tasks.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService implements OnInit {
+export class AdminService extends Store<DashboardState> {
 
-  constructor(private http:HttpClient) { }
+  constructor(public boardApi: BoardsService, public taskApi: TasksService) {
+    super({
+      boards: [],
+      tasks: [],
+      board: {_id: '', name: '', description: '', created_date: new Date()},
+      task: {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: new Date()}
+    })
+  }
 
-  private apiUrl:string = 'http://localhost:8080/api';
-  public boards$:Observable<Board[]> = this.getBoards().pipe(
-    mergeMap((boardsObj) => {return of(boardsObj.boards)})
-  );
-  public currentBoardSubject = new BehaviorSubject<Board>({_id:'', name: '', description: '', created_date: new Date()});
+  public readonly boards$: Observable<Board[]> = this.state$.pipe(map(x => {return x.boards}));
+  public readonly tasks$: Observable<Task[]> = this.state$.pipe(map(x => {return x.tasks}));
+  public readonly board$: Observable<Board | undefined> = this.state$.pipe(map(x => {return x.board}));
+  public readonly task$: Observable<Task> = this.state$.pipe(map(x => {return x.task}));
+
   public message$:Observable<Message> = of({isDisplayed: false, message: ''})
-
-  createFormSubject = new BehaviorSubject<boolean>(false);
-  editFormSubject = new BehaviorSubject<boolean>(false);
-  deleteFormSubject = new BehaviorSubject<boolean>(false);
   displayMessageSubject = new BehaviorSubject<Observable<Message>>(this.message$);
-  displayBoardsSubject = new BehaviorSubject<Observable<Board[]>>(this.boards$)
 
   ngOnInit()
   {
 
-  }
-
-  openCreateBoardForm() {
-    this.createFormSubject.next(!this.createFormSubject.value);
-  }
-
-  openEditBoardForm() {
-    this.editFormSubject.next(!this.editFormSubject.value);
-  }
-
-  openDeleteBoardForm() {
-    this.deleteFormSubject.next(!this.deleteFormSubject.value);
   }
 
   openMessageBlock(message: Observable<Message>)
@@ -47,67 +40,199 @@ export class AdminService implements OnInit {
     this.displayMessageSubject.next(message);
   }
 
-  getBoards(): Observable<BoardsObject> {
-    return this.http.get<BoardsObject>(
-      `${this.apiUrl}/boards`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-      })
+  getBoards() {
+    this.boardApi.getBoards().subscribe((value => {
+      this.setState({
+        ...this.state,
+        boards: value
+      });
+    }))
+    return this.boards$;
   }
 
-  getTasks(board_id:string): Observable<TasksObject> {
-    return this.http.get<TasksObject>(
-      `${this.apiUrl}/tasks/${board_id}`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-      })
-  }
-
-  getTasksByStatus(board_id:string, status:string): Observable<TasksObject> {
-    return this.http.get<TasksObject>(
-      `${this.apiUrl}/tasks/${board_id}`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-        params: {
-          status
-        }
-      })
-  }
-
-  getBoard(id: number | string) {
-    return this.getBoards().pipe(
-      map((boardsObj: BoardsObject) => boardsObj.boards.find(board => board._id === id)!)
-    );
+  getBoard(id: string) {
+    this.boardApi.getBoard(id).subscribe((value => {
+      this.setState({
+        ...this.state,
+        board: value
+      });
+    }))
+    return this.board$;
   }
 
   createBoard(board:Board)
   {
-    return this.http.post<Message>(`${this.apiUrl}/boards`, 
-    {name: board.name, description: board.description}, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
+    this.boardApi.createBoard(board)
+    .pipe(mergeMap(message => {
+      return this.boardApi.getBoards()
+    })).subscribe(value => {
+      this.setState({
+        ...this.state,
+        boards: value
+      });
     })
-  }
-
-  detectBoardsChange()
-  {
-    this.displayBoardsSubject.next(this.getBoards().pipe(
-      mergeMap((boardsObj) => {return of(boardsObj.boards)})
-    ));
   }
 
   updateBoard(board:Board)
   {
-    return this.http.put<Message>(`${this.apiUrl}/boards/${board._id}`, 
-    {name: board.name, desciption: board.description}, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
+    this.boardApi.updateBoard(board)
+    .pipe(mergeMap(message => {
+      return this.boardApi.getBoards()
+    })).subscribe(value => {
+      this.setState({
+        ...this.state,
+        boards: value
+      });
     })
   }
 
-  deleteBoard(board:Board)
+  deleteBoard(board:Board | undefined)
   {
-    return this.http.delete<Message>(`${this.apiUrl}/boards/${board._id}`, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
+    this.boardApi.deleteBoard(board)
+    .pipe(mergeMap(message => {
+      return this.boardApi.getBoards()
+    })).subscribe(value => {
+      this.setState({
+        ...this.state,
+        boards: value
+      });
     })
+  }
+
+  getTasks(board_id:string) {
+    this.taskApi.getTasks(board_id).subscribe((value => {
+      this.setState({
+        ...this.state,
+        tasks: value
+      });
+    }))
+    return this.tasks$;
+  }
+
+  getTasksByStatus(board_id:string, status:string) {
+    this.taskApi.getTasksByStatus(board_id, status).subscribe((value => {
+      this.setState({
+        ...this.state,
+        tasks: value
+      });
+    }))
+    return this.tasks$;
+  }
+
+  getTask(id: string)
+  {
+    let task;
+    this.taskApi.getTask(id).subscribe((value => {
+      this.setState({
+        ...this.state,
+        task: value
+      });
+      task = value;
+    }))
+    return task;
+  }
+
+  createTask(task:Task)
+  {
+    let board_id = ''
+    this.taskApi.createTask(task).pipe(
+      concatMap((value) => {
+        return this.board$
+      }),
+      mergeMap(value => {
+        if(value != undefined)
+        {
+          return this.taskApi.getTasks(value._id)
+        }
+        return this.taskApi.getTasks(board_id)
+      }),
+      take(1)
+    ).subscribe(value => {
+      this.setState({
+        ...this.state,
+        tasks: value
+      });
+    })
+  }
+
+  updateTask(task:Task)
+  {
+    let board_id = ''
+    this.taskApi.updateTask(task).pipe(
+      concatMap((value) => {
+        return this.board$
+      }),
+      concatMap(value => {
+        if(value != undefined)
+        {
+          return this.taskApi.getTasks(value._id)
+        }
+        return this.taskApi.getTasks(board_id)
+      }),
+      take(1)
+    ).subscribe(value => {
+      this.setState({
+        ...this.state,
+        tasks: value
+      });
+    })
+  }
+
+  deleteTask(task: Task)
+  {
+    let board_id = ''
+    this.taskApi.deleteTask(task._id).pipe(
+      concatMap((value) => {
+        return this.board$
+      }),
+      mergeMap(value => {
+        if(value != undefined)
+        {
+          return this.taskApi.getTasks(value._id)
+        }
+        return this.taskApi.getTasks(board_id)
+      }),
+      take(1)
+    ).subscribe(value => {
+      console.log(value)
+      this.setState({
+        ...this.state,
+        tasks: value
+      });
+    })
+  }
+
+  setCurrentValues(board: Board, task: Task)
+  {
+    this.setState({
+      ...this.state,
+      task: task,
+      board: board
+    });
+  }
+
+  setCurrentTask(task: Task)
+  {
+    this.setState({
+      ...this.state,
+      task: task
+    });
+  }
+
+  setCurrentTasks(tasks: Task[])
+  {
+    this.setState({
+      ...this.state,
+      tasks: tasks
+    });
+  }
+
+  setCurrentBoard(board: Board)
+  {
+    this.setState({
+      ...this.state,
+      board: board
+    });
   }
 }
 
@@ -125,4 +250,20 @@ export class TasksObject{
     this.tasks = tasks;
   }
   public tasks:Task[];
+}
+
+export class TaskObject{
+  constructor(task:Task)
+  {
+    this.task = task;
+  }
+  public task:Task;
+}
+
+export class BoardObject{
+  constructor(board:Board)
+  {
+    this.board = board;
+  }
+  public board:Board;
 }

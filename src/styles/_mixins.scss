@@ -1,12 +1,13 @@
 @import './variables';
-@mixin text-styles {
+
+@mixin --text-styles {
     font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
     letter-spacing: 1px;
     word-spacing: 1px;
-    color: $text-color;
+    color: --text-color;
 }
-@mixin btn-params {
+@mixin --btn-params {
     padding: 16px 20px;
-    border: 1px solid $input-color;
+    border: 1px solid var(--input-color);
     border-radius: 30px;
 }

@@ -1,7 +1,6 @@
-@import '../../../../scss/variables';
 .icon-list {
-    background-color: $obligatory-color;
-    color: $dark-gray;
+    background-color: var(--obligatory-color);
+    color: var(--dark-gray);
     height: 100%;
     justify-content: space-between;
     display: flex;
@@ -15,8 +14,8 @@
         border-radius: 60px;
     }
     .icon:hover {
-        color: $input-color;
-        background-color: $darker-gray;
+        color: var(--input-color);
+        background-color: var(--darker-gray);
         cursor: pointer;
     }
 }

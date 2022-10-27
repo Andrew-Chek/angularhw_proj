@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { mergeMap, Observable, of } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { concatMap, map, mergeMap, Observable, of, Subscription, take } from 'rxjs';
 import { Board } from 'src/app/Board';
+import { PopupService } from 'src/app/shared/popup.service';
 import { AdminService } from '../../admin.service';
 
 @Component({
@@ -8,51 +10,71 @@ import { AdminService } from '../../admin.service';
   templateUrl: './board-menu.component.html',
   styleUrls: ['./board-menu.component.scss']
 })
-export class BoardMenuComponent implements OnInit {
+export class BoardMenuComponent implements OnInit, OnDestroy {
 
   public openTasks:boolean = false;
   public openBoards:boolean = false;
 
-  public bRight:boolean = true;
-  public bDown:boolean = false;
-  public bLabel:boolean = false;
-
-  public tRight:boolean = true;
-  public tDown:boolean = false;
-  public tLabel:boolean = false;
+  public bList:boolean = false;
+  public tList:boolean = false;
 
   public boardCount:number = 0;
+  public taskCount:number = 0;
+  public board_id:string = '';
 
   public boards$:Observable<Board[]>;
-  constructor(private adminService:AdminService) {
-    this.boards$ = this.adminService.boards$;
+  public adminStateSubscription = new Subscription();
+  constructor(private adminService:AdminService, private popupService:PopupService, private router: Router) {
+    this.boards$ = this.adminService.getBoards();
+  }
+  ngOnDestroy(): void {
+    this.adminStateSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.adminService.displayBoardsSubject.subscribe((boards$) => {
-      this.boards$ = boards$;
-      boards$.subscribe((boards) => this.boardCount = boards.length)
+    this.boards$ = this.adminService.getBoards();
+    this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
+      console.log(`we are in board menu: '${value.tasks}'`)
+      this.boards$ = of(value.boards);
+      this.boardCount = value.boards.length;
+      // this.board_id = value.boards[0]._id;
     })
   }
 
   openTaskList()
   {
-    this.tLabel = !this.tLabel;
+    this.tList = !this.tList;
     this.openTasks = !this.openTasks;
-    this.tRight = !this.tRight;
-    this.tDown = !this.tDown;
+  }
+
+  setTasks(board:Board)
+  {
+    this.adminService.getTasks(board._id).pipe(
+      concatMap(value => {
+        return this.adminService.getBoard(board._id)
+      }),
+      concatMap((value) => {
+        return of("Succesfully set")
+    }), take(1)).subscribe(value => {
+      console.log(value)
+      this.router.navigate(['admin/board', board._id])
+    })
   }
 
   openBoardList()
   {
-    this.bLabel = !this.bLabel;
+    this.bList = !this.bList;
     this.openBoards = !this.openBoards;
-    this.bRight = !this.bRight;
-    this.bDown = !this.bDown;
   }
 
   openCreateForm()
   {
-    this.adminService.openCreateBoardForm();
+    this.popupService.openCreateBoardForm();
+  }
+
+  getTasksCount(status:string)
+  {
+    let count:number = 0;
+    return count;
   }
 }

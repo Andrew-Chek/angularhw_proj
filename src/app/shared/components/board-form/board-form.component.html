@@ -1,4 +1,4 @@
-<form class="board-form" [formGroup]="boardForm">
+<form class="board-form" [ngClass]="{open__board: visible}" [formGroup]="boardForm">
     <section class="board-form-header">
         <h2 class="board-title">{{submitText}}</h2>
         <mat-icon class="board-icon icon" (click)="closePopup()">close</mat-icon>

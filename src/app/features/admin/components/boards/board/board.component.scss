@@ -1,8 +1,7 @@
-@import '../../../../../scss/_variables';
 .board {
     width: 300px;
     height: 200px;
-    border: .5px solid $gray;
+    border: .5px solid var(--gray);
     border-radius: 30px;
     padding: 15px 20px;
     margin: 10px 15px;
@@ -19,7 +18,7 @@
             flex-direction: column;
             align-items: flex-end;
             &-icon {
-                border: .5px solid $gray;
+                border: .5px solid var(--gray);
                 border-radius: 30px;
                 transition: .5s all ease;
                 cursor: pointer;
@@ -27,7 +26,7 @@
                 width: 25px;
             }
             &-list {
-                border: .5px solid $gray;
+                border: .5px solid var(--gray);
                 border-radius: 10px;
                 padding: 5px 10px;
                 right: -5px;
@@ -36,18 +35,18 @@
                 position: relative;
                 visibility: hidden;
                 top: 5px;
-                transform: translate(0, -1200px);
+                opacity: 0;
                 &-item {
                     cursor: pointer;
                     transition: .5s all ease;
-                    color: $gray;
+                    color: var(--gray);
                 }
                 &-item:hover {
-                    color: $text-color;
+                    color: var(--text-color);
                 }
             }
             .visible {
-                transform: translate(0, 0);
+                opacity: 1;
                 visibility: visible;
             }
         }
@@ -55,17 +54,17 @@
     &-info {
         .info-desc {
             text-align: start;
-            color: $board-gray;
+            color: var(--board-gray);
             font-size: 18px;
             padding: 10px 5px;
         }
         .info-date {
             padding: 5px 10px;
-            border: 1px solid $gray;
+            border: 1px solid var(--gray);
             border-radius: 15px;
-            color: $medium-gray;
+            color: var(--medium-gray);
             font-weight: 600;
-            background-color: $light-gray;
+            background-color: var(--light-gray);
         }
     }
     &-form {
@@ -73,9 +72,11 @@
         top: 30%;
         left: 40%;
         transition: .5s all ease;
-        transform: translate(0, -500%);
+        opacity: 0;
+        visibility: hidden;
     }
     .edit__board {
-        transform: translate(0, 0);
+        opacity: 1;
+        visibility: visible;
     }
 }

@@ -1,6 +1,6 @@
 <article class="board">
     <section class="board-general">
-        <h3 class="general__name" [routerLink]="['board', board._id]">{{board.name}}</h3>
+        <h3 class="general__name" (click)="setTasks()">{{board.name}}</h3>
         <div class="board-more more">
             <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
             <div class="more-list" [ngClass]="{visible: isPressed}">

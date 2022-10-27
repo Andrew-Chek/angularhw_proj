@@ -1,4 +1,3 @@
-@import '../../scss/variables';
 .admin {
     display: grid;
     height: 90vh;
@@ -14,11 +13,9 @@
         grid-area: main;
     }
     &-form {
-        position: absolute;
-        top: 30%;
-        left: 40%;
+        position: fixed;
         transition: .5s all ease;
-        transform: translate(0, -500%);
+        transform: translate(-500%, 0);
     }
     &-message {
         position: absolute;
@@ -29,10 +26,14 @@
         left: 40%;
         transform: translate(0, -1200%);
         transition: .5s all ease;
-        border: 1px solid $gray;
+        border: 1px solid var(--gray);
     }
     .create__board, .open__message, 
-    .edit__board, .delete__board {
+    .edit__board, .delete__board,
+    .create__task, .edit__task {
         transform: translate(0, 0);
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(6px);
     }
 }

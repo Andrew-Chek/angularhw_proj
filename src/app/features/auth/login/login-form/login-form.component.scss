@@ -1,5 +1,4 @@
-@import '../../../../scss/variables';
-@import '../../../../scss/mixins';
+@import '../../../../../styles/mixins';
 .form {
     &-item {
         display: flex;
@@ -10,13 +9,13 @@
     &-label {
         -webkit-text-stroke-width: .5px;
         .obligatory {
-            color: $obligatory-color;
+            color: var(--obligatory-color);
         }
     }
     &-input {
-        @include btn-params;
+        @include --btn-params;
     }
     &-input::placeholder {
-        color: $placeholder-color;
+        color: var(--placeholder-color);
     }
 }

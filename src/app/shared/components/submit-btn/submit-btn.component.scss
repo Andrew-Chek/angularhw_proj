@@ -1,15 +1,14 @@
-@import '../../../scss/variables';
-@import '../../../scss/mixins';
+@import 'src/styles/_mixins';
 .submit {
     &-btn {
-        background-color: $obligatory-color;
-        @include btn-params;
-        color: $input-color;
+        background-color: var(--obligatory-color);
+        @include --btn-params;
+        color: var(--input-color);
         transition: .5s;
         width: 95%;
         margin: 0 5px;
     }
     &-btn:hover {
-        background-color: $gradient-color2;
+        background-color: var(--gradient-color2);
     }
 }

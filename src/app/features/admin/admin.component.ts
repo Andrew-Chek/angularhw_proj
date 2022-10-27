@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, merge, mergeMap, Observable, of, take } from 'rxjs';
+import { map, merge, mergeMap, Observable, of, Subscription, take } from 'rxjs';
 import { Board } from 'src/app/Board';
+import { Task } from 'src/app/Task';
 import { Message } from 'src/app/Message';
 import { AdminService } from './admin.service';
+import { PopupService } from 'src/app/shared/popup.service';
 
 @Component({
   selector: 'app-admin',
@@ -12,51 +14,99 @@ import { AdminService } from './admin.service';
 })
 export class AdminComponent implements OnInit, OnDestroy {
   
-  public openCreateBoard: boolean = false;
+  public message$:Observable<Message> = this.adminService.message$;
   public openMessage: boolean = false;
+
+  public board:Board | undefined = {_id:'', name: '', description: '', created_date: new Date()};
+  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: new Date()};
+
+  public openDelete: boolean = false;
+
+  public openCreateBoard: boolean = false;
   public openEditBoard:boolean = false;
   public openDeleteBoard:boolean = false;
-  public message$:Observable<Message> = this.adminService.message$;
 
-  constructor(private adminService: AdminService, private router:Router) { }
+  public openCreateTask:boolean = false;
+  public openEditTask:boolean = false;
+  public openDeleteTask:Boolean = false;
+  public adminStateSubscription: Subscription = new Subscription();
+  public popupSubscription: Subscription = new Subscription();
+
+  constructor(private adminService: AdminService, private popupService: PopupService) {
+    this.popupService.setDefault();
+   }
 
   ngOnInit(): void {
-    this.adminService.createFormSubject.subscribe((value: boolean) => this.openCreateBoard = value);
-    this.adminService.editFormSubject.subscribe((value: boolean) => this.openEditBoard = value);
-    this.adminService.deleteFormSubject.subscribe((value: boolean) => this.openDeleteBoard = value);
-    this.adminService.displayMessageSubject
-    .subscribe((value) => {
-      this.message$ = value;
-      this.openMessage = !this.openMessage
+    this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
+      this.board = value.board;
+      this.task = value.task
+    });
+
+    this.popupSubscription = this.popupService.state$.subscribe((value) => {
+      this.openCreateBoard = value.openCreateBoard;
+      this.openEditBoard = value.openEditBoard;
+      this.openDeleteBoard = value.openDeleteBoard;
+
+      this.openCreateTask = value.openCreateTask;
+      this.openEditTask = value.openEditTask;
+      this.openDeleteTask = value.openDeleteTask;
+
+      this.openDelete = value.openDelete;
     });
   }
 
   ngOnDestroy()
   {
-    this.adminService.createFormSubject.unsubscribe();
     this.adminService.displayMessageSubject.unsubscribe();
+    this.adminStateSubscription.unsubscribe();
+    this.popupSubscription.unsubscribe();
   }
 
-  sendCreateRequest(board:Board)
+  sendCreateBoardRequest(board:Board)
   {
-    this.adminService.createBoard(board).pipe(take(1)).subscribe(value => console.log(value))
-    this.adminService.detectBoardsChange();
-    this.adminService.openCreateBoardForm();
+    this.adminService.createBoard(board);
+    this.popupService.openCreateBoardForm();
   }
 
-  sendEditRequest(board:Board)
+  sendEditBoardRequest(board:Board)
   {
-    this.adminService.updateBoard(board).pipe(take(1)).subscribe(value => console.log(value));
-    this.adminService.openEditBoardForm()
-    this.adminService.currentBoardSubject.next({_id:'', name: '', description: '', created_date: new Date()});
-    this.adminService.detectBoardsChange()
+    this.adminService.updateBoard(board);
+    this.popupService.openEditBoardForm()
   }
 
-  sendDeleteRequest(board:Board)
+  sendCreateTaskRequest(task:Task)
   {
-    this.adminService.deleteBoard(board).pipe(take(1)).subscribe(value => console.log(value));
-    this.adminService.openDeleteBoardForm()
-    this.adminService.currentBoardSubject.next({_id:'', name: '', description: '', created_date: new Date()});
-    this.adminService.detectBoardsChange()
+    this.adminService.createTask(task);
+    this.popupService.openCreateTaskForm();
+  }
+
+  sendEditTaskRequest(task:Task)
+  {
+    this.adminService.updateTask(task);
+    this.popupService.openEditTaskForm();
+  }
+
+  deleteBoard()
+  {
+    this.adminService.deleteBoard(this.board);
+    this.popupService.openDeleteBoardForm()
+  }
+
+  deleteTask()
+  {
+    this.adminService.deleteTask(this.task);
+    this.popupService.openDeleteTaskForm()
+  }
+
+  deleteItem()
+  {
+    if(this.openDeleteBoard)
+    {
+      this.deleteBoard();
+    }
+    else
+    {
+      this.deleteTask();
+    }
   }
 }

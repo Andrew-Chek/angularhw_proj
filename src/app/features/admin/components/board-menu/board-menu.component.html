@@ -5,28 +5,28 @@
     </section>
     <section class="board-menu-boards">
         <div class="board-menu-general boards-list">
-            <label class="board-menu-label" [ngClass]="{'board__label' : bLabel}" (click)="openBoardList()">Boards 
-                <mat-icon class="list-icon" [ngClass]="{'board__right' : bRight}">keyboard_arrow_right</mat-icon>
-                <mat-icon class="list-icon" [ngClass]="{'board__down' : bDown}">keyboard_arrow_down</mat-icon>
+            <label class="board-menu-label" [ngClass]="{'board__label' : bList}" (click)="openBoardList()">Boards 
+                <mat-icon class="list-icon" [ngClass]="{'board__right' : !bList}">keyboard_arrow_right</mat-icon>
+                <mat-icon class="list-icon" [ngClass]="{'board__down' : bList}">keyboard_arrow_down</mat-icon>
             </label>
         </div>
         <div class="board-menu-boards-list" [ngClass]="{'b_list' : openBoards}">
             <a class="link boards-link" [routerLink]="['dashboard']">All boards({{boardCount}})</a>
-            <a class="link boards-link" [routerLink]="['board', board._id]" *ngFor="let board of boards$ | async">{{board.name}}</a>
+            <a class="link boards-link" (click)="setTasks(board)" *ngFor="let board of boards$ | async">{{board.name}}</a>
         </div>
     </section>
     <section class="board-menu-tasks">
         <div class="board-menu-general tasks-list">
-            <label class="board-menu-label" [ngClass]="{'task__label' : tLabel}" (click)="openTaskList()">Tasks 
-                <mat-icon class="list-icon" [ngClass]="{task__right: tRight}">keyboard_arrow_right</mat-icon>
-                <mat-icon class="list-icon" [ngClass]="{task__down: tDown}">keyboard_arrow_down</mat-icon>
+            <label class="board-menu-label" [ngClass]="{'task__label' : tList}" (click)="openTaskList()">Tasks 
+                <mat-icon class="list-icon" [ngClass]="{task__right: !tList}">keyboard_arrow_right</mat-icon>
+                <mat-icon class="list-icon" [ngClass]="{task__down: tList}">keyboard_arrow_down</mat-icon>
             </label>
         </div>
         <div class="board-menu-tasks-list" [ngClass]="{'t_list' : openTasks}">
-            <a class="link tasks-link">All tasks(count)</a>
-            <a class="link tasks-link">To do(count)</a>
-            <a class="link tasks-link">In progress(count)</a>
-            <a class="link tasks-link">Done(count)</a>
+            <a class="link tasks-link">All tasks({{taskCount}})</a>
+            <a class="link tasks-link">To do({{getTasksCount('To do')}})</a>
+            <a class="link tasks-link">In progress({{getTasksCount('In progress')}})</a>
+            <a class="link tasks-link">Done({{getTasksCount('Done')}})</a>
         </div>
     </section>
 </article>

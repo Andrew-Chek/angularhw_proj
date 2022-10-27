@@ -1,18 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { map, of, Subscription, take } from 'rxjs';
+import { Board } from 'src/app/Board';
+import { PopupService } from 'src/app/shared/popup.service';
 import { Task } from 'src/app/Task';
+import { AdminService } from '../../../admin.service';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
 
   public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date:new Date()};
   public date:string = this.task.created_date.toLocaleDateString();
   public isPressed:boolean = false;
-  public openEditTask:boolean = false;
-  constructor() { }
+
+  constructor(private adminService: AdminService, private popupService: PopupService) { }
+
+  ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+  }
 
   @Input()
   set taskValue(task: Task) {
@@ -22,22 +32,23 @@ export class TaskComponent implements OnInit {
     return this.task;
 	}
 
-  ngOnInit(): void {
-
-  }
-
   openMore()
   {
     this.isPressed = !this.isPressed;
   }
-  openEditForm()
+  
+  openEditTaskForm()
   {
-    this.openEditTask = !this.openEditTask;
+    this.adminService.getBoard(this.task.board_id).subscribe();
+    this.adminService.setCurrentTask({...this.task});
+    this.popupService.openEditTaskForm();
   }
 
-  sendCloseInfo(isClosed: boolean)
+  openDeleteTaskForm()
   {
-    this.openEditTask = isClosed;
+    this.adminService.getBoard(this.task.board_id).subscribe();
+    this.adminService.setCurrentTask({...this.task});
+    this.popupService.openDeleteTaskForm();
   }
 
 }
