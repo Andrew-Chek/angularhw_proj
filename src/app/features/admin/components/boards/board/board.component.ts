@@ -14,10 +14,9 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  public board:Board = {_id: '', name:'', description: '', created_date: new Date()};
+  public board:Board = {_id: '', name:'', description: '', created_date: ''};
   public tasks:Task[] = [];
   public message$:Observable<Message> = new Observable();
-  public date:string = this.board.created_date.toLocaleDateString();
   public isPressed:boolean = false;
   public adminStateSubscription = new Subscription();
   constructor(private adminService: AdminService, private popupService: PopupService, private router: Router) {

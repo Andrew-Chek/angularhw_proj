@@ -12,7 +12,7 @@ import { Message } from 'src/app/Message';
 export class TasksService {
 
   private apiUrl:string = 'http://localhost:8080/api';
-  public board:Board = {_id:'', name: '', description: '', created_date: new Date()};
+  public board:Board = {_id:'', name: '', description: '', created_date: ''};
   constructor(private http:HttpClient) {
   }
 

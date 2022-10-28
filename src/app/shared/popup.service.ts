@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { PopupState, Store } from '../Store';
+import { Task } from '../Task';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ export class PopupService extends Store<PopupState> {
   public openEditTask:boolean = false;
   public openDeleteTask:Boolean = false;
   public openDelete:boolean = false;
+
+  public sortParams = new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Task, sortOrder: 'asc' | 'desc'}>({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
 
   setDefault()
   {

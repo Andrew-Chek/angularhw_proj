@@ -17,8 +17,8 @@ export class AdminComponent implements OnInit, OnDestroy {
   public message$:Observable<Message> = this.adminService.message$;
   public openMessage: boolean = false;
 
-  public board:Board | undefined = {_id:'', name: '', description: '', created_date: new Date()};
-  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: new Date()};
+  public board:Board | undefined = {_id:'', name: '', description: '', created_date: ''};
+  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: ''};
 
   public openDelete: boolean = false;
 

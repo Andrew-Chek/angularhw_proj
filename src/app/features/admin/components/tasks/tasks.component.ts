@@ -9,16 +9,19 @@ import { Task } from 'src/app/Task';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.scss']
+  styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit, OnDestroy {
 
-  public board: Board = {_id:'', name: '', description: '', created_date: new Date()};
+  public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public tasks$: Observable<Task[]> = new Observable();
   public adminStateSubscription = new Subscription();
   public statuses = ['To do', 'In progress', 'Done'];
+  public propertyName: keyof Task = 'name';
+  public sortFlag = false;
+  public ascOrder: 'asc' | 'desc' = 'asc';
 
-  constructor(private adminService: AdminService, private route:ActivatedRoute, 
+  constructor(private adminService: AdminService,
     private popupService: PopupService) {
   }
 
@@ -28,6 +31,7 @@ export class TasksComponent implements OnInit, OnDestroy {
       if(value.board != undefined)
       {
         this.board = value.board;
+        this.tasks$ = of(value.tasks)
       }
     })
   }

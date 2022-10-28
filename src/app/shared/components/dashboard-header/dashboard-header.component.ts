@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Board } from 'src/app/Board';
+import { Task } from 'src/app/Task';
 import { PopupService } from '../../popup.service';
 
 @Component({
@@ -14,13 +16,36 @@ export class DashboardHeaderComponent implements OnInit {
   }
 
   public headerType:string = ''
+  public propertyName:keyof Board = 'name'
+  public order: 'asc' | 'desc' = 'asc'
 
   @Output()
-  sentDropDownParams = new EventEmitter<string>();
+  sentSortParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
 
-  sortByDropDown()
+  setPropertyName(value: keyof Board)
   {
-    
+    this.propertyName = value;
+    if(this.headerType == 'Dashboard')
+    {
+      this.sentSortParams.emit({propertyName: this.propertyName, order: this.order})
+    }
+    else
+    {
+      this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
+    }
+  }
+
+  setOrder(value:'asc' | 'desc')
+  {
+    this.order = value;
+    if(this.headerType == 'Dashboard')
+    {
+      this.sentSortParams.emit({propertyName: this.propertyName, order: this.order})
+    }
+    else
+    {
+      this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
+    }
   }
 
   @Input()
@@ -35,7 +60,7 @@ export class DashboardHeaderComponent implements OnInit {
 
   openCreateForm()
   {
-    if(this.headerType == 'board')
+    if(this.headerType == 'Dashboard')
     {
       this.popupService.openCreateBoardForm();
     }

@@ -1,6 +1,6 @@
 <article class="taskboard" *ngIf="tasks$">
-    <app-dashboard-header setHeader="task"></app-dashboard-header>
+    <app-dashboard-header setHeader="{{board.name}}"></app-dashboard-header>
     <section class="taskboard-tasks">
-        <app-status-board class="taskboard-status-board" *ngFor="let status of statuses" statusValue="{{status}}" [boardValue]="board"></app-status-board>
+        <app-status-board class="taskboard-status-board" *ngFor="let status of statuses" statusValue="{{status}}" [boardValue]="board" [tasksValue$]="tasks$"></app-status-board>
     </section>
 </article>

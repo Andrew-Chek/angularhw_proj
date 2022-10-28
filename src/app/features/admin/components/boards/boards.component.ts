@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { mergeMap, Observable, of, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
+import { Task } from 'src/app/Task';
 import { PopupService } from 'src/app/shared/popup.service';
 import { AdminService } from '../../admin.service';
 
@@ -20,22 +21,21 @@ export class BoardsComponent implements OnInit, OnDestroy {
 
   public boards$:Observable<Board[]>;
   public adminStateSubscription = new Subscription();
+  public propertyName: keyof Board = 'name';
+  public sortFlag = false;
+  public ascOrder: 'asc' | 'desc' = 'asc';
 
   openCreateForm()
   {
     this.popupService.openCreateBoardForm();
   }
 
-  sortByDropDown()
+  setSortValues(value: {propertyName: keyof Board, order: 'asc' | 'desc'})
   {
-    
+    this.sortFlag = true;
+    this.ascOrder = value.order;
+    this.propertyName = value.propertyName;
   }
-
-  compareDates = (d1: Date, d2: Date):boolean => {
-    let date1 = new Date(d1).getTime();
-    let date2 = new Date(d2).getTime();
-    return date1 > date2;
-  };
 
   ngOnInit(): void {
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {

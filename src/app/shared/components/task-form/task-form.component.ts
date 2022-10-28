@@ -43,7 +43,7 @@ export class TaskFormComponent implements OnInit {
     return this.submitText;
   }
 
-  public task:Task = {_id: '', name: '', description: '', status: 'To do', board_id: '', assigned_to: '', created_date: new Date()};
+  public task:Task = {_id: '', name: '', description: '', status: 'To do', board_id: '', assigned_to: '', created_date: ''};
   
   @Input()
   set setTask(task:Task)

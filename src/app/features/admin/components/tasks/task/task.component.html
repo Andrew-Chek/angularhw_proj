@@ -11,6 +11,6 @@
     </section>
     <section class="task-info">
         <p class="info-desc">{{task.description}}</p>
-        <p class="info-date">{{date}}</p>
+        <p class="info-date">{{task.created_date | date:"dd/MM/yyyy"}}</p>
     </section>
 </article>

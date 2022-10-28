@@ -5,6 +5,7 @@
     padding: 10px 40px;
     .dashboard-add {
         display: flex;
+        align-items: flex-end;
         .dashboard-title {
             font: {
                 size: 24px;
@@ -34,19 +35,48 @@
     }
     .tools {
         display: flex;
-        justify-content: baseline;
         align-items: flex-end;
         &-list {
             display: flex;
-            justify-content: baseline;
             align-items: flex-end;
             &-li {
                 padding: 0 10px;
                 color: var(--gray);
                 transition: .5s all ease;
                 cursor: pointer;
+                display: flex;
+                &-order {
+                    display: flex;
+                    align-items: flex-end;
+                    &-icon {
+                        margin-left: 7px;
+                    }
+                }
+                &-params {
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: .5s ease;
+                    padding: 4px;
+                    border: 1px solid var(--gray);
+                    border-radius: 10px;
+                    position: relative;
+                    bottom: -50px;
+                    left: -60%;
+                    background-color: #fff;
+                }
             }
-            &-li:hover {
+            .sort-tools:hover {
+                .tools-list-li-params {
+                    opacity: 1;
+                    visibility: visible;
+                    z-index: 1;
+                }
+            }
+            .sort-hover {
+                transition: .5s all ease;
+                cursor: pointer;
+            }
+            .sort-hover:hover {
                 color: var(--text-color);
             }
         }

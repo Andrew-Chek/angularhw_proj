@@ -12,8 +12,7 @@ import { AdminService } from '../../../admin.service';
 })
 export class TaskComponent implements OnInit, OnDestroy {
 
-  public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date:new Date()};
-  public date:string = this.task.created_date.toLocaleDateString();
+  public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date:''};
   public isPressed:boolean = false;
 
   constructor(private adminService: AdminService, private popupService: PopupService) { }

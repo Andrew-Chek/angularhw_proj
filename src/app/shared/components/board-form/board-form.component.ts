@@ -12,7 +12,7 @@ import { PopupService } from '../../popup.service';
 export class BoardFormComponent implements OnInit {
 
   constructor(private popupService:PopupService, private adminService: AdminService) { }
-  public board: Board = {_id:'', name: '', description: '', created_date: new Date()};
+  public board: Board = {_id:'', name: '', description: '', created_date: ''};
 
   public visible = false;
 

@@ -22,17 +22,15 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   public taskCount:number = 0;
   public board_id:string = '';
 
-  public boards$:Observable<Board[]>;
+  public boards$:Observable<Board[]> = this.adminService.getBoards();
   public adminStateSubscription = new Subscription();
   constructor(private adminService:AdminService, private popupService:PopupService, private router: Router) {
-    this.boards$ = this.adminService.getBoards();
   }
   ngOnDestroy(): void {
     this.adminStateSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.boards$ = this.adminService.getBoards();
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
       console.log(`we are in board menu: '${value.tasks}'`)
       this.boards$ = of(value.boards);

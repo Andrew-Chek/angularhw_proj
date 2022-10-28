@@ -5,5 +5,5 @@ export interface Task{
     status: string;
     board_id: string;
     assigned_to: string;
-    created_date:Date;
+    created_date:string;
 }
