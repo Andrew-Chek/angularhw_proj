@@ -6,20 +6,31 @@
                 <h2 class="general-title">Login</h2>
                 <p class="general-description description">See your growth and achieve your goals!</p>
             </section>
-            <app-login-form (outResetPassForm)="openResetPopup($event)"></app-login-form>
+            <app-login-form></app-login-form>
             <section class="register">
                 <p class="register-description description">Not registered yet?</p>
                 <app-submit-btn (click)="openRegisterPopup()" class="register-btn" text="Create an Account" [styleFlag]="true"></app-submit-btn>
             </section>
+            <article class="message">
+                <p class="message-info" #message></p>
+            </article>
         </div>
-        <app-custom-form form="Reset Password Form" btnName="Reset password" (sendClose)="sendCloseInfo($event)" class="login-form forget-form" [ngClass]="{open__reset: checkReset}" id="forget" 
-            [fieldValues]="[{fieldText: 'Email', placeholder: 'andrii_chekurda@epam.com'}, 
-                            {fieldText: 'Old password', placeholder: '1234'},
-                            {fieldText: 'New password', placeholder: '1234'}]">
+        <app-custom-form 
+            form="Reset Password Form" 
+            btnName="Reset password"
+            (sentData)="sendRegisterRequest($event)"
+            class="login-form forget-form" 
+            [ngClass]="{open__reset: checkReset}" 
+            id="forget" 
+            [questionValues]="resetQuestions">
         </app-custom-form>
-        <app-custom-form form="Sign Up Form" (sendClose)="sendCloseInfo($event)" btnName="Sign Up" class="login-form register-form" [ngClass]="{open__register: checkRegister}" id="register" 
-        [fieldValues]="[{fieldText: 'Email', placeholder: 'andrii_chekurda@epam.com'}, 
-                        {fieldText: 'Password', placeholder: '1234'}]">
+        <app-custom-form 
+            form="Sign Up Form"
+            btnName="Sign Up" 
+            class="login-form register-form" 
+            [ngClass]="{open__register: checkRegister}" id="register"
+            (sentData)="sendRegisterRequest($event)"
+            [questionValues]="registerQuestions">
         </app-custom-form>
     </section>
     <section class="img-section">

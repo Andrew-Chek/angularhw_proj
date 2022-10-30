@@ -28,17 +28,19 @@
         }
         &-form {
             position: fixed;
-            width: 50%;
-            z-index: 2;
-            background-color: #fff;
-            border-radius: 30px;
+            width: 100vw;
+            height: 100vh;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            top: 0;
+            left: 0;
             transition: .5s;
             text-shadow: var(--text-shadow);
             box-shadow: .3px .5px 4px var(--placeholder-color);
             transform: translate(0, -1000%);
         }
         .open__register, .open__reset {
-            transform: translate(0, -100%);
+            transform: translate(0, 0);
         }
     }
     .register {

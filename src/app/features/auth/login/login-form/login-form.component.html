@@ -1,14 +1,14 @@
 <article class="form">
     <section class="form-item email">
         <label class="form-label" for="email-input">Email<span class="obligatory">*</span></label>
-        <input type="text" class="form-input" id="email-input" placeholder="andrii_chekurda@epam.com">
+        <input type="text" class="form-input" id="email-input" #email placeholder="andrii_chekurda@epam.com">
     </section>
     <section class="form-item password">
         <label class="form-label" for="pass-input">Password<span class="obligatory">*</span></label>
-        <input type="text" class="form-input" id="pass-input" placeholder="Min. 8 characters">
+        <input type="password" class="form-input" id="pass-input" #password placeholder="Min. 8 characters">
     </section>
     <section class="form-item btns">
         <app-submit-btn (click)="openForgetPopup()" class="form-btn" [styleFlag]="true" text="Forget password?"></app-submit-btn>
-        <app-submit-btn text="Sign In" (click)="login()"></app-submit-btn>
+        <app-submit-btn text="Sign In" (click)="login(email.value, password.value)"></app-submit-btn>
     </section>
 </article>

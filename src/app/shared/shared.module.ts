@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { SubmitBtnComponent } from './components/submit-btn/submit-btn.component';
-import { FormFieldComponent } from './components/form-field/form-field.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
@@ -17,14 +16,13 @@ import { DashboardHeaderComponent } from './components/dashboard-header/dashboar
 @NgModule({
   declarations: [
     SubmitBtnComponent,
-    FormFieldComponent,
     CustomFormComponent,
     AdminHeaderComponent,
     BoardFormComponent,
     MessageComponent,
     TaskFormComponent,
     ApproveFormComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +31,6 @@ import { DashboardHeaderComponent } from './components/dashboard-header/dashboar
   ],
   exports: [
     SubmitBtnComponent,
-    FormFieldComponent,
     CustomFormComponent,
     AdminHeaderComponent,
     BoardFormComponent,

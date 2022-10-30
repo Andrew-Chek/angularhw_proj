@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { map, merge, mergeMap, Observable, of, Subscription, take } from 'rxjs';
+import { Observable, Subscription} from 'rxjs';
 import { Board } from 'src/app/Board';
 import { Task } from 'src/app/Task';
 import { Message } from 'src/app/Message';

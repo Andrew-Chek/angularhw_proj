@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { map } from 'rxjs';
+import { QuestionBase } from 'src/app/shared/services/question-control/question-base';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,34 +12,76 @@ export class LoginComponent implements OnInit {
 
   public checkRegister:boolean = false;
   public checkReset:boolean = false;
+  @ViewChild('message') message!: ElementRef;
+
+  public registerQuestions : QuestionBase<string>[] = [
+    new QuestionBase<string>({
+      key: 'emailValue',
+      label: 'Email',
+      value: '',
+      required: true,
+      order: 1,
+      placeholder: 'andrii_chekurda@epam.com',
+      type: 'text',
+    }), 
+    new QuestionBase<string>({
+        key: 'passwordValue',
+        label: 'Password',
+        value: '',
+        required: true,
+        order: 2,
+        placeholder: '1234',
+        type: 'password',
+    })]
+
+  public resetQuestions : QuestionBase<string>[] = [
+    new QuestionBase<string>({
+      key: 'resetEmail',
+      label: 'Email for reseting password',
+      value: '',
+      required: true,
+      order: 1,
+      placeholder: 'andrii_chekurda@epam.com',
+      type: 'text',
+    })]
   
-  constructor(
-    private authService: AuthService,
-  ) 
+  constructor(private authService: AuthService) 
   {
     this.checkRegister = this.authService.registerFlag;
     this.checkReset = this.authService.resetFlag;
   }
   ngOnInit(): void {
+    this.authService.openSubject.subscribe(value => {
+      this.checkRegister = value.register;
+      this.checkReset = value.reset;
+    })
   }
 
   openRegisterPopup()
   {
-    this.checkRegister = this.authService.setRegisterFlag();
+    this.authService.setRegisterFlag();
   }
-  openResetPopup(checkReset:boolean)
+
+  openResetPopup()
   {
-    this.checkReset = checkReset;
+    this.authService.setResetFlag();
   }
-  sendCloseInfo(formName: string)
+
+  sendRegisterRequest(user: {email: string, password: string, newPassword: string})
   {
-    if(formName == 'Sign Up Form')
-    {
-      this.checkRegister = this.authService.setRegisterFlag();
-    }
-    else if(formName == 'Reset Password Form')
-    {
-      this.checkReset = this.authService.setResetFlag();
-    }
+    this.authService.register(user)
+    .pipe(
+      map(value => {
+      this.message.nativeElement.innerText = value.message
+    })).subscribe()
+  }
+
+  sendResetRequest(user: {email: string, password: string, newPassword: string})
+  {
+    this.authService.forget(user)
+    .pipe(
+      map(value => {
+      this.message.nativeElement.innerText = value.message
+    })).subscribe()
   }
 }

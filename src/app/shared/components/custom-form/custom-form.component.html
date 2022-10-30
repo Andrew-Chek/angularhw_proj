@@ -1,10 +1,11 @@
-<form class="custom">
+<form class="custom" [ngClass]="{'custom-center': isOpened}" [formGroup]="customForm">
     <section class="custom-header">
         <h2 class="custom-title">{{formName}}</h2>
         <mat-icon class="custom-icon icon" (click)="closePopup()">close</mat-icon>
     </section>
-    <article class="custom-field" *ngFor="let field of fields">
-        <app-form-field class="field-info" text="{{field.fieldText}}" inpPlaceholder="{{field.placeholder}}"></app-form-field>
+    <article class="custom-field" *ngFor="let question of questions">
+        <label class="custom-label" [attr.for]="question.key">{{question.label}}</label>
+        <input class="custom-input" #fieldName [formControlName]="question.key" [id]="question.key" [type]="question.type">
     </article>
-    <app-submit-btn text="{{buttonName}}" class="custom-submit"></app-submit-btn>
+    <app-submit-btn text="{{buttonName}}" (btnClick)="sendData()" class="custom-submit"></app-submit-btn>
 </form>

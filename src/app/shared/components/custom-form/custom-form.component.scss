@@ -1,10 +1,29 @@
+@import 'src/styles/mixins';
 .custom {
+    width: 400px;
+    background-color: #fff;
+    transition: .5s all ease;
+    border-radius: 30px;
     &-field {
         display: flex;
         align-items: flex-start;
-        .field-info {
-            width: 100%;
-            margin: 15px 20px;
+        flex-direction: column;
+        width: 100%;
+        margin: 15px 20px;
+        .custom-label {
+            -webkit-text-stroke-width: .5px;
+            text-align: start;
+            padding-bottom: 15px;
+            .obligatory {
+                color: var(--obligatory-color);
+            }
+        }
+        .custom-input {
+            width: 90%;
+            @include --btn-params;
+        }
+        .custom-input::placeholder {
+            color: var(--placeholder-color);
         }
     }
     &-header {
@@ -28,4 +47,9 @@
     &-submit {
         padding: 10px 30px;
     }
+}
+.custom-center {
+    position: fixed;
+    top: 40%;
+    left: 30%;
 }
