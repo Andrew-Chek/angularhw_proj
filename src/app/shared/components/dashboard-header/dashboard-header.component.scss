@@ -65,6 +65,15 @@
                     background-color: #fff;
                 }
             }
+            .filter {
+                padding: 5px 15px;
+                border-radius: 12px;
+                border: .5px solid var(--gray);
+                cursor:text;
+            }
+            .filter::placeholder{
+                color: var(--gray)
+            }
             .sort-tools:hover {
                 .tools-list-li-params {
                     opacity: 1;

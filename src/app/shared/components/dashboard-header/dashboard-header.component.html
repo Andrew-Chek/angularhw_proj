@@ -8,7 +8,7 @@
     </div>
     <aside class="dashboard-tools tools">
         <ul class="tools-list">
-            <li class="tools-list-li">Filter</li>
+            <input class="tools-list-li filter" type="text" placeholder="Filter me" #filterInput (change)="sendFilterData(filterInput.value)">
             <li class="tools-list-li sort-tools">
                 <section class="tools-list-li-order">
                     <p class="tools-list-li-order-pgh">Sort by</p>

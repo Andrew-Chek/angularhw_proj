@@ -5,6 +5,7 @@ import { Task } from 'src/app/Task';
 import { Message } from 'src/app/Message';
 import { AdminService } from './admin.service';
 import { PopupService } from 'src/app/shared/popup.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-admin',
@@ -15,6 +16,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   
   public message$:Observable<Message> = this.adminService.message$;
   public openMessage: boolean = false;
+  protected username: string;
 
   public board:Board | undefined = {_id:'', name: '', description: '', created_date: ''};
   public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
@@ -33,6 +35,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(private adminService: AdminService, private popupService: PopupService) {
     this.popupService.setDefault();
+    const token = window.localStorage.getItem('jwt_token')!
+    const value = jwt_decode<{_id: string, email: string, created_date: string}>(token)
+    this.username = value.email;
    }
 
   ngOnInit(): void {

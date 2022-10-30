@@ -44,4 +44,22 @@ export class TasksComponent implements OnInit, OnDestroy {
   {
     this.popupService.openCreateTaskForm();
   }
+
+  filterTasks(value: string)
+  {
+    if(value == '')
+    {
+      this.tasks$ = this.adminService.tasks$;
+    }
+    else
+    {
+      this.tasks$ = this.tasks$.pipe(
+        mergeMap(tasks => {
+          const filteredArray = tasks.filter(function(task) {
+            return task.name.includes(value)
+          });
+          return of(filteredArray);
+      }))
+    }
+  }
 }

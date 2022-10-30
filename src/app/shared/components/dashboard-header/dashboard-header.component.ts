@@ -19,8 +19,8 @@ export class DashboardHeaderComponent implements OnInit {
   public propertyName:keyof Board = 'name'
   public order: 'asc' | 'desc' = 'asc'
 
-  @Output()
-  sentSortParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
+  @Output() sentSortParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
+  @Output() sentFilterData = new EventEmitter<string>();
 
   setPropertyName(value: keyof Board)
   {
@@ -33,6 +33,11 @@ export class DashboardHeaderComponent implements OnInit {
     {
       this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
     }
+  }
+
+  sendFilterData(value: string)
+  {
+    this.sentFilterData.emit(value);
   }
 
   setOrder(value:'asc' | 'desc')

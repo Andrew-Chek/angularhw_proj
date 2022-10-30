@@ -1,5 +1,5 @@
 <article class="dashboard">
-    <app-dashboard-header setHeader="Dashboard" (sentSortParams)="setSortValues($event)"></app-dashboard-header>
+    <app-dashboard-header setHeader="Dashboard" (sentFilterData)="filterBoards($event)" (sentSortParams)="setSortValues($event)"></app-dashboard-header>
     <section class="dashboard-boards">
         <app-board class="dashboard-board" 
             *ngFor="let board of (sortFlag ? (boards$ | async | sortBy: ascOrder : propertyName) : (boards$ | async))" [boardValue]="board">

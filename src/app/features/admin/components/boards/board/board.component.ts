@@ -57,7 +57,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       console.log(value)
       setTimeout(() => {
         this.router.navigate(['admin/board', this.board._id])
-      }, 100)
+      }, 150)
     })
   }
 
