@@ -67,6 +67,8 @@ export class BoardFormComponent implements OnInit {
     }
     this.board.name = '';
     this.board.description = '';
+    this.boardForm.controls['name'].setErrors(null);
+    this.boardForm.controls['description'].setErrors(null);
   }
 
   sendForm()
@@ -83,6 +85,8 @@ export class BoardFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.state$.subscribe((value) => {
+      this.boardForm.controls['name'].setErrors(null);
+      this.boardForm.controls['description'].setErrors(null);
       if(value.board != undefined)
       {
         this.board = value.board

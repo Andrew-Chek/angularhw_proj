@@ -18,7 +18,7 @@ export class AdminService extends Store<DashboardState> {
       boards: [],
       tasks: [],
       board: {_id: '', name: '', description: '', created_date: ''},
-      task: {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: ''}
+      task: {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''}
     })
   }
 

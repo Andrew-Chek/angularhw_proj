@@ -66,7 +66,7 @@ export class TasksService {
   {
     return this.http.put<Task>(
       `${this.apiUrl}/tasks/${task._id}`, 
-      {name: task.name, description: task.description, status: task.status},
+      {name: task.name, description: task.description, status: task.status, isArchived: task.isArchived},
       {
         headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
     })

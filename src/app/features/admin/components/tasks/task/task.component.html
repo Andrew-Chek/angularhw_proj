@@ -1,4 +1,4 @@
-<article class="task">
+<article class="task" [ngClass]="{archive: task.isArchived}">
     <section class="task-general">
         <h3 class="general__name">{{task.name}}</h3>
         <div class="task-more more">
@@ -6,6 +6,8 @@
             <div class="more-list" [ngClass]="{visible: isPressed}">
                 <p class="more-list-item" (click)="openEditTaskForm()">Edit</p>
                 <p class="more-list-item" (click)="openDeleteTaskForm()">Delete</p>
+                <p class="more-list-item" *ngIf="!task.isArchived" (click)="archiveTask()">Archive</p>
+                <p class="more-list-item" *ngIf="task.isArchived" (click)="archiveTask()">Dearchive</p>
             </div>
         </div>
     </section>

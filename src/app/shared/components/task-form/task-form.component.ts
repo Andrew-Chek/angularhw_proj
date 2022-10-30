@@ -43,7 +43,7 @@ export class TaskFormComponent implements OnInit {
     return this.submitText;
   }
 
-  public task:Task = {_id: '', name: '', description: '', status: 'To do', board_id: '', assigned_to: '', created_date: ''};
+  public task:Task = {_id: '', name: '', description: '', status: 'To do', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
   
   @Input()
   set setTask(task:Task)
@@ -75,6 +75,9 @@ export class TaskFormComponent implements OnInit {
     this.task.name = '';
     this.task.description = '';
     this.task.status = '';
+    this.taskForm.controls['name'].setErrors(null);
+    this.taskForm.controls['description'].setErrors(null);
+    this.taskForm.controls['status'].setErrors(null);
   }
 
   sendForm()
@@ -101,6 +104,9 @@ export class TaskFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.state$.subscribe(value => {
+      this.taskForm.controls['name'].setErrors(null);
+      this.taskForm.controls['description'].setErrors(null);
+      this.taskForm.controls['status'].setErrors(null);
       this.task = value.task;
     })
     this.readonlyFlag = (this.submitText == 'Edit Task');

@@ -76,3 +76,14 @@
         transform: translate(0, 0);
     }
 }
+.archive {
+    opacity: .5;
+    .task-general {
+        .general__name {
+            text-decoration: line-through;
+        }
+    }
+    .task-info {
+        text-decoration: line-through;
+    }
+}

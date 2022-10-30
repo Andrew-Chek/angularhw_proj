@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   public openMessage: boolean = false;
 
   public board:Board | undefined = {_id:'', name: '', description: '', created_date: ''};
-  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: ''};
+  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
 
   public openDelete: boolean = false;
 
@@ -89,12 +89,14 @@ export class AdminComponent implements OnInit, OnDestroy {
   {
     this.adminService.deleteBoard(this.board);
     this.popupService.openDeleteBoardForm()
+    this.adminService.setCurrentBoard({_id:'', name: '', description: '', created_date: ''})
   }
 
   deleteTask()
   {
     this.adminService.deleteTask(this.task);
     this.popupService.openDeleteTaskForm()
+    this.adminService.setCurrentTask({_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''});
   }
 
   deleteItem()

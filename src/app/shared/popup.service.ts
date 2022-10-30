@@ -18,11 +18,30 @@ export class PopupService extends Store<PopupState> {
   public openDelete:boolean = false;
 
   public sortParams = new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Task, sortOrder: 'asc' | 'desc'}>({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
+  public statusColors = new BehaviorSubject({color1: '#ffffff', color2: '#ffffff', color3: '#ffffff'});
 
   setDefault()
   {
     this.setState({openCreateBoard: false, openCreateTask: false, openEditBoard: false, 
       openDeleteTask: false, openDeleteBoard: false, openEditTask: false, openDelete: false});
+  }
+
+  setColor(color: string, order: number)
+  {
+    const value = this.statusColors.getValue();
+    if(order == 0)
+    {
+      value.color1 = color;
+    }
+    else if(order == 1)
+    {
+      value.color2 = color;
+    }
+    else
+    {
+      value.color3 = color;
+    }
+    this.statusColors.next(value);
   }
 
   openCreateBoardForm() {

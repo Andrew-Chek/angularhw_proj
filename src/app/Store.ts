@@ -28,7 +28,7 @@ export class DashboardState {
     tasks: Task[] = [];
 
     board: Board | undefined = {_id: '', name: '', description: '', created_date: ''};
-    task: Task = {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', created_date: ''};
+    task: Task = {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
 }
 
 export class PopupState {

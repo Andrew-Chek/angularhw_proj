@@ -16,7 +16,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public tasks$: Observable<Task[]> = new Observable();
   public adminStateSubscription = new Subscription();
-  public statuses = ['To do', 'In progress', 'Done'];
+  public statuses = [{value: 'To do', color: '#ffffff'}, {value: 'In progress', color: '#ffffff'}, {value: 'Done', color: '#ffffff'}];
   public propertyName: keyof Task = 'name';
   public sortFlag = false;
   public ascOrder: 'asc' | 'desc' = 'asc';

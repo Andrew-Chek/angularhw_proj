@@ -53,9 +53,11 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
       }),
       concatMap((value) => {
         return of("Succesfully set")
-    }), take(1)).subscribe(value => {
+    })).subscribe(value => {
       console.log(value)
-      this.router.navigate(['admin/board', board._id])
+      setTimeout(() => {
+        this.router.navigate(['admin/board', board._id])
+      }, 100)
     })
   }
 
@@ -67,6 +69,7 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
 
   openCreateForm()
   {
+    this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
     this.popupService.openCreateBoardForm();
   }
 

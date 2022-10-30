@@ -1,6 +1,4 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { map, of, Subscription, take } from 'rxjs';
-import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/popup.service';
 import { Task } from 'src/app/Task';
 import { AdminService } from '../../../admin.service';
@@ -12,7 +10,7 @@ import { AdminService } from '../../../admin.service';
 })
 export class TaskComponent implements OnInit, OnDestroy {
 
-  public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date:''};
+  public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', isArchived: false, created_date:''};
   public isPressed:boolean = false;
 
   constructor(private adminService: AdminService, private popupService: PopupService) { }
@@ -50,4 +48,9 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.popupService.openDeleteTaskForm();
   }
 
+  archiveTask() {
+    const task = {...this.task};
+    task.isArchived = !this.task.isArchived;
+    this.adminService.updateTask(task);
+  }
 }

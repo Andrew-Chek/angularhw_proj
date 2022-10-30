@@ -27,6 +27,7 @@ export class BoardsComponent implements OnInit, OnDestroy {
 
   openCreateForm()
   {
+    this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
     this.popupService.openCreateBoardForm();
   }
 

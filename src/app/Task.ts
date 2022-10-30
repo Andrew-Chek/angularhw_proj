@@ -6,4 +6,5 @@ export interface Task{
     board_id: string;
     assigned_to: string;
     created_date:string;
+    isArchived: boolean;
 }

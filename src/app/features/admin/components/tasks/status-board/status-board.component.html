@@ -1,6 +1,6 @@
-<article class="status-board">
+<article class="status-board" #statusBoard [ngStyle]="{'background-color': status.color}">
     <section class="status-board-header">
-        <h2 class="status-board-title">{{status}}</h2>
+        <h2 class="status-board-title">{{status.value}}</h2>
         <div class="status-board-add" (click)="openCreateTaskForm()">
             <mat-icon class="add-icon">add_circle_outline</mat-icon>
             <p class="add-name">Add New</p>
@@ -8,5 +8,9 @@
     </section>
     <section class="status-board-main">
         <app-task class="status-board-task" *ngFor="let task of tasks$ | async" [taskValue]="task"></app-task>
+    </section>
+    <section class="status-board-color">
+        <label for="color-inp">Change color:</label>
+        <input type="color" value="#ffffff" #color (change)="setColor(color.value)">
     </section>
 </article>

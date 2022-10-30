@@ -1,5 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { mergeMap, of, Observable, map, Subscription, take, firstValueFrom } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/popup.service';
@@ -18,10 +17,10 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
   public tasks$: Observable<Task[]> = this.adminService.tasks$
   .pipe(
     map(tasks => {
-    return tasks.filter(task => task.status === this.status)
+    return tasks.filter(task => task.status === this.status.value)
   }));
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
-  public status: string = '';
+  public status!: {value: string, color: string};
   public adminStateSubscription = new Subscription();
 
   constructor(private adminService:AdminService, private popupService: PopupService,
@@ -29,7 +28,7 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  set statusValue(status:string)
+  set statusValue(status:{value: string, color: string})
   {
     this.status = status;
   }
@@ -53,7 +52,7 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
   {
     this.tasks$ = tasks$.pipe(
       map(tasks => {
-      return tasks.filter(task => task.status === this.status)
+      return tasks.filter(task => task.status === this.status.value)
     }));
   }
   get tasksValue$()
@@ -61,9 +60,15 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
     return this.tasks$;
   }
 
-  async openCreateTaskForm()
+  setColor(color: string)
   {
-    this.adminService.setCurrentTask({_id: '', name: '', description: '', status: this.status, assigned_to: '', board_id: '', created_date: ''})
+    const order = this.status.value == 'To do' ? 0 : this.status.value == 'In progress' ? 1 : 2;
+    this.popupService.setColor(color, order)
+  }
+
+  openCreateTaskForm()
+  {
+    this.adminService.setCurrentTask({_id: '', name: '', description: '', status: this.status.value, assigned_to: '', board_id: '', isArchived: false, created_date: ''})
     this.popupService.openCreateTaskForm();
   }
 
@@ -77,6 +82,19 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
             return filteredTasks != null ? filteredTasks : tasks;
           })
         )
+      }
+    })
+    this.popupService.statusColors.subscribe(value => {
+      if(this.status.value == 'To do')
+      {
+        this.status.color = value.color1
+      }
+      else if(this.status.value == 'In progress')
+      {
+        this.status.color = value.color2;
+      }
+      else {
+        this.status.color = value.color3;
       }
     })
   }

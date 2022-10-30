@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'admin', component: AdminComponent,
     loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
-    canLoad: [AuthGuard]
+    // canLoad: [AuthGuard]
   },
   { 
     path: '', component: HomeComponent,
