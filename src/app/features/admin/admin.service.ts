@@ -6,7 +6,7 @@ import { Message } from 'src/app/Message';
 import { DashboardState, Store } from 'src/app/Store';
 import { Task } from 'src/app/Task';
 import { BoardsService } from './components/boards/boards.service';
-import { TasksService } from './components/tasks/tasks.service';
+import { TasksService } from './components/tasks/services/tasksService/tasks.service';
 
 @Injectable({
   providedIn: 'root'
@@ -121,15 +121,19 @@ export class AdminService extends Store<DashboardState> {
 
   getTask(id: string)
   {
-    let task;
-    this.taskApi.getTask(id).subscribe((value => {
+    this.taskApi.getTask(id)
+    .subscribe((value => {
       this.setState({
         ...this.state,
         task: value
       });
-      task = value;
     }))
-    return task;
+    return this.task$
+  }
+
+  getTaskValue(id: string)
+  {
+    return this.taskApi.getTask(id)
   }
 
   createTask(task:Task)

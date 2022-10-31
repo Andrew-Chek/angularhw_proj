@@ -6,8 +6,8 @@
             <p class="add-name">Add New</p>
         </div>
     </section>
-    <section class="status-board-main">
-        <app-task class="status-board-task" *ngFor="let task of tasks$ | async" [taskValue]="task"></app-task>
+    <section class="status-board-main" #boardMain>
+        <app-task class="status-board-task" draggable="true" #taskItem *ngFor="let task of tasks$ | async" [taskValue]="task"></app-task>
     </section>
     <section class="status-board-color">
         <label for="color-inp">Change color:</label>

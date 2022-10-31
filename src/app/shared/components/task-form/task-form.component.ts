@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { firstValueFrom, lastValueFrom, map, take, tap } from 'rxjs';
-import { Board } from 'src/app/Board';
+import { tap } from 'rxjs';
 import { AdminService } from 'src/app/features/admin/admin.service';
-import { TasksService } from 'src/app/features/admin/components/tasks/tasks.service';
 import { Task } from 'src/app/Task';
 import { PopupService } from '../../popup.service';
 

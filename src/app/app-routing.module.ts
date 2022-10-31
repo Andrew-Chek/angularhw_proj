@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
 import { AuthGuard } from './features/auth/auth.guard';
 import { AdminComponent } from './features/admin/admin.component';
 
@@ -14,8 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
     // canLoad: [AuthGuard]
   },
-  { 
-    path: '', component: HomeComponent,
+  {
+    path: '', 
+    pathMatch: 'full',
+    redirectTo: '/admin',
   }
 ];
 

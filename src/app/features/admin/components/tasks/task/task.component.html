@@ -1,6 +1,6 @@
-<article class="task" [ngClass]="{archive: task.isArchived}">
+<article class="task" appDragAndDrop [ngClass]="{archive: task.isArchived}">
     <section class="task-general">
-        <h3 class="general__name">{{task.name}}</h3>
+        <h3 class="general__name" id="{{task._id}}">{{task.name}}</h3>
         <div class="task-more more">
             <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
             <div class="more-list" [ngClass]="{visible: isPressed}">

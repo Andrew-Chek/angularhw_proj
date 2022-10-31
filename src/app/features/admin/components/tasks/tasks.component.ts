@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { concatMap, map, mergeMap, Observable, of, Subscription, take, tap } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChildren, ElementRef, QueryList, AfterViewInit } from '@angular/core';
+import { mergeMap, Observable, of, Subscription} from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/popup.service';
 import { AdminService } from '../../admin.service';
@@ -11,7 +10,7 @@ import { Task } from 'src/app/Task';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
-export class TasksComponent implements OnInit, OnDestroy {
+export class TasksComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public tasks$: Observable<Task[]> = new Observable();
@@ -20,6 +19,7 @@ export class TasksComponent implements OnInit, OnDestroy {
   public propertyName: keyof Task = 'name';
   public sortFlag = false;
   public ascOrder: 'asc' | 'desc' = 'asc';
+  @ViewChildren('statusBoard') statusBoards!: QueryList<ElementRef>
 
   constructor(private adminService: AdminService,
     private popupService: PopupService) {
@@ -34,6 +34,11 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.tasks$ = of(value.tasks)
       }
     })
+  }
+
+  ngAfterViewInit()
+  {
+    // this.dragDropService.addDragAndDropEvents();
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, Output, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren, AfterViewInit} from '@angular/core';
 import { mergeMap, of, Observable, map, Subscription, take, firstValueFrom } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/popup.service';
@@ -12,7 +12,7 @@ import { SortByPipe } from '../../../pipes/sort-by.pipe';
   styleUrls: ['./status-board.component.scss'],
   providers: [SortByPipe]
 })
-export class StatusBoardComponent implements OnInit, OnDestroy {
+export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public tasks$: Observable<Task[]> = this.adminService.tasks$
   .pipe(
@@ -21,6 +21,9 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
   }));
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public status!: {value: string, color: string};
+  @ViewChildren('taskItem') taskItems!: QueryList<ElementRef> 
+  @ViewChild('boardMain') boardMain!: ElementRef<StatusBoardComponent>;
+  @Output() sentTaskItems: EventEmitter<QueryList<ElementRef>> = new EventEmitter();
   public adminStateSubscription = new Subscription();
 
   constructor(private adminService:AdminService, private popupService: PopupService,
@@ -97,6 +100,12 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
         this.status.color = value.color3;
       }
     })
+  }
+  ngAfterViewInit(): void {
+    // this.taskItems.changes.subscribe(() => {
+    //   this.dragDropService.items = this.taskItems;
+    //   this.dragDropService.addDragAndDropEvents();
+    // })
   }
 
   ngOnDestroy()

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, mergeMap, Observable, of } from 'rxjs';
 import { Task } from 'src/app/Task';
 import { Board } from 'src/app/Board';
-import { TaskObject, TasksObject } from '../../admin.service';
+import { TaskObject, TasksObject } from '../../../../admin.service';
 import { HttpClient } from '@angular/common/http';
 import { Message } from 'src/app/Message';
 

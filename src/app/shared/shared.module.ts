@@ -10,6 +10,8 @@ import { MessageComponent } from './components/message/message.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ApproveFormComponent } from './components/approve-form/approve-form.component';
 import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 
 
@@ -23,6 +25,8 @@ import { DashboardHeaderComponent } from './components/dashboard-header/dashboar
     TaskFormComponent,
     ApproveFormComponent,
     DashboardHeaderComponent,
+    PageNotFoundComponent,
+    DragAndDropDirective,
   ],
   imports: [
     CommonModule,
@@ -37,7 +41,8 @@ import { DashboardHeaderComponent } from './components/dashboard-header/dashboar
     MessageComponent,
     TaskFormComponent,
     ApproveFormComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
+    DragAndDropDirective
   ]
 })
 export class SharedModule implements NgModule { }
