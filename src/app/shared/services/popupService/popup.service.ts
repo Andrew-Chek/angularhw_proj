@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PopupState, Store } from '../Store';
-import { Task } from '../Task';
+import { PopupState, Store } from '../../../Store';
+import { Task } from '../../../Task';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService extends Store<PopupState> {
 
-  public openCreateBoard: boolean = false;
-  public openEditBoard:boolean = false;
-  public openDeleteBoard:boolean = false;
+  private openCreateBoard: boolean = false;
+  private openEditBoard:boolean = false;
+  private openDeleteBoard:boolean = false;
 
-  public openCreateTask:boolean = false;
-  public openEditTask:boolean = false;
-  public openDeleteTask:Boolean = false;
-  public openDelete:boolean = false;
+  private openCreateTask:boolean = false;
+  private openEditTask:boolean = false;
+  private openDeleteTask:Boolean = false;
+  private openDelete:boolean = false;
+  private isDraged = false;
 
   public sortParams = new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Task, sortOrder: 'asc' | 'desc'}>({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
   public statusColors = new BehaviorSubject({color1: '#ffffff', color2: '#ffffff', color3: '#ffffff'});
@@ -23,7 +24,7 @@ export class PopupService extends Store<PopupState> {
   setDefault()
   {
     this.setState({openCreateBoard: false, openCreateTask: false, openEditBoard: false, 
-      openDeleteTask: false, openDeleteBoard: false, openEditTask: false, openDelete: false});
+      openDeleteTask: false, openDeleteBoard: false, openEditTask: false, openDelete: false, isDraged: false});
   }
 
   setColor(color: string, order: number)
@@ -106,5 +107,14 @@ export class PopupService extends Store<PopupState> {
     {
       this.openDeleteTaskForm();
     }
+  }
+
+  setDragState()
+  {
+    this.setState({
+      ...this.state,
+      isDraged: !this.isDraged
+    });
+    this.isDraged = !this.isDraged;
   }
 }

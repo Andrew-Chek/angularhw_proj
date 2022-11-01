@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChildren, ElementRef, QueryList, AfterViewInit } from '@angular/core';
 import { mergeMap, Observable, of, Subscription} from 'rxjs';
 import { Board } from 'src/app/Board';
-import { PopupService } from 'src/app/shared/popup.service';
+import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
 import { Task } from 'src/app/Task';
 

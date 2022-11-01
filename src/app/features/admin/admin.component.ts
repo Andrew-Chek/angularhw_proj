@@ -4,7 +4,7 @@ import { Board } from 'src/app/Board';
 import { Task } from 'src/app/Task';
 import { Message } from 'src/app/Message';
 import { AdminService } from './admin.service';
-import { PopupService } from 'src/app/shared/popup.service';
+import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({

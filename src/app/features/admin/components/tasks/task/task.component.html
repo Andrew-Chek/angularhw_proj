@@ -1,14 +1,17 @@
-<article class="task" appDragAndDrop [ngClass]="{archive: task.isArchived}">
+<article class="task" [ngClass]="{archive: task.isArchived}">
     <section class="task-general">
-        <h3 class="general__name" id="{{task._id}}">{{task.name}}</h3>
+        <h3 class="general__name">{{task.name}}</h3>
         <div class="task-more more">
-            <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
-            <div class="more-list" [ngClass]="{visible: isPressed}">
-                <p class="more-list-item" (click)="openEditTaskForm()">Edit</p>
-                <p class="more-list-item" (click)="openDeleteTaskForm()">Delete</p>
-                <p class="more-list-item" *ngIf="!task.isArchived" (click)="archiveTask()">Archive</p>
-                <p class="more-list-item" *ngIf="task.isArchived" (click)="archiveTask()">Dearchive</p>
-            </div>
+            <section class="more-btns">
+                <mat-icon class="more-drag">open_with</mat-icon>
+                <mat-icon class="more-icon" (click)="openMore()">more_horiz</mat-icon>
+            </section>
+            <section class="more-list" [ngClass]="{visible: isPressed}">
+                <mat-icon class="more-list-item" title="Edit task" (click)="openEditTaskForm()">edit</mat-icon>
+                <mat-icon class="more-list-item" title="Delete task" (click)="openDeleteTaskForm()">delete</mat-icon>
+                <mat-icon class="more-list-item" title="Archive task" *ngIf="!task.isArchived" (click)="archiveTask()">archive</mat-icon>
+                <mat-icon class="more-list-item" title="Unarchive task" *ngIf="task.isArchived" (click)="archiveTask()">unarchive</mat-icon>
+            </section>
         </div>
     </section>
     <section class="task-info">

@@ -2,6 +2,7 @@ import { AfterViewInit, Directive, ElementRef, OnDestroy, OnInit } from '@angula
 import { fromEvent, map, mergeMap, Observable, of, Subscription, switchMap, take, takeUntil } from 'rxjs';
 import { AdminService } from 'src/app/features/admin/admin.service';
 import { Task } from 'src/app/Task';
+import { PopupService } from '../services/popupService/popup.service';
 
 @Directive({
   selector: "[appDragAndDrop]",
@@ -12,56 +13,61 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private elementRef: ElementRef, private adminService: AdminService
-  ) {}
+  constructor(private elementRef: ElementRef, 
+    private adminService: AdminService, private popupService: PopupService) {}
 
   ngOnInit(): void {
     this.element = this.elementRef.nativeElement as HTMLElement;
   }
 
   ngAfterViewInit(): void {
-    const element = this.elementRef.nativeElement.children[0].children[0] as HTMLElement
-    const id = element.getAttribute('id')
-    if(id != null)
-    {
-      this.task$ = this.adminService.getTaskValue(id)
-      this.initDrag();
-    }
+    const element = this.elementRef.nativeElement as HTMLElement
+    const id = element.getAttribute('data-task-id')!
+    const name = element.getAttribute('data-task-name')!
+    const description = element.getAttribute('data-task-description')!
+    const status = element.getAttribute('data-task-status')!
+    const assigned_to = element.getAttribute('data-task-assigned_to')!
+    const created_date = element.getAttribute('data-task-created_date')!
+    const board_id = element.getAttribute('data-task-board_id')!
+    const isArchived = element.getAttribute('data-task-archived')! == 'true'
+    const task: Task = {_id: id, name, description, status, assigned_to, board_id, created_date, isArchived}
+    this.task$ = of(task)
+    this.initDrag();
   }
 
   initDrag(): void {
     // 1
-    const dragStart$ = fromEvent<MouseEvent>(this.element, "mousedown");
+    const dragIcon = this.element.children[0].children[0].children[1].children[0].children[0];
+    const dragStart$ = fromEvent<MouseEvent>(dragIcon, "mousedown");
     const dragEnd$ = fromEvent<MouseEvent>(document, "mouseup")
     .pipe(
       switchMap(event => {
-      console.log('hello from drag end')
-      if(event.clientX > todoWidth.leftX && event.clientX < todoWidth.rightX)
-      {
-        this.task$.subscribe(task => {
-          task.status = 'To do'
-          this.adminService.updateTask({...task});
-        })
-      }
-      else if(event.clientX > inProgressWidth.leftX && event.clientX < inProgressWidth.rightX)
-      {
-        this.task$.subscribe(task => {
-          task.status = 'In progress'
-          this.adminService.updateTask({...task});
-        })
-      }
-      else if(event.clientX > doneWidth.leftX && event.clientX < doneWidth.rightX)
-      {
-        this.task$.subscribe(task => {
-          task.status = 'Done'
-          this.adminService.updateTask({...task});
-        })
-      }
-      initialX = 0;
-      initialY = 0;
-      this.element.classList.remove('free-dragging');
-      return of(event);
+        if(event.clientX > todoWidth.leftX && event.clientX < todoWidth.rightX)
+        {
+          this.task$.subscribe(task => {
+            task.status = 'To do'
+            this.adminService.updateTask({...task});
+          })
+        }
+        else if(event.clientX > inProgressWidth.leftX && event.clientX < inProgressWidth.rightX)
+        {
+          this.task$.subscribe(task => {
+            task.status = 'In progress'
+            this.adminService.updateTask({...task});
+          })
+        }
+        else if(event.clientX > doneWidth.leftX && event.clientX < doneWidth.rightX)
+        {
+          this.task$.subscribe(task => {
+            task.status = 'Done'
+            this.adminService.updateTask({...task});
+          })
+        }
+        initialX = 0;
+        initialY = 0;
+        this.popupService.setDragState();
+        this.element.children[0].classList.remove('dragItem');
+        return of(event);
     }))
     const drag$ = fromEvent<MouseEvent>(document, "mousemove").pipe(
       takeUntil(dragEnd$)
@@ -85,10 +91,10 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
     // 3
     const dragStartSub = dragStart$.pipe(
       switchMap(event => {
-        console.log('drag started')
+        this.popupService.setDragState();
         initialX = event.clientX - currentX;
         initialY = event.clientY - currentY;
-        this.element.classList.add('free-dragging');
+        this.element.children[0].classList.add('dragItem');
         return drag$;
       }))
     .subscribe((event: MouseEvent) => {

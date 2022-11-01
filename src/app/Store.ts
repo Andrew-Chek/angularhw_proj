@@ -23,22 +23,23 @@ export class Store<T> {
     }
 }
 
-export class DashboardState {
-    boards: Board[] = [];
-    tasks: Task[] = [];
+export interface DashboardState {
+    boards: Board[]
+    tasks: Task[]
 
-    board: Board | undefined = {_id: '', name: '', description: '', created_date: ''};
-    task: Task = {_id: '', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
+    board: Board | undefined;
+    task: Task;
 }
 
-export class PopupState {
-    openCreateBoard: boolean = false;
-    openEditBoard:boolean = false;
-    openDeleteBoard:boolean = false;
+export interface PopupState {
+    openCreateBoard: boolean;
+    openEditBoard:boolean;
+    openDeleteBoard:boolean;
 
-    openCreateTask:boolean = false;
-    openEditTask:boolean = false;
-    openDeleteTask:Boolean = false;
+    openCreateTask:boolean;
+    openEditTask:boolean;
+    openDeleteTask:Boolean;
 
-    openDelete:boolean = false;
+    openDelete:boolean;
+    isDraged: boolean;
 }

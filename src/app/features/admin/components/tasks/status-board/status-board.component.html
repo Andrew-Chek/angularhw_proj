@@ -1,4 +1,4 @@
-<article class="status-board" #statusBoard [ngStyle]="{'background-color': status.color}">
+<article class="status-board" #statusBoard [ngStyle]="{'background-color': status.color}" [ngClass]="{drag: isDraged}">
     <section class="status-board-header">
         <h2 class="status-board-title">{{status.value}}</h2>
         <div class="status-board-add" (click)="openCreateTaskForm()">
@@ -7,7 +7,19 @@
         </div>
     </section>
     <section class="status-board-main" #boardMain>
-        <app-task class="status-board-task" draggable="true" #taskItem *ngFor="let task of tasks$ | async" [taskValue]="task"></app-task>
+        <app-task class="status-board-task" 
+        appDragAndDrop
+        #taskItem 
+        *ngFor="let task of tasks$ | async" 
+        [attr.data-task-id]="task._id"
+        [attr.data-task-name]="task.name"
+        [attr.data-task-description]="task.description"
+        [attr.data-task-archived]="task.isArchived"
+        [attr.data-task-board_id]="task.board_id"
+        [attr.data-task-created_date]="task.created_date"
+        [attr.data-task-assigned_to]="task.assigned_to"
+        [attr.data-task-status]="task.status"
+        [taskValue]="task"></app-task>
     </section>
     <section class="status-board-color">
         <label for="color-inp">Change color:</label>

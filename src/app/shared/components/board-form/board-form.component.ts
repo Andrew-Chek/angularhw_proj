@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Board } from 'src/app/Board';
 import { AdminService } from 'src/app/features/admin/admin.service';
-import { PopupService } from '../../popup.service';
+import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
   selector: 'app-board-form',

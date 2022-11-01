@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Board } from 'src/app/Board';
 import { Task } from 'src/app/Task';
-import { PopupService } from '../../popup.service';
+import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
   selector: 'app-dashboard-header',

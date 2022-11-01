@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { map, mergeMap, Observable, of, Subscription, take } from 'rxjs';
 import { Board } from 'src/app/Board';
-import { PopupService } from 'src/app/shared/popup.service';
+import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
 
 @Component({
