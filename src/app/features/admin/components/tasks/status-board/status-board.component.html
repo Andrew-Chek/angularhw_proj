@@ -22,7 +22,7 @@
         [taskValue]="task"></app-task>
     </section>
     <section class="status-board-color">
-        <label for="color-inp">Change color:</label>
-        <input type="color" value="#ffffff" #color (change)="setColor(color.value)">
+        <label class="status-board-color-label" for="color-inp">Change color:</label>
+        <input class="status-board-color-input" [ngStyle]="{'background-color': status.color}" type="color" value="#ffffff" #color (change)="setColor(color.value)">
     </section>
 </article>

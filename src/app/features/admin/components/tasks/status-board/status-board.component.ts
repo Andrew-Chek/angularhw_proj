@@ -12,7 +12,7 @@ import { SortByPipe } from '../../../pipes/sort-by.pipe';
   styleUrls: ['./status-board.component.scss'],
   providers: [SortByPipe]
 })
-export class StatusBoardComponent implements OnInit, OnDestroy {
+export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     const sortSubscription = this.popupService.sortParams.subscribe(value => {
@@ -52,6 +52,10 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
     })
   }
 
+  ngAfterViewInit(): void {
+    this.colorInput.nativeElement.value = this.status.color;
+  }
+
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public status!: {value: string, color: string};
   public isDraged = false;
@@ -64,6 +68,7 @@ export class StatusBoardComponent implements OnInit, OnDestroy {
 
   @ViewChildren('taskItem') taskItems!: QueryList<ElementRef> 
   @ViewChild('boardMain') boardMain!: ElementRef<StatusBoardComponent>;
+  @ViewChild('color') colorInput!: ElementRef<HTMLInputElement>;
   @Output() sentTaskItems: EventEmitter<QueryList<ElementRef>> = new EventEmitter();
 
   constructor(private adminService:AdminService, private popupService: PopupService,

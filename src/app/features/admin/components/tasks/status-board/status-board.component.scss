@@ -38,6 +38,23 @@
         align-items: center;
         flex-direction: column;
     }
+    &-color {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding: 15px 30px;
+        &-label {
+            text-align: start;
+            margin-top: 2px;
+            font: {
+                size: 18px;
+                weight: 600;
+            }
+        }
+        &-input {
+            border: none;
+        }
+    }
 }
 .drag {
     border: 2.5px dashed var(--gray);
