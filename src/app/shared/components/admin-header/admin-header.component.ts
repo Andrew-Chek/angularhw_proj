@@ -8,17 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AdminHeaderComponent implements OnInit {
 
   public time:string = new Date().toLocaleString();
-  public username: string = ''
-
-  @Input()
-  set userValue(name: string)
-  {
-    this.username = name;
-  }
-  get userValue()
-  {
-    return this.username;
-  }
+  
+  @Input() username: string = ''
 
   constructor() { }
 
@@ -27,5 +18,4 @@ export class AdminHeaderComponent implements OnInit {
       this.time = new Date().toLocaleString()
     }, 1000)
   }
-
 }

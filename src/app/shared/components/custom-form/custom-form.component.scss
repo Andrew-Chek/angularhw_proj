@@ -9,7 +9,7 @@
         align-items: flex-start;
         flex-direction: column;
         width: 100%;
-        margin: 15px 20px;
+        padding: 15px 20px;
         .custom-label {
             -webkit-text-stroke-width: .5px;
             text-align: start;
@@ -18,8 +18,14 @@
                 color: var(--obligatory-color);
             }
         }
+        .alert-danger {
+            color: red;
+            text-shadow: none;
+            padding: 5px 10px;
+            width: 100%;
+        }
         .custom-input {
-            width: 90%;
+            width: 100%;
             @include --btn-params;
         }
         .custom-input::placeholder {

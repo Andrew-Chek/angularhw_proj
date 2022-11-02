@@ -1,11 +1,11 @@
 <article class="taskboard" *ngIf="tasks$">
-    <app-dashboard-header setHeader="{{board.name}}" (sentFilterData)="filterTasks($event)"></app-dashboard-header>
+    <app-dashboard-header headerType="{{board.name}}" (sentFilterData)="filterTasks($event)"></app-dashboard-header>
     <section class="taskboard-tasks">
         <app-status-board class="taskboard-status-board" 
         #statusBoard 
         *ngFor="let status of statuses" 
-        [statusValue]="status" 
-        [boardValue]="board" 
+        [status]="status" 
+        [board]="board" 
         [tasksValue$]="tasks$"
         id="{{status.value}}"></app-status-board>
     </section>

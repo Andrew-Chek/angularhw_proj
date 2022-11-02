@@ -59,6 +59,7 @@ export class AuthService {
 
 export interface Token{
   jwt_token:string;
+  message: string;
 }
 
 export interface User{

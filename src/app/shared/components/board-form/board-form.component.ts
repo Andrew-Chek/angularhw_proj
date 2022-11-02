@@ -11,11 +11,14 @@ import { PopupService } from 'src/app/shared/services/popupService/popup.service
 })
 export class BoardFormComponent implements OnInit {
 
-  constructor(private popupService:PopupService, private adminService: AdminService) { }
-  public board: Board = {_id:'', name: '', description: '', created_date: ''};
+  protected board: Board = {_id:'', name: '', description: '', created_date: ''};
+  @Input() submitText:string = '';
+
+  @Output() sentData = new EventEmitter<Board>;
 
   public visible = false;
-
+  public readonlyFlag:boolean = false;
+  public checkErrors = false;
   public boardForm = new FormGroup({
     name: new FormControl(this.board?.name, [
       Validators.required,
@@ -25,63 +28,12 @@ export class BoardFormComponent implements OnInit {
       Validators.minLength(4),
     ]),
   })
-  public submitText:string = '';
-  public readonlyFlag:boolean = false;
 
-  @Output() sentData = new EventEmitter<Board>;
-
-  @Input()
-  set setSubmit(text:string)
-  {
-    this.submitText = text;
-  }
-  get setSubmit()
-  {
-    return this.submitText;
-  }
-  
-  @Input()
-  set setBoard(board:Board)
-  {
-    this.board = board;
-  }
-  get setBoard()
-  {
-    return this.board;
-  }
+  constructor(private popupService:PopupService, private adminService: AdminService) { }
 
   get name() { return this.boardForm.get('name'); }
 
   get description() { return this.boardForm.get('description'); }
-  
-
-  closePopup()
-  {
-    if(this.submitText == 'Edit Board')
-    {
-      this.popupService.openEditBoardForm();
-    }
-    else
-    {
-      this.popupService.openCreateBoardForm();
-    }
-    this.board.name = '';
-    this.board.description = '';
-    this.boardForm.controls['name'].setErrors(null);
-    this.boardForm.controls['description'].setErrors(null);
-  }
-
-  sendForm()
-  {
-    if(this.name?.value != null && this.description?.value != null && this.board != undefined)
-    {
-      this.board.name = this.name.value;
-      this.board.description = this.description.value;
-      this.sentData.emit(this.board)
-      this.board.name = '';
-      this.board.description = '';
-    }
-  }
 
   ngOnInit(): void {
     this.adminService.state$.subscribe((value) => {
@@ -107,6 +59,44 @@ export class BoardFormComponent implements OnInit {
       this.popupService.state$.subscribe(value => {
         this.visible = value.openEditBoard
       })
+    }
+  }
+
+  closePopup()
+  {
+    if(this.submitText == 'Edit Board')
+    {
+      this.popupService.openEditBoardForm();
+    }
+    else
+    {
+      this.popupService.openCreateBoardForm();
+    }
+    this.board.name = '';
+    this.board.description = '';
+    this.boardForm.controls['name'].setErrors(null);
+    this.boardForm.controls['description'].setErrors(null);
+    this.checkErrors = false;
+  }
+
+  sendForm()
+  {
+    if(this.name?.value != null && this.description?.value != null && this.board != undefined)
+    {
+      this.board.name = this.name.value;
+      this.board.description = this.description.value;
+      if(this.name.errors || this.description.errors ||
+        this.board.name == '' || this.board.description == '')
+        {
+          this.checkErrors = true;
+        }
+      else
+      {
+        this.sentData.emit(this.board)
+        this.board.name = '';
+        this.board.description = '';
+        this.checkErrors = false;
+      }
     }
   }
 }

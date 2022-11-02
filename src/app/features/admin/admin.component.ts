@@ -14,24 +14,23 @@ import jwt_decode from 'jwt-decode';
 })
 export class AdminComponent implements OnInit, OnDestroy {
   
-  public message$:Observable<Message> = this.adminService.message$;
-  public openMessage: boolean = false;
+  protected openMessage: boolean = false;
   protected username: string;
 
   public board:Board | undefined = {_id:'', name: '', description: '', created_date: ''};
   public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
 
-  public openDelete: boolean = false;
+  protected openDelete: boolean = false;
 
-  public openCreateBoard: boolean = false;
-  public openEditBoard:boolean = false;
-  public openDeleteBoard:boolean = false;
+  protected openCreateBoard: boolean = false;
+  protected openEditBoard:boolean = false;
+  protected openDeleteBoard:boolean = false;
 
-  public openCreateTask:boolean = false;
-  public openEditTask:boolean = false;
-  public openDeleteTask:Boolean = false;
-  public adminStateSubscription: Subscription = new Subscription();
-  public popupSubscription: Subscription = new Subscription();
+  protected openCreateTask:boolean = false;
+  protected openEditTask:boolean = false;
+  protected openDeleteTask:Boolean = false;
+  private adminStateSubscription: Subscription = new Subscription();
+  private popupSubscription: Subscription = new Subscription();
 
   constructor(private adminService: AdminService, private popupService: PopupService) {
     this.popupService.setDefault();

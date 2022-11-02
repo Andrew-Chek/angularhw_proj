@@ -65,6 +65,12 @@
         width: 100%;
     }
 }
+.alert-danger {
+    text-align: center;
+    width: 100%;
+    padding: 10px 20px;
+    color: var(--red);
+}
 .open__task {
     position: fixed;
     top: 30%;

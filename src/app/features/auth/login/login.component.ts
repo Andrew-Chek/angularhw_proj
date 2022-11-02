@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   public checkRegister:boolean = false;
   public checkReset:boolean = false;
+
   @ViewChild('message') message!: ElementRef;
 
   public registerQuestions : QuestionBase<string>[] = [
@@ -20,15 +21,17 @@ export class LoginComponent implements OnInit {
       label: 'Email',
       value: '',
       required: true,
+      isEmail: true,
       order: 1,
       placeholder: 'andrii_chekurda@epam.com',
-      type: 'text',
+      type: 'email',
     }), 
     new QuestionBase<string>({
         key: 'passwordValue',
         label: 'Password',
         value: '',
         required: true,
+        isEmail: false,
         order: 2,
         placeholder: '1234',
         type: 'password',
@@ -40,9 +43,10 @@ export class LoginComponent implements OnInit {
       label: 'Email for reseting password',
       value: '',
       required: true,
+      isEmail: true,
       order: 1,
       placeholder: 'andrii_chekurda@epam.com',
-      type: 'text',
+      type: 'email',
     })]
   
   constructor(private authService: AuthService) 
@@ -50,6 +54,7 @@ export class LoginComponent implements OnInit {
     this.checkRegister = this.authService.registerFlag;
     this.checkReset = this.authService.resetFlag;
   }
+  
   ngOnInit(): void {
     this.authService.openSubject.subscribe(value => {
       this.checkRegister = value.register;

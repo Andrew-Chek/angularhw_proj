@@ -6,31 +6,31 @@
                 <h2 class="general-title">Login</h2>
                 <p class="general-description description">See your growth and achieve your goals!</p>
             </section>
-            <app-login-form></app-login-form>
+            <app-login-form [message]="message"></app-login-form>
             <section class="register">
                 <p class="register-description description">Not registered yet?</p>
-                <app-submit-btn (click)="openRegisterPopup()" class="register-btn" text="Create an Account" [styleFlag]="true"></app-submit-btn>
+                <app-submit-btn (click)="openRegisterPopup()" class="register-btn" buttonText="Create an Account" [styleFlag]="true"></app-submit-btn>
             </section>
             <article class="message">
                 <p class="message-info" #message></p>
             </article>
         </div>
         <app-custom-form 
-            form="Reset Password Form" 
+            formName="Reset Password Form" 
             btnName="Reset password"
             (sentData)="sendRegisterRequest($event)"
             class="login-form forget-form" 
             [ngClass]="{open__reset: checkReset}" 
             id="forget" 
-            [questionValues]="resetQuestions">
+            [questions]="resetQuestions">
         </app-custom-form>
         <app-custom-form 
-            form="Sign Up Form"
+            formName="Sign Up Form"
             btnName="Sign Up" 
             class="login-form register-form" 
             [ngClass]="{open__register: checkRegister}" id="register"
             (sentData)="sendRegisterRequest($event)"
-            [questionValues]="registerQuestions">
+            [questions]="registerQuestions">
         </app-custom-form>
     </section>
     <section class="img-section">

@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    redirectTo: '/admin',
+    redirectTo: '',
   },
   {
     path: 'board/:id',

@@ -34,6 +34,16 @@
                 {{ status }}
             </option>
         </select>
+        <div *ngIf="status?.invalid && (status?.dirty || status?.touched)" class="alert alert-danger">
+            <div *ngIf="name?.errors?.['required']">
+                Status is required.
+            </div>
+        </div>
     </section>
-   <app-submit-btn class="task-form-submit" text="{{submitText}}" (btnClick)="sendForm()"></app-submit-btn>
+    <app-submit-btn class="task-form-submit" buttonText="{{submitText}}" (btnClick)="sendForm()"></app-submit-btn>
+    <div *ngIf="name?.invalid && (name?.dirty || name?.touched) 
+        || description?.invalid && (description?.dirty || description?.touched)
+        || status?.invalid && (status?.dirty || status?.touched) || checkErrors" class="alert-danger">
+        Cannot send data, errors detected
+    </div>
 </form>

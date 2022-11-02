@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, Input } from '@angular/core';
 import { AuthService } from '../../auth.service';
-import { map, take } from 'rxjs';
+import { map } from 'rxjs';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
@@ -9,6 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit {
+
+  @Input() message!: HTMLParagraphElement;
+
+  public loginForm:FormGroup = new FormGroup({
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+    ]),
+  });
 
   constructor(
     private authService: AuthService,
@@ -18,14 +30,30 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @Output() outResetPassForm = new EventEmitter<boolean>();
+  get email() { return this.loginForm.get('email'); }
 
-  login(email: string, password: string) {
-    this.authService.login({email, password}).pipe(
-      map((token) => {
-        window.localStorage.setItem('jwt_token', token.jwt_token)
-        this.router.navigateByUrl(this.authService.redirectUrl)
-      })).subscribe();
+  get password() { return this.loginForm.get('password'); }
+
+  login() {
+    if(this.email?.errors == null && this.password?.errors == null)
+    {
+      const email = this.email?.value;
+      const password = this.password?.value;
+      this.authService.login({email, password}).pipe(
+        map((token) => {
+          if(token.jwt_token != undefined)
+          {
+            window.localStorage.setItem('jwt_token', token.jwt_token)
+            this.router.navigateByUrl(this.authService.redirectUrl)
+          }
+          else {
+            this.message.innerText = token.message
+          }
+          return token;
+        })).subscribe(token => {
+          console.log(token.message)
+        });
+    }
   }
 
   openForgetPopup()

@@ -10,16 +10,15 @@ import { Task } from 'src/app/Task';
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
-export class TasksComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TasksComponent implements OnInit, OnDestroy {
+
+  @ViewChildren('statusBoard') statusBoards!: QueryList<ElementRef>
 
   public board: Board = {_id:'', name: '', description: '', created_date: ''};
   public tasks$: Observable<Task[]> = new Observable();
-  public adminStateSubscription = new Subscription();
   public statuses = [{value: 'To do', color: '#ffffff'}, {value: 'In progress', color: '#ffffff'}, {value: 'Done', color: '#ffffff'}];
-  public propertyName: keyof Task = 'name';
-  public sortFlag = false;
-  public ascOrder: 'asc' | 'desc' = 'asc';
-  @ViewChildren('statusBoard') statusBoards!: QueryList<ElementRef>
+
+  private adminStateSubscription = new Subscription();
 
   constructor(private adminService: AdminService,
     private popupService: PopupService) {
@@ -27,18 +26,12 @@ export class TasksComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
-      console.log(`we are in tasks: '${value.tasks}'`)
       if(value.board != undefined)
       {
         this.board = value.board;
         this.tasks$ = of(value.tasks)
       }
     })
-  }
-
-  ngAfterViewInit()
-  {
-    // this.dragDropService.addDragAndDropEvents();
   }
 
   ngOnDestroy(): void {

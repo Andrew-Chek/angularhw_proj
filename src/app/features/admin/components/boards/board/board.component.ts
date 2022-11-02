@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { concatMap, map, mergeMap, Observable, of, Subscription, take } from 'rxjs';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { concatMap, Observable, of, Subscription } from 'rxjs';
 import { Message } from 'src/app/Message';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { Board } from '../../../../../Board'
@@ -14,21 +14,17 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  public board:Board = {_id: '', name:'', description: '', created_date: ''};
+  @Input() board:Board = {_id: '', name:'', description: '', created_date: ''};
+
   public tasks:Task[] = [];
   public message$:Observable<Message> = new Observable();
   public isPressed:boolean = false;
-  public adminStateSubscription = new Subscription();
-  constructor(private adminService: AdminService, private popupService: PopupService, private router: Router) {
-  }
 
-  @Input()
-  set boardValue(board: Board) {
-		this.board = board;
-	}
-	get boardValue(): Board {
-    return this.board;
-	}
+  private adminStateSubscription = new Subscription();
+
+  constructor(private adminService: AdminService, 
+    private popupService: PopupService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -36,6 +32,9 @@ export class BoardComponent implements OnInit, OnDestroy {
   openMore()
   {
     this.isPressed = !this.isPressed;
+    setTimeout(() => {
+      this.isPressed = false;
+    }, 10000)
   }
 
   ngOnDestroy()
@@ -54,9 +53,8 @@ export class BoardComponent implements OnInit, OnDestroy {
         return of("Succesfully set")
       })
     ).subscribe(value => {
-      console.log(value)
       setTimeout(() => {
-        this.router.navigate(['admin/board', this.board._id])
+        this.router.navigate(['/board', this.board._id])
       }, 150)
     })
   }

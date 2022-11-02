@@ -198,7 +198,6 @@ export class AdminService extends Store<DashboardState> {
       }),
       take(1)
     ).subscribe(value => {
-      console.log(value)
       this.setState({
         ...this.state,
         tasks: value

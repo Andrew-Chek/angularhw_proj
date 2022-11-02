@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef} from '@angular/core';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../../features/auth/auth.service';
 import { QuestionBase } from '../../services/question-control/question-base';
 import { QuestionControlService } from '../../services/question-control/question-control.service';
@@ -12,17 +12,21 @@ import { QuestionControlService } from '../../services/question-control/question
 })
 
 export class CustomFormComponent implements OnInit {
-  public questions!: QuestionBase<string>[];
-  public customForm! : FormGroup;
-  public buttonName: string = ''
-  public formName: string = ''
+  @ViewChildren('fieldName') fieldNames!: QueryList<ElementRef>;
+
+  @Input() questions!: QuestionBase<string>[];
+  @Input() buttonName: string = '';
+  @Input() formName: string = '';
+
+  @Output() sentData: EventEmitter<{email: string, password: string, newPassword: string}> = new EventEmitter()
+
+  public customForm! : FormGroup<FormControl[]>;
   public isOpened = false;
   public isRegister = false;
-  public email: string = ''
-  public password: string = ''
-  public newPassword: string = ''
-
-  @ViewChildren('fieldName') fieldNames!: QueryList<ElementRef>;
+  public email: string = '';
+  public password: string = '';
+  public newPassword: string = '';
+  public errorsChecked = false;
 
   constructor(private authService: AuthService, private questionControlService: QuestionControlService) { }
 
@@ -33,46 +37,40 @@ export class CustomFormComponent implements OnInit {
     })
   }
 
-  @Output() sentData: EventEmitter<{email: string, password: string, newPassword: string}> = new EventEmitter()
-
-  @Input()
-  set questionValues(questions: QuestionBase<string>[]) {
-		this.questions = questions;
-    this.customForm = this.questionControlService.toFormGroup(this.questions);
-	}
-	get questionValues(): QuestionBase<string>[] {
-    return this.questions;
-	}
-
-  @Input()
-  set btnName(name: string) {
-		this.buttonName = name;
-	}
-	get btnName(): string {
-    return this.buttonName;
-	}
-
   sendData()
   {
     const user = {email: '', password: '', newPassword: ''}
-    const fields = this.fieldNames.toArray();
-    user.email = fields[0].nativeElement.value;
-    user.password = fields[1]?.nativeElement.value;
-    user.newPassword = fields[2]?.nativeElement.value;
-    this.sentData.emit(user)
-    this.closePopup();
+    this.questions.forEach(question => {
+      const errors = this.customForm.get(question.key)?.errors;
+      if(errors != null)
+      {
+        this.errorsChecked = true;
+        return;
+      }
+    })
+    if(!this.errorsChecked)
+    {
+      const fields = this.fieldNames.toArray();
+      user.email = fields[0].nativeElement.value;
+      user.password = fields[1]?.nativeElement.value;
+      user.newPassword = fields[2]?.nativeElement.value;
+      this.sentData.emit(user)
+      this.closePopup();
+    }
   }
-
-  @Input()
-  set form(form: string) {
-		this.formName = form;
-	}
-	get form(): string {
-    return this.formName;
-	}
 
   closePopup()
   {
+    const fields = this.fieldNames.toArray();
+    fields[0].nativeElement.value = '';
+    if(fields[1] != undefined)
+    {
+      fields[1].nativeElement.value = '';
+    }
+    if(fields[2] != undefined)
+    {
+      fields[2].nativeElement.value = '';
+    }
     if(this.isRegister)
     {
       this.authService.setRegisterFlag()

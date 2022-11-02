@@ -7,13 +7,13 @@
         <label for="board-name" class="form-label">Name: </label>
         <input id="board-name" class="form-input" type="text" formControlName="name" required [(ngModel)]="board.name">
         <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert alert-danger">
-        <div *ngIf="name?.errors?.['required']">
-            Name is required.
+            <div *ngIf="name?.errors?.['required']">
+                Name is required.
+            </div>
+            <div *ngIf="name?.errors?.['minlength']">
+                Name must be at least 4 characters long.
+            </div>
         </div>
-        <div *ngIf="name?.errors?.['minlength']">
-            Name must be at least 4 characters long.
-        </div>
-    </div>
     </section>
     <section class="board-form-value">
         <label for="board-description" class="form-label">Description: </label>
@@ -27,5 +27,8 @@
             </div>
         </div>
     </section>
-   <app-submit-btn class="board-form-submit" text="{{submitText}}" [styleFlag]="false" (btnClick)="sendForm()"></app-submit-btn>
+    <app-submit-btn class="board-form-submit" buttonText="{{submitText}}" [styleFlag]="false" (btnClick)="sendForm()"></app-submit-btn>
+    <div *ngIf="name?.invalid && (name?.dirty || name?.touched) || description?.invalid && (description?.dirty || description?.touched) || checkErrors" class="alert-danger">
+        Cannot send data, errors detected
+    </div>
 </form>

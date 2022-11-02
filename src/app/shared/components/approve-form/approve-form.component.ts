@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Board } from 'src/app/Board';
-import { AdminService } from 'src/app/features/admin/admin.service';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
@@ -11,6 +9,7 @@ import { PopupService } from 'src/app/shared/services/popupService/popup.service
 export class ApproveFormComponent implements OnInit {
 
   constructor(private popupService:PopupService) { }
+  
   @Output() sentData = new EventEmitter<boolean>(false);
 
   public visible = false;

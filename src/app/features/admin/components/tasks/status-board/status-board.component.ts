@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, Output, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren, AfterViewInit} from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, Output, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
 import { Observable, map, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
@@ -13,6 +13,36 @@ import { SortByPipe } from '../../../pipes/sort-by.pipe';
   providers: [SortByPipe]
 })
 export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChildren('taskItem') taskItems!: QueryList<ElementRef> 
+  @ViewChild('boardMain') boardMain!: ElementRef<StatusBoardComponent>;
+  @ViewChild('color') colorInput!: ElementRef<HTMLInputElement>;
+  
+  @Output() sentTaskItems: EventEmitter<QueryList<ElementRef>> = new EventEmitter();
+
+  @Input() board:Board = {_id: '', name:'', description: '', created_date: ''};
+  @Input() status!: {value: string, color: string};
+  @Input()
+  set tasksValue$(tasks$:Observable<Task[]>)
+  {
+    this.tasks$ = tasks$.pipe(
+      map(tasks => {
+      return tasks.filter(task => task.status === this.status.value)
+    }));
+  }
+
+  public isDraged = false;
+  public tasks$: Observable<Task[]> = this.adminService.tasks$
+  .pipe(
+    map(tasks => {
+    return tasks.filter(task => task.status === this.status.value)
+  }));
+
+  private subscriptions: Subscription[] = [];
+
+  constructor(private adminService:AdminService, private popupService: PopupService,
+    private sortByPipe: SortByPipe) {
+  }
 
   ngOnInit(): void {
     const sortSubscription = this.popupService.sortParams.subscribe(value => {
@@ -54,58 +84,6 @@ export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.colorInput.nativeElement.value = this.status.color;
-  }
-
-  public board: Board = {_id:'', name: '', description: '', created_date: ''};
-  public status!: {value: string, color: string};
-  public isDraged = false;
-  private subscriptions: Subscription[] = [];
-  public tasks$: Observable<Task[]> = this.adminService.tasks$
-  .pipe(
-    map(tasks => {
-    return tasks.filter(task => task.status === this.status.value)
-  }));
-
-  @ViewChildren('taskItem') taskItems!: QueryList<ElementRef> 
-  @ViewChild('boardMain') boardMain!: ElementRef<StatusBoardComponent>;
-  @ViewChild('color') colorInput!: ElementRef<HTMLInputElement>;
-  @Output() sentTaskItems: EventEmitter<QueryList<ElementRef>> = new EventEmitter();
-
-  constructor(private adminService:AdminService, private popupService: PopupService,
-    private sortByPipe: SortByPipe) {
-  }
-
-  @Input()
-  set statusValue(status:{value: string, color: string})
-  {
-    this.status = status;
-  }
-  get statusValue()
-  {
-    return this.status;
-  }
-
-  @Input()
-  set boardValue(board:Board)
-  {
-    this.board = board;
-  }
-  get boardValue()
-  {
-    return this.board;
-  }
-
-  @Input()
-  set tasksValue$(tasks$:Observable<Task[]>)
-  {
-    this.tasks$ = tasks$.pipe(
-      map(tasks => {
-      return tasks.filter(task => task.status === this.status.value)
-    }));
-  }
-  get tasksValue$()
-  {
-    return this.tasks$;
   }
 
   setColor(color: string)

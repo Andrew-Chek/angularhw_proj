@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
-import { map, mergeMap, Observable, of, Subscription, take } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { mergeMap, Observable, of, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
@@ -11,18 +11,26 @@ import { AdminService } from '../../admin.service';
 })
 export class BoardsComponent implements OnInit, OnDestroy {
 
-  constructor(public adminService: AdminService, private popupService: PopupService) {
-    this.boards$ = this.adminService.boards$;
-  }
-  ngOnDestroy(): void {
-    this.adminStateSubscription.unsubscribe();
-  }
-
   public boards$:Observable<Board[]>;
-  public adminStateSubscription = new Subscription();
   public propertyName: keyof Board = 'name';
   public sortFlag = false;
   public ascOrder: 'asc' | 'desc' = 'asc';
+
+  private adminStateSubscription = new Subscription();
+
+  constructor(public adminService: AdminService, private popupService: PopupService) {
+    this.boards$ = this.adminService.boards$;
+  }
+
+  ngOnInit(): void {
+    this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
+      this.boards$ = of(value.boards);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.adminStateSubscription.unsubscribe();
+  }
 
   openCreateForm()
   {
@@ -53,12 +61,5 @@ export class BoardsComponent implements OnInit, OnDestroy {
     this.sortFlag = true;
     this.ascOrder = value.order;
     this.propertyName = value.propertyName;
-  }
-
-  ngOnInit(): void {
-    this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
-      console.log(`we are in boards: '${value.tasks}'`)
-      this.boards$ = of(value.boards);
-    })
   }
 }

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Board } from 'src/app/Board';
-import { Task } from 'src/app/Task';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
@@ -10,29 +9,23 @@ import { PopupService } from 'src/app/shared/services/popupService/popup.service
 })
 export class DashboardHeaderComponent implements OnInit {
 
+  @Input() headerType:string = ''
+  public propertyName:keyof Board = 'name'
+  public order: 'asc' | 'desc' = 'asc'
+
+  @Output() sentSortBoardParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
+  @Output() sentFilterData = new EventEmitter<string>();
+
   constructor(private popupService:PopupService) { }
 
   ngOnInit(): void {
   }
 
-  public headerType:string = ''
-  public propertyName:keyof Board = 'name'
-  public order: 'asc' | 'desc' = 'asc'
-
-  @Output() sentSortParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
-  @Output() sentFilterData = new EventEmitter<string>();
-
   setPropertyName(value: keyof Board)
   {
     this.propertyName = value;
-    if(this.headerType == 'Dashboard')
-    {
-      this.sentSortParams.emit({propertyName: this.propertyName, order: this.order})
-    }
-    else
-    {
-      this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
-    }
+    this.headerType == 'Dashboard' ? this.sentSortBoardParams.emit({propertyName: this.propertyName, order: this.order}) 
+      : this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
   }
 
   sendFilterData(value: string)
@@ -43,24 +36,8 @@ export class DashboardHeaderComponent implements OnInit {
   setOrder(value:'asc' | 'desc')
   {
     this.order = value;
-    if(this.headerType == 'Dashboard')
-    {
-      this.sentSortParams.emit({propertyName: this.propertyName, order: this.order})
-    }
-    else
-    {
-      this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
-    }
-  }
-
-  @Input()
-  set setHeader(type: string)
-  {
-    this.headerType = type;
-  }
-  get setHeader()
-  {
-    return this.headerType;
+    this.headerType == 'Dashboard' ? this.sentSortBoardParams.emit({propertyName: this.propertyName, order: this.order}) 
+      : this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
   }
 
   openCreateForm()

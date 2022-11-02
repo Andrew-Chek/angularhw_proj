@@ -10,7 +10,7 @@ import { AdminService } from '../../../admin.service';
 })
 export class TaskComponent implements OnInit, OnDestroy {
 
-  public task:Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', isArchived: false, created_date:''};
+  @Input() task :Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', isArchived: false, created_date:''};
   public isPressed = false;
 
   constructor(private adminService: AdminService, private popupService: PopupService) { }
@@ -21,17 +21,12 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  @Input()
-  set taskValue(task: Task) {
-		this.task = task;
-	}
-	get taskValue(): Task {
-    return this.task;
-	}
-
   openMore()
   {
     this.isPressed = !this.isPressed;
+    setTimeout(() => {
+      this.isPressed = false;
+    }, 10000)
   }
   
   openEditTaskForm()

@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { concatMap, map, mergeMap, Observable, of, Subscription, take } from 'rxjs';
+import { concatMap, Observable, of, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
@@ -12,31 +12,32 @@ import { AdminService } from '../../admin.service';
 })
 export class BoardMenuComponent implements OnInit, OnDestroy {
 
-  public openTasks:boolean = false;
-  public openBoards:boolean = false;
+  public openTasks = false;
+  public openBoards = false;
 
-  public bList:boolean = false;
-  public tList:boolean = false;
+  public bList = false;
+  public tList = false;
 
-  public boardCount:number = 0;
-  public taskCount:number = 0;
-  public board_id:string = '';
+  public boardCount = 0;
+  public taskCount = 0;
+  public board_id = '';
 
   public boards$:Observable<Board[]> = this.adminService.getBoards();
-  public adminStateSubscription = new Subscription();
+  private adminStateSubscription = new Subscription();
+  
   constructor(private adminService:AdminService, private popupService:PopupService, private router: Router) {
-  }
-  ngOnDestroy(): void {
-    this.adminStateSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
-      console.log(`we are in board menu: '${value.tasks}'`)
       this.boards$ = of(value.boards);
       this.boardCount = value.boards.length;
       // this.board_id = value.boards[0]._id;
     })
+  }
+
+  ngOnDestroy(): void {
+    this.adminStateSubscription.unsubscribe();
   }
 
   openTaskList()
@@ -54,7 +55,6 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
       concatMap((value) => {
         return of("Succesfully set")
     })).subscribe(value => {
-      console.log(value)
       setTimeout(() => {
         this.router.navigate(['admin/board', board._id])
       }, 150)
