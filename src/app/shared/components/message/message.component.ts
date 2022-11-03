@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AdminService } from 'src/app/features/admin/admin.service';
+import { AuthService } from 'src/app/features/auth/auth.service';
 import { Message } from 'src/app/Message';
 
 @Component({
@@ -10,25 +11,23 @@ import { Message } from 'src/app/Message';
 })
 export class MessageComponent implements OnInit {
 
-  constructor(private adminService:AdminService) {
-    this.adminService.message$.subscribe((message) => {
-      this.text = message.message;
-    })
+  public isDisplayed = false;
+  public message:string = '';
+  public error = false;
+
+  constructor(private authService:AuthService) {
    }
 
-  public message$: Observable<Message> = this.adminService.message$;
-  public text:string = ''
+   ngOnInit(): void {
+    this.authService.messageSubject.subscribe(value => {
+      this.message = value.message;
+      this.isDisplayed = value.isDisplayed;
+      this.error = value.error;
+    })
+  }
 
   closePopup()
   {
-    const message:Observable<Message> = of({isDisplayed: false, message: ''})
-    this.adminService.openMessageBlock(message);
+    this.authService.closeMessagePopup()
   }
-
-  ngOnInit(): void {
-    this.adminService.displayMessageSubject.subscribe(value => {this.message$ = value
-      value.subscribe((message) => {this.text = message.message});
-    })
-  }
-
 }

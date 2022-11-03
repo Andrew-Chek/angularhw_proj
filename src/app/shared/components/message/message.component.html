@@ -1,9 +1,9 @@
-<article class="message">
+<article class="message" [ngClass]="{open__message: isDisplayed}">
     <section class="message-header">
-        <h2 class="message-title">Action message</h2>
+        <h2 class="message-title">Error message</h2>
         <mat-icon class="message-icon icon" (click)="closePopup()">close</mat-icon>
     </section>
     <section class="message-main">
-        <p class="message-info">{{text}}</p>
+        <p class="message-info" [ngClass]="{'error-info': error}">{{message}}</p>
     </section>
 </article>

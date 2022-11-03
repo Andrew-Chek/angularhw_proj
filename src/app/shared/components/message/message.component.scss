@@ -1,6 +1,9 @@
 .message {
     height: 200px;
     width: 300px;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 1px 1px 1px var(--gray);
     &-header {
         display: flex;
         height: 50px;
@@ -29,10 +32,21 @@
         display: flex;
         justify-content: center;
         .message-info {
+            display: flex;
+            align-items: center;
             font: {
                 size: 18px;
                 weight: 600;
             };
+            text-shadow: none;
+        }
+        .error-info {
+            color: red;
         }
     }
+}
+.open__message {
+    position: fixed;
+    top: 30%;
+    left: 40%;
 }

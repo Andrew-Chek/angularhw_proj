@@ -7,13 +7,16 @@
         <label class="custom-label" [attr.for]="question.key">{{question.label}}</label>
         <input class="custom-input" #fieldName [formControlName]="question.key" [id]="question.key" [type]="question.type">
         <div *ngIf="errorsChecked" class="alert alert-danger">
-            <div *ngIf="question.type == 'password' && customForm.get(question.key)?.errors!['required']">
+            <div *ngIf="question.type == 'password'
+                && (customForm!.get(question.key)?.errors != null && customForm.get(question.key)?.errors!['required'])">
                 Password is required.
             </div>
-            <div *ngIf="question.type == 'email' && customForm.get(question.key)?.errors!['required']">
+            <div *ngIf="question.type == 'email' 
+                && (customForm!.get(question.key)?.errors != null && customForm.get(question.key)?.errors!['required'])">
                 Email is required.
             </div>
-            <div *ngIf="question.type == 'email' && customForm.get(question.key)?.errors!['email']">
+            <div *ngIf="question.type == 'email' 
+                && (customForm!.get(question.key)?.errors != null && customForm.get(question.key)?.errors!['email'])">
                 Field must be type of email.
             </div>
         </div>

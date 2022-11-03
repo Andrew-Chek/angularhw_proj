@@ -41,17 +41,17 @@ export class LoginFormComponent implements OnInit {
       const password = this.password?.value;
       this.authService.login({email, password}).pipe(
         map((token) => {
-          if(token.jwt_token != undefined)
+          if(token.body!.jwt_token != undefined)
           {
-            window.localStorage.setItem('jwt_token', token.jwt_token)
+            window.localStorage.setItem('jwt_token', token.body!.jwt_token)
             this.router.navigateByUrl(this.authService.redirectUrl)
           }
           else {
-            this.message.innerText = token.message
+            this.message.innerText = token.body!.message
           }
           return token;
         })).subscribe(token => {
-          console.log(token.message)
+          
         });
     }
   }

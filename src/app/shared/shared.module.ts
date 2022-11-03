@@ -12,6 +12,7 @@ import { ApproveFormComponent } from './components/approve-form/approve-form.com
 import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -31,7 +32,8 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
   imports: [
     CommonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     SubmitBtnComponent,
@@ -42,6 +44,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     TaskFormComponent,
     ApproveFormComponent,
     DashboardHeaderComponent,
+    PageNotFoundComponent,
     DragAndDropDirective
   ]
 })

@@ -5,6 +5,11 @@
         flex-direction: column;
         padding: 15px 0;
         gap: 15px;
+        .alert {
+            width: 100%;
+            color: red;
+            text-align: center;
+        }
     }
     &-label {
         -webkit-text-stroke-width: .5px;

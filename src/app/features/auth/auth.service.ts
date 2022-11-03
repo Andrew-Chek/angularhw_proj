@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, delay, Observable, of, tap} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import {BehaviorSubject, catchError, delay, Observable, of, tap, throwError} from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Message } from 'src/app/Message';
 
 @Injectable({
@@ -10,29 +10,49 @@ import { Message } from 'src/app/Message';
 export class AuthService {
   isAuthorized = false;
   redirectUrl: string = '/admin';
+  apiUrl = 'http://localhost:8080/api'
   resetFlag = false;
   registerFlag = false;
   openSubject = new BehaviorSubject<{reset: boolean, register: boolean, open : boolean}>({reset: false, register: false, open: false});
+  messageSubject = new BehaviorSubject({isDisplayed: false, message: 'value', error: false})
 
   constructor(private http: HttpClient) {}
 
-  login(user: User): Observable<Token> {
+  login(user: User): Observable<HttpResponse<Token>> {
     this.isAuthorized=true;
     return this.http.post<Token>(
-      'http://localhost:8080/api/auth/login', 
-      {email: user.email, password: user.password})
+      `${this.apiUrl}/auth/login`, 
+      {email: user.email, password: user.password}, {
+        observe: 'response'
+      }).pipe(
+        catchError((error) => {
+          this.messageSubject.next({isDisplayed: true, message: error.error.message as string, error: true})
+          return throwError(() => {new Error('Something bad happened; please try again later.')})
+      }))
   }
 
-  register(user: User): Observable<Message> {
+  register(user: User): Observable<HttpResponse<Message>> {
     return this.http.post<Message>(
-      'http://localhost:8080/api/auth/register', 
-      {email: user.email, password: user.password})
+      `${this.apiUrl}/auth/register`, 
+      {email: user.email, password: user.password}, {
+        observe: 'response'
+      }).pipe(
+        catchError((error) => {
+          this.messageSubject.next({isDisplayed: true, message: error.error.message as string, error: true})
+          return throwError(() => {new Error('Something bad happened; please try again later.')})
+      }))
   }
 
-  forget(user: User): Observable<Message> {
+  forget(user: User): Observable<HttpResponse<Message>> {
     return this.http.post<Message>(
-      'http://localhost:8080/api/auth/forgot_password', 
-      {email: user.email})
+      `${this.apiUrl}/auth/forgot_password`, 
+      {email: user.email}, {
+        observe: 'response'
+      }).pipe(
+        catchError((error) => {
+          this.messageSubject.next({isDisplayed: true, message: error.error.message as string, error:true})
+          return throwError(() => {new Error('Something bad happened; please try again later.')})
+      }))
   }
 
   logout(): Observable<boolean> {
@@ -54,6 +74,16 @@ export class AuthService {
   {
     this.registerFlag = !this.registerFlag
     this.openSubject.next({reset: false, register: this.registerFlag, open : this.registerFlag})
+  }
+
+  setRequestMessage(message: string)
+  {
+    this.messageSubject.next({isDisplayed: true, message: message, error: false})
+  }
+
+  closeMessagePopup()
+  {
+    this.messageSubject.next({isDisplayed: false, message: '', error: false});
   }
 }
 

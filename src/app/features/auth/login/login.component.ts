@@ -12,8 +12,8 @@ export class LoginComponent implements OnInit {
 
   public checkRegister:boolean = false;
   public checkReset:boolean = false;
-
-  @ViewChild('message') message!: ElementRef;
+  public message = ''
+  public isDisplayed = false;
 
   public registerQuestions : QuestionBase<string>[] = [
     new QuestionBase<string>({
@@ -60,6 +60,9 @@ export class LoginComponent implements OnInit {
       this.checkRegister = value.register;
       this.checkReset = value.reset;
     })
+    this.authService.messageSubject.subscribe(value => {
+      this.isDisplayed = value.isDisplayed;
+    })
   }
 
   openRegisterPopup()
@@ -77,7 +80,7 @@ export class LoginComponent implements OnInit {
     this.authService.register(user)
     .pipe(
       map(value => {
-      this.message.nativeElement.innerText = value.message
+        this.authService.setRequestMessage(value.body!.message)
     })).subscribe()
   }
 
@@ -86,7 +89,7 @@ export class LoginComponent implements OnInit {
     this.authService.forget(user)
     .pipe(
       map(value => {
-      this.message.nativeElement.innerText = value.message
+        this.authService.setRequestMessage(value.body!.message)
     })).subscribe()
   }
 }

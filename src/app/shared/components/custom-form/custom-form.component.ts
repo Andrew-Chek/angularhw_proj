@@ -28,13 +28,15 @@ export class CustomFormComponent implements OnInit {
   public newPassword: string = '';
   public errorsChecked = false;
 
-  constructor(private authService: AuthService, private questionControlService: QuestionControlService) { }
+  constructor(private authService: AuthService, private questionControlService: QuestionControlService) {
+  }
 
   ngOnInit(): void {
     this.authService.openSubject.subscribe(value => {
       this.isRegister = value.register;
       this.isOpened = value.open;
     })
+    this.customForm = this.questionControlService.toFormGroup(this.questions);
   }
 
   sendData()
@@ -48,7 +50,7 @@ export class CustomFormComponent implements OnInit {
         return;
       }
     })
-    if(!this.errorsChecked)
+    if(this.customForm.errors == null)
     {
       const fields = this.fieldNames.toArray();
       user.email = fields[0].nativeElement.value;

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { BoardsComponent } from './components/boards/boards.component';
 import { TasksComponent } from './components/tasks/tasks.component';
+import { PageNotFoundComponent } from 'src/app/shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
     path: 'board/:id',
     component: TasksComponent,
     canActivate: [AuthGuard]
+  },
+  { 
+    path: '**', 
+    pathMatch: 'full', 
+    component: PageNotFoundComponent 
   },
 ];
 
