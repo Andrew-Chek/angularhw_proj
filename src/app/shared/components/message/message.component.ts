@@ -28,6 +28,6 @@ export class MessageComponent implements OnInit {
 
   closePopup()
   {
-    this.authService.closeMessagePopup()
+    this.authService.setRequestMessage('');
   }
 }

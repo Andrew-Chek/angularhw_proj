@@ -22,7 +22,7 @@ export class ApproveFormComponent implements OnInit {
 
   closePopup()
   {
-    this.popupService.openDeleteForm();
+    this.popupService.closeDeleteForm();
   }
 
   sendData()

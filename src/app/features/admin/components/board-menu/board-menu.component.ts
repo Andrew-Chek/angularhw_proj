@@ -57,7 +57,7 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
     })).subscribe(value => {
       setTimeout(() => {
         this.router.navigate(['admin/board', board._id])
-      }, 150)
+      }, 300)
     })
   }
 

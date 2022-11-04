@@ -54,8 +54,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       })
     ).subscribe(value => {
       setTimeout(() => {
-        this.router.navigate(['/board', this.board._id])
-      }, 150)
+        this.router.navigate(['admin/board', this.board._id])
+      }, 300)
     })
   }
 
@@ -65,7 +65,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.popupService.openEditBoardForm();
   }
 
-  openDeleteForm()
+  openDeleteBoardForm()
   {
     this.adminService.setCurrentBoard({...this.board});
     this.popupService.openDeleteBoardForm();

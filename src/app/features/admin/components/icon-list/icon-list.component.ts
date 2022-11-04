@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { take } from 'rxjs';
+import { AuthService } from 'src/app/features/auth/auth.service';
 
 @Component({
   selector: 'app-icon-list',
@@ -8,9 +10,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class IconListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+
+  logout()
+  {
+    this.authService.logout().pipe(take(1)).subscribe();
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, catchError, delay, Observable, of, tap, throwError} from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Message } from 'src/app/Message';
+import { Board } from 'src/app/Board';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AuthService {
   apiUrl = 'http://localhost:8080/api'
   resetFlag = false;
   registerFlag = false;
+  isDisplayed = false;
   openSubject = new BehaviorSubject<{reset: boolean, register: boolean, open : boolean}>({reset: false, register: false, open: false});
   messageSubject = new BehaviorSubject({isDisplayed: false, message: 'value', error: false})
 
@@ -38,7 +40,9 @@ export class AuthService {
         observe: 'response'
       }).pipe(
         catchError((error) => {
-          this.messageSubject.next({isDisplayed: true, message: error.error.message as string, error: true})
+          this.setRequestMessage(error.error.message)
+          this.isDisplayed = !this.isDisplayed;
+          this.messageSubject.next({isDisplayed: this.isDisplayed, message: error.error.message as string, error: true})
           return throwError(() => {new Error('Something bad happened; please try again later.')})
       }))
   }
@@ -50,7 +54,8 @@ export class AuthService {
         observe: 'response'
       }).pipe(
         catchError((error) => {
-          this.messageSubject.next({isDisplayed: true, message: error.error.message as string, error:true})
+          this.isDisplayed = !this.isDisplayed;
+          this.messageSubject.next({isDisplayed: this.isDisplayed, message: error.error.message as string, error: true})
           return throwError(() => {new Error('Something bad happened; please try again later.')})
       }))
   }
@@ -78,12 +83,8 @@ export class AuthService {
 
   setRequestMessage(message: string)
   {
-    this.messageSubject.next({isDisplayed: true, message: message, error: false})
-  }
-
-  closeMessagePopup()
-  {
-    this.messageSubject.next({isDisplayed: false, message: '', error: false});
+    this.isDisplayed = !this.isDisplayed;
+    this.messageSubject.next({isDisplayed: this.isDisplayed, message: message, error: false})
   }
 }
 

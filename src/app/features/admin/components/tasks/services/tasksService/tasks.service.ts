@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { mergeMap, of } from 'rxjs';
+import { catchError, mergeMap, of } from 'rxjs';
 import { Task } from 'src/app/Task';
 import { Board } from 'src/app/Board';
 import { TaskObject, TasksObject } from '../../../../admin.service';
@@ -24,22 +24,8 @@ export class TasksService {
       }).pipe(
         mergeMap(tasksObj => {
           return of(tasksObj.tasks);
-        })
-      )
-  }
-
-  getTasksByStatus(board_id:string, status:string) {
-    return this.http.get<TasksObject>(
-      `${this.apiUrl}/tasks/${board_id}`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-        params: {
-          status
-        }
-      }).pipe(
-        mergeMap(tasksObj => {
-          return of(tasksObj.tasks);
-        })
+        }),
+        catchError(error => {throw new Error(error.message)})
       )
   }
 

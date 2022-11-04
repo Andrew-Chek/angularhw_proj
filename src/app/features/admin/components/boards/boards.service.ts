@@ -15,10 +15,7 @@ export class BoardsService {
 
   getBoards() {
     return this.http.get<BoardsObject>(
-      `${this.apiUrl}/boards`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-      }).pipe(
+      `${this.apiUrl}/boards`).pipe(
         mergeMap((boardsObj) => {
           return of(boardsObj.boards)
         })
@@ -27,10 +24,7 @@ export class BoardsService {
 
   getBoard(id: string) {
     return this.http.get<BoardObject>(
-      `${this.apiUrl}/boards/${id}`,
-      {
-        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
-      }).pipe(
+      `${this.apiUrl}/boards/${id}`).pipe(
         mergeMap((boardObj) => {
           return of(boardObj.board)
       }))
@@ -39,23 +33,17 @@ export class BoardsService {
   createBoard(board:Board)
   {
     return this.http.post<Message>(`${this.apiUrl}/boards`, 
-    {name: board.name, description: board.description}, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
-    })
+    {name: board.name, description: board.description})
   }
 
   updateBoard(board:Board)
   {
     return this.http.put<Message>(`${this.apiUrl}/boards/${board._id}`, 
-    {name: board.name, desciption: board.description}, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
-    })
+    {name: board.name, desciption: board.description})
   }
 
   deleteBoard(board:Board | undefined)
   {
-    return this.http.delete<Message>(`${this.apiUrl}/boards/${board?._id}`, {
-      headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`}
-    })
+    return this.http.delete<Message>(`${this.apiUrl}/boards/${board?._id}`)
   }
 }

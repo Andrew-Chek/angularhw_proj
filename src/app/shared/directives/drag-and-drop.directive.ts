@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { fromEvent, map, mergeMap, Observable, of, Subscription, switchMap, take, takeUntil } from 'rxjs';
+import { fromEvent, map, mergeMap, Observable, of, Subscription, switchMap, take, tap, takeUntil } from 'rxjs';
 import { AdminService } from 'src/app/features/admin/admin.service';
 import { Task } from 'src/app/Task';
 import { PopupService } from '../services/popupService/popup.service';
@@ -23,16 +23,17 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     const element = this.elementRef.nativeElement as HTMLElement
     const id = element.getAttribute('data-task-id')!
-    const name = element.getAttribute('data-task-name')!
-    const description = element.getAttribute('data-task-description')!
-    const status = element.getAttribute('data-task-status')!
-    const assigned_to = element.getAttribute('data-task-assigned_to')!
-    const created_date = element.getAttribute('data-task-created_date')!
-    const board_id = element.getAttribute('data-task-board_id')!
-    const isArchived = element.getAttribute('data-task-archived')! == 'true'
-    const task: Task = {_id: id, name, description, status, assigned_to, board_id, created_date, isArchived}
-    this.task$ = of(task)
+    this.task$ = this.adminService.state$
+    .pipe(
+      map(value => {
+      const task = value.tasks.find(task => task._id == id)!
+      return task
+    }));
     this.initDrag();
+  }
+  
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => s?.unsubscribe());
   }
 
   initDrag(): void {
@@ -44,21 +45,21 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
       switchMap(event => {
         if(event.clientX > todoWidth.leftX && event.clientX < todoWidth.rightX)
         {
-          this.task$.subscribe(task => {
+          this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'To do'
             this.adminService.updateTask({...task});
           })
         }
         else if(event.clientX > inProgressWidth.leftX && event.clientX < inProgressWidth.rightX)
         {
-          this.task$.subscribe(task => {
+          this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'In progress'
             this.adminService.updateTask({...task});
           })
         }
         else if(event.clientX > doneWidth.leftX && event.clientX < doneWidth.rightX)
         {
-          this.task$.subscribe(task => {
+          this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'Done'
             this.adminService.updateTask({...task});
           })
@@ -111,9 +112,5 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push.apply(this.subscriptions, [
       dragStartSub,
     ]);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((s) => s?.unsubscribe());
   }
 }

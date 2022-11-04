@@ -63,7 +63,8 @@ export class AdminService extends Store<DashboardState> {
   createBoard(board:Board)
   {
     this.boardApi.createBoard(board)
-    .pipe(mergeMap(message => {
+    .pipe(
+      mergeMap(message => {
       return this.boardApi.getBoards()
     })).subscribe(value => {
       this.setState({
@@ -101,16 +102,6 @@ export class AdminService extends Store<DashboardState> {
 
   getTasks(board_id:string) {
     this.taskApi.getTasks(board_id).subscribe((value => {
-      this.setState({
-        ...this.state,
-        tasks: value
-      });
-    }))
-    return this.tasks$;
-  }
-
-  getTasksByStatus(board_id:string, status:string) {
-    this.taskApi.getTasksByStatus(board_id, status).subscribe((value => {
       this.setState({
         ...this.state,
         tasks: value
@@ -205,28 +196,11 @@ export class AdminService extends Store<DashboardState> {
     })
   }
 
-  setCurrentValues(board: Board, task: Task)
-  {
-    this.setState({
-      ...this.state,
-      task: task,
-      board: board
-    });
-  }
-
   setCurrentTask(task: Task)
   {
     this.setState({
       ...this.state,
       task: task
-    });
-  }
-
-  setCurrentTasks(tasks: Task[])
-  {
-    this.setState({
-      ...this.state,
-      tasks: tasks
     });
   }
 
@@ -239,34 +213,22 @@ export class AdminService extends Store<DashboardState> {
   }
 }
 
-export class BoardsObject{
-  constructor(boards:Board[])
-  {
-    this.boards = boards;
-  }
-  public boards:Board[];
+export interface BoardsObject{
+  boards: Board[];
+  message: string;
 }
 
-export class TasksObject{
-  constructor(tasks:Task[])
-  {
-    this.tasks = tasks;
-  }
-  public tasks:Task[];
+export interface TasksObject{
+  tasks: Task[];
+  message: string;
 }
 
-export class TaskObject{
-  constructor(task:Task)
-  {
-    this.task = task;
-  }
-  public task:Task;
+export interface TaskObject{
+  task: Task;
+  message: string;
 }
 
-export class BoardObject{
-  constructor(board:Board)
-  {
-    this.board = board;
-  }
-  public board:Board;
+export interface BoardObject{
+  board: Board;
+  message: string;
 }

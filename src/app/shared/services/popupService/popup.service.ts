@@ -8,18 +8,23 @@ import { Task } from '../../../Task';
 })
 export class PopupService extends Store<PopupState> {
 
-  private openCreateBoard: boolean = false;
-  private openEditBoard:boolean = false;
-  private openDeleteBoard:boolean = false;
+  public openCreateBoard: boolean = false;
+  public openEditBoard:boolean = false;
+  public openDeleteBoard:boolean = false;
 
-  private openCreateTask:boolean = false;
-  private openEditTask:boolean = false;
-  private openDeleteTask:Boolean = false;
-  private openDelete:boolean = false;
-  private isDraged = false;
+  public openCreateTask:boolean = false;
+  public openEditTask:boolean = false;
+  public openDeleteTask:Boolean = false;
+  public openDelete:boolean = false;
+  public isDraged = false;
 
   public sortParams = new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Task, sortOrder: 'asc' | 'desc'}>({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
   public statusColors = new BehaviorSubject({color1: '#ffffff', color2: '#ffffff', color3: '#ffffff'});
+
+  constructor(){
+    super({openCreateBoard: false, openCreateTask: false, openEditBoard: false, 
+    openDeleteTask: false, openDeleteBoard: false, openEditTask: false, openDelete: false, isDraged: false})
+  }
 
   setDefault()
   {
@@ -38,7 +43,7 @@ export class PopupService extends Store<PopupState> {
     {
       value.color2 = color;
     }
-    else
+    else if(order == 2)
     {
       value.color3 = color;
     }
@@ -97,7 +102,7 @@ export class PopupService extends Store<PopupState> {
     this.openDelete = !this.openDelete;
   }
   
-  openDeleteForm()
+  closeDeleteForm()
   {
     if(this.openDeleteBoard)
     {
