@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeModule } from './features/home/home.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,7 +17,6 @@ import { AuthInterceptorService } from './shared/interceptors/http-interceptor';
   imports: [
     BrowserModule,
     HttpClientModule,
-    HomeModule,
     CoreModule,
     AppRoutingModule,
     ReactiveFormsModule,

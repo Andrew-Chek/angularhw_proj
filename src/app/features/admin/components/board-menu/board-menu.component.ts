@@ -48,29 +48,13 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
 
   setTasks(board:Board)
   {
-    this.adminService.getTasks(board._id).pipe(
-      concatMap(value => {
-        return this.adminService.getBoard(board._id)
-      }),
-      concatMap((value) => {
-        return of("Succesfully set")
-    })).subscribe(value => {
-      setTimeout(() => {
-        this.router.navigate(['admin/board', board._id])
-      }, 300)
-    })
+    this.router.navigate(['admin/board', board._id])
   }
 
   openBoardList()
   {
     this.bList = !this.bList;
     this.openBoards = !this.openBoards;
-  }
-
-  openCreateForm()
-  {
-    this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
-    this.popupService.openCreateBoardForm();
   }
 
   getTasksCount(status:string)

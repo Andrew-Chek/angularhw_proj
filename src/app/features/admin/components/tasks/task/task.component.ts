@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { Task } from 'src/app/Task';
 import { AdminService } from '../../../admin.service';
@@ -10,10 +11,13 @@ import { AdminService } from '../../../admin.service';
 })
 export class TaskComponent implements OnInit, OnDestroy {
 
-  @Input() task :Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', isArchived: false, created_date:''};
+  @Input() task :Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', comments: [], status: '', isArchived: false, created_date:''};
   public isPressed = false;
 
-  constructor(private adminService: AdminService, private popupService: PopupService) { }
+  constructor(private adminService: AdminService, 
+    private popupService: PopupService, 
+    private router: Router
+    ) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +45,12 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.adminService.getBoard(this.task.board_id).subscribe();
     this.adminService.setCurrentTask({...this.task});
     this.popupService.openDeleteTaskForm();
+  }
+
+  openTaskPage()
+  {
+    this.adminService.setCurrentTask(this.task);
+    this.router.navigate(['admin/task', this.task._id])
   }
 
   archiveTask() {

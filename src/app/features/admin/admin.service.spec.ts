@@ -12,7 +12,7 @@ describe('AdminService', () => {
   let service: AdminService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const apiUrl = 'http://localhost:8080/api';
+  const apiUrl = 'https://n-npb6.onrender.com/api';
   let copiedBoards: Board[] = [...boards]
   let copiedTasks: Task[] = [...tasks]
   let currentBoard: Board = copiedBoards.find(board => board._id == '1')!;
@@ -209,7 +209,8 @@ describe('AdminService', () => {
 
   describe('#createTask', () => {
     it('should update state properly', () => {
-      const task: Task = {_id: '15', name: 'new board', board_id: '1', assigned_to: '', description: 'hello there', status: 'To do', isArchived: false, created_date: '15/12/2003'};
+      const task: Task = {_id: '15', name: 'new board', board_id: '1', assigned_to: '', description: 'hello there', status: 'To do', isArchived: false, created_date: '15/12/2003',
+      comments: []};
       service.createTask(task)
       copiedTasks.push(task)
 
@@ -226,7 +227,8 @@ describe('AdminService', () => {
 
   describe('#updateTask', () => {
     it('should update state as expected', () => {
-      const updatedTask: Task = {_id: '5', name: 'new board', status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
+      const updatedTask: Task = {_id: '5', name: 'new board', status: 'In progress',
+        comments: [], isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
       service.updateTask(updatedTask)
       const updatedTasks = copiedTasks.map(currentTask => {
         currentTask._id == updatedTask._id ? currentTask = updatedTask: currentTask = currentTask
@@ -244,7 +246,8 @@ describe('AdminService', () => {
     })
 
     it('should get unchanged state', () => {
-      const updatedTask: Task = {_id: '15', name: 'new board', status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
+      const updatedTask: Task = {_id: '15', name: 'new board', status: 'In progress', isArchived: false,
+      comments: [], board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
       service.updateTask(updatedTask)
       const updatedTasks = copiedTasks.map(currentTask => {
         currentTask._id == updatedTask._id ? currentTask = updatedTask: currentTask = currentTask
@@ -265,7 +268,8 @@ describe('AdminService', () => {
   describe('#deleteTask', () => {
     it('should update state as expected', () => {
       const deletedTask: Task = 
-        {_id: '5', name: 'new board', status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
+        {_id: '5', name: 'new board', status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1',
+        comments: [], description: 'hello there', created_date: '15/12/2003'};
       service.deleteTask(deletedTask)
       const updatedTasks = copiedTasks.map(currentTask => {
         currentTask._id == deletedTask._id ? copiedTasks.splice(copiedTasks.indexOf(currentTask), 1): currentTask = currentTask
@@ -284,7 +288,8 @@ describe('AdminService', () => {
 
     it('should get unchanged state', () => {
       const deletedTask: Task = 
-        {_id: '5', name: 'new board', status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
+        {_id: '5', name: 'new board',
+        comments: [], status: 'In progress', isArchived: false, board_id: '2', assigned_to: '1', description: 'hello there', created_date: '15/12/2003'};
       service.deleteTask(deletedTask)
       const updatedTasks = copiedTasks.map(currentTask => {
         currentTask._id == deletedTask._id ? copiedTasks.splice(copiedTasks.indexOf(currentTask), 1): currentTask = currentTask

@@ -11,7 +11,7 @@ describe('TasksService', () => {
   let service: BoardsService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  const apiUrl = 'http://localhost:8080/api';
+  const apiUrl = 'https://n-npb6.onrender.com/api';
   let copiedBoards: Board[] = [...boards]
 
   beforeEach(() => {

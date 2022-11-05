@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, Output, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, map, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
@@ -94,7 +95,17 @@ export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   openCreateTaskForm()
   {
-    this.adminService.setCurrentTask({_id: '', name: '', description: '', status: this.status.value, assigned_to: '', board_id: '', isArchived: false, created_date: ''})
+    this.adminService.setCurrentTask({
+      _id: '', 
+      name: '', 
+      description: '', 
+      status: this.status.value, 
+      assigned_to: '', 
+      board_id: '', 
+      comments: [], 
+      isArchived: false, 
+      created_date: ''
+    })
     this.popupService.openCreateTaskForm();
   }
 }

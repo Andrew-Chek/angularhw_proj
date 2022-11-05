@@ -75,6 +75,20 @@
             padding: 10px 5px;
             word-wrap: break-word;
         }
+        .info-count {
+            text-align: start;
+            color: var(--board-gray);
+            font-size: 18px;
+            padding: 3px 5px;
+            word-wrap: break-word;
+            &-num {
+                font: {
+                    size: 18px;
+                    font-weight: 600;
+                }
+                color: var(--text-color);
+            }
+        }
         .info-date {
             padding: 5px 10px;
             border: 1px solid var(--gray);

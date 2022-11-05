@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { StatusBoardComponent } from './components/tasks/status-board/status-board.component';
 import { SortByPipe } from './pipes/sort-by.pipe';
+import { TaskPageComponent } from './components/tasks/task-page/task-page.component';
 
 
 
@@ -26,6 +27,7 @@ import { SortByPipe } from './pipes/sort-by.pipe';
     BoardMenuComponent,
     StatusBoardComponent,
     SortByPipe,
+    TaskPageComponent,
   ],
   imports: [
     CommonModule,

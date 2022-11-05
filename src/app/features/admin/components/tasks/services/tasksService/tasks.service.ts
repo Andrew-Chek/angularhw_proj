@@ -11,7 +11,7 @@ import { Message } from 'src/app/Message';
 })
 export class TasksService {
 
-  private apiUrl:string = 'http://localhost:8080/api';
+  private apiUrl:string = 'https://n-npb6.onrender.com/api';
   public board:Board = {_id:'', name: '', description: '', created_date: ''};
   constructor(private http:HttpClient) {
   }
@@ -52,7 +52,7 @@ export class TasksService {
   {
     return this.http.put<Task>(
       `${this.apiUrl}/tasks/${task._id}`, 
-      {name: task.name, description: task.description, status: task.status, isArchived: task.isArchived},
+      {name: task.name, description: task.description, status: task.status, isArchived: task.isArchived, comments: task.comments},
       {
         headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
     })

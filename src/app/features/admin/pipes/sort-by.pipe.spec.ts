@@ -1,20 +1,20 @@
 import { SortByPipe } from './sort-by.pipe';
-import { tasks } from '../../../shared/testingData/tasksMock';
+import { tasksForSort } from '../../../shared/testingData/pipeData/tasksForSort';
 import { sortedTasks } from '../../../shared/testingData/pipeData/sortedTasksMock';
 import { descNameTasks } from 'src/app/shared/testingData/pipeData/tasksByDescName';
 import { ascDropdownTasks } from 'src/app/shared/testingData/pipeData/ascDropdownTasks';
 import { descDropdownTasks } from 'src/app/shared/testingData/pipeData/descDropdownTasks';
-import { boards } from 'src/app/shared/testingData/boardsMock';
+import { boardsForSort } from 'src/app/shared/testingData/pipeData/boardsForSort';
 import { descDropdownBoards } from 'src/app/shared/testingData/pipeData/descDropdownBoards';
 
 describe('SortByPipe', () => {
   let sortPipe: SortByPipe;
-  let copiedTasks = [...tasks];
-  let copiedBoards = [...boards]
+  let copiedTasks = [...tasksForSort];
+  let copiedBoards = [...boardsForSort]
   beforeEach(() => {
     sortPipe = new SortByPipe();
-    copiedTasks = [...tasks];
-    copiedBoards = [...boards]
+    copiedTasks = [...tasksForSort];
+    copiedBoards = [...boardsForSort]
   })
 
   it('transform data of tasks as expected by asc name', () => {

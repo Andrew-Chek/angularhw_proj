@@ -11,7 +11,7 @@ describe('TasksService', () => {
   let service: TasksService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
-  let apiUrl = 'http://localhost:8080/api';
+  let apiUrl = 'https://n-npb6.onrender.com/api';
   let copiedTasks: Task[] = [...tasks]
 
   beforeEach(() => {
@@ -223,7 +223,7 @@ describe('TasksService', () => {
     })
 
     it('should throw error with empty task', () => {
-      const task: Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date: '', isArchived: false}
+      const task: Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date: '', comments: [],isArchived: false}
       const data = `Task values cannot be empty`
       const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
       let errResponse:string = '';
@@ -319,7 +319,7 @@ describe('TasksService', () => {
     })
 
     it('should throw error with empty task', () => {
-      const task: Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date: '', isArchived: false}
+      const task: Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', comments: [], created_date: '', isArchived: false}
       const data = `Task values cannot be empty`
       const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
       let errResponse:string = '';

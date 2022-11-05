@@ -1,6 +1,6 @@
 <article class="task" [ngClass]="{archive: task.isArchived}">
     <section class="task-general">
-        <h3 class="general__name">{{task.name}}</h3>
+        <h3 class="general__name" (click)="openTaskPage()">{{task.name}}</h3>
         <div class="task-more more">
             <section class="more-btns">
                 <mat-icon class="more-drag">open_with</mat-icon>
@@ -16,6 +16,7 @@
     </section>
     <section class="task-info">
         <p class="info-desc">{{task.description}}</p>
+        <p *ngIf="task.comments != undefined" class="info-count">Comments count: <span class="info-count-num">{{task.comments!.length}}</span></p>
         <p class="info-date">{{task.created_date | date:"dd/MM/yyyy"}}</p>
     </section>
 </article>

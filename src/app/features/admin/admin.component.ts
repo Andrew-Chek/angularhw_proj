@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Observable, Subscription} from 'rxjs';
 import { Board } from 'src/app/Board';
 import { Task } from 'src/app/Task';
-import { Message } from 'src/app/Message';
 import { AdminService } from './admin.service';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import jwt_decode from 'jwt-decode';
@@ -18,7 +17,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   protected username: string;
 
   public board:Board | undefined = {_id:'', name: '', description: '', created_date: ''};
-  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''};
+  public task:Task = {_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, comments: [], created_date: ''};
 
   protected openDelete: boolean = false;
 
@@ -100,7 +99,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   {
     this.adminService.deleteTask(this.task);
     this.popupService.openDeleteTaskForm()
-    this.adminService.setCurrentTask({_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, created_date: ''});
+    this.adminService.setCurrentTask({_id:'', name: '', description: '', status: '', board_id: '', assigned_to: '', isArchived: false, comments: [], created_date: ''});
   }
 
   deleteItem()

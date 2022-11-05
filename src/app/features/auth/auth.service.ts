@@ -11,7 +11,7 @@ import { Board } from 'src/app/Board';
 export class AuthService {
   isAuthorized = false;
   redirectUrl: string = '/admin';
-  apiUrl = 'http://localhost:8080/api'
+  apiUrl = 'https://n-npb6.onrender.com/api'
   resetFlag = false;
   registerFlag = false;
   isDisplayed = false;

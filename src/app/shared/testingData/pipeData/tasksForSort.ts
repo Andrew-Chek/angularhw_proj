@@ -1,6 +1,6 @@
 import { Task } from "src/app/Task";
 
-export const tasks: Task[] = [
+export const tasksForSort: Task[] = [
     {
         _id: '2',
         name: 'task2',

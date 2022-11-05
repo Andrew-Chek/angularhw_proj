@@ -32,12 +32,6 @@ export class BoardsComponent implements OnInit, OnDestroy {
     this.adminStateSubscription.unsubscribe();
   }
 
-  openCreateForm()
-  {
-    this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
-    this.popupService.openCreateBoardForm();
-  }
-
   filterBoards(value: string)
   {
     if(value == '')

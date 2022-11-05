@@ -7,4 +7,9 @@ export interface Task{
     assigned_to: string;
     created_date:string;
     isArchived: boolean;
+    comments: {
+        title:string, 
+        message:string,
+        created_date: string
+    }[]
 }

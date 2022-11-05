@@ -9,7 +9,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '1', 
       created_date: '09/10/2020', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '8', 
@@ -19,7 +20,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '2', 
       created_date: '15/05/2020', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '7', 
@@ -29,7 +31,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '1', 
       created_date: '06/12/2018', 
-      isArchived: true
+      isArchived: true,
+      comments: []
    }, 
    {
       _id: '6', 
@@ -39,7 +42,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '2', 
       created_date: '15/12/2021', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '5', 
@@ -49,7 +53,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '2', 
       created_date: '18/12/2020', 
-      isArchived: true
+      isArchived: true,
+      comments: []
    }, 
    {
       _id: '4', 
@@ -59,7 +64,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '2', 
       created_date: '15/12/2021', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '3', 
@@ -69,7 +75,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '1', 
       created_date: '15/12/2020', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '2', 
@@ -79,7 +86,8 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '1', 
       created_date: '17/12/2020', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }, 
    {
       _id: '1', 
@@ -89,6 +97,7 @@ export const descNameTasks: Task[] = [
       assigned_to: '1', 
       board_id: '1', 
       created_date: '15/12/2020', 
-      isArchived: false
+      isArchived: false,
+      comments: []
    }
 ]

@@ -7,9 +7,9 @@
         </div>
     </div>
     <aside class="dashboard-tools tools">
-        <ul class="tools-list">
+        <article class="tools-list">
             <input class="tools-list-li filter" type="text" placeholder="Filter me" #filterInput (change)="sendFilterData(filterInput.value)">
-            <li class="tools-list-li sort-tools">
+            <aside class="tools-list-li sort-tools">
                 <section class="tools-list-li-order">
                     <p class="tools-list-li-order-pgh">Sort by</p>
                     <mat-icon class="tools-list-li-order-icon sort-hover" (click)="setOrder('asc')">arrow_upward</mat-icon>
@@ -19,7 +19,7 @@
                     <p class="tools-list-li-params-pgh sort-hover" (click)="setPropertyName('created_date')">Dropdown</p>
                     <p class="tools-list-li-params-pgh sort-hover" (click)="setPropertyName('name')">Name</p>
                 </section>
-            </li>
-        </ul>
+            </aside>
+        </article>
     </aside>
 </section>

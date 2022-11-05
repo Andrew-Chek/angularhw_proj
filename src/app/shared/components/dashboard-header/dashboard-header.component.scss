@@ -59,9 +59,6 @@
                     padding: 4px;
                     border: 1px solid var(--gray);
                     border-radius: 10px;
-                    position: relative;
-                    bottom: -50px;
-                    left: -60%;
                     background-color: #fff;
                 }
             }
@@ -73,6 +70,12 @@
             }
             .filter::placeholder{
                 color: var(--gray)
+            }
+            .sort-tools {
+                display: flex;
+                flex-direction: column;
+                position: relative;
+                top: 44px;
             }
             .sort-tools:hover {
                 .tools-list-li-params {

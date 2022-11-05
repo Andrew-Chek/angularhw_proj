@@ -45,18 +45,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   
   setTasks()
   {
-    this.adminService.getTasks(this.board._id).pipe(
-      concatMap(value => {
-        return this.adminService.getBoard(this.board._id)
-      }),
-      concatMap((value) => {
-        return of("Succesfully set")
-      })
-    ).subscribe(value => {
-      setTimeout(() => {
-        this.router.navigate(['admin/board', this.board._id])
-      }, 300)
-    })
+    this.router.navigate(['admin/board', this.board._id])
   }
 
   openEditForm()

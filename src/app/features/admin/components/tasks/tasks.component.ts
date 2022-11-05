@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChildren, ElementRef, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren, ElementRef, QueryList, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { mergeMap, Observable, of, Subscription} from 'rxjs';
 import { Board } from 'src/app/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
 import { Task } from 'src/app/Task';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -19,10 +20,14 @@ export class TasksComponent implements OnInit, OnDestroy {
   public statuses = [{value: 'To do', color: '#ffffff'}, {value: 'In progress', color: '#ffffff'}, {value: 'Done', color: '#ffffff'}];
 
   private adminStateSubscription = new Subscription();
+  protected snapshot! : ActivatedRouteSnapshot;
+  protected currentRouteId!: string;
 
   constructor(private adminService: AdminService,
-    private popupService: PopupService) {
-  }
+    private popupService: PopupService, private activatedRoute: ActivatedRoute) {
+      this.snapshot = activatedRoute.snapshot;
+      this.currentRouteId = this.snapshot.paramMap.get('id')!;
+    }
 
   ngOnInit(): void {
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {

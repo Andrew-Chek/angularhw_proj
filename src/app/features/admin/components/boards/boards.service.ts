@@ -10,7 +10,7 @@ import { BoardObject, BoardsObject } from '../../admin.service';
 })
 export class BoardsService {
 
-  private apiUrl:string = 'http://localhost:8080/api';
+  private apiUrl:string = 'https://n-npb6.onrender.com/api';
   constructor(private http:HttpClient) { }
 
   getBoards() {
