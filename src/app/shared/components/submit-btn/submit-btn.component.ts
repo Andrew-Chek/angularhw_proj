@@ -8,14 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class SubmitBtnComponent implements OnInit {
 
 	@Input() buttonText:string = ''
-	public style = false;
-	public submitStyle = !this.style;
-
-	@Input()
-	set styleFlag(style: boolean) {
-		this.style = style;
-		this.submitStyle = !style
-	}
+	@Input() style = false;
 
 	@Output() btnClick = new EventEmitter();
 

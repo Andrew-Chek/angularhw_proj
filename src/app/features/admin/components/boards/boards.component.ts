@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { mergeMap, Observable, of, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
-import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class BoardsComponent implements OnInit, OnDestroy {
 
   private adminStateSubscription = new Subscription();
 
-  constructor(public adminService: AdminService, private popupService: PopupService) {
+  constructor(public adminService: AdminService) {
     this.boards$ = this.adminService.boards$;
   }
 

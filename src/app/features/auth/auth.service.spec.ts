@@ -264,4 +264,13 @@ describe('AuthService', () => {
       expect(service.messageSubject.getValue()).toEqual({isDisplayed: false, message: 'tested message', error: false});
     })
   })
+
+  describe('#closeMessage', () => {
+    it('should set isDisplayed to false and update state in service', () => {
+      service.isDisplayed = true;
+      service.closeMessage();
+      expect(service.isDisplayed).toEqual(false);
+      expect(service.messageSubject.getValue()).toEqual({isDisplayed: false, message: '', error: false});
+    })
+  })
 });

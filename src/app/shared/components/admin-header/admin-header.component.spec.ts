@@ -17,7 +17,19 @@ describe('AdminHeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('#username', () => {
+    it('should set expected username', () => {
+      component.username = 'test username'
+      fixture.detectChanges();
+      const title = fixture.nativeElement.querySelector('.admin-title') as HTMLElement;
+      expect(title.textContent).toContain(component.username);
+    });
+
+    it('should set empty username', () => {
+      component.username = ''
+      fixture.detectChanges();
+      const title = fixture.nativeElement.querySelector('.admin-title') as HTMLElement;
+      expect(title.textContent).toEqual('Welcome back, ');
+    });
+  })
 });

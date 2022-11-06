@@ -27,7 +27,7 @@
             </div>
         </div>
     </section>
-    <app-submit-btn class="board-form-submit" buttonText="{{submitText}}" [styleFlag]="false" (btnClick)="sendForm()"></app-submit-btn>
+    <app-submit-btn class="board-form-submit" buttonText="{{submitText}}" [style]="false" (btnClick)="sendForm()"></app-submit-btn>
     <div *ngIf="name?.invalid && (name?.dirty || name?.touched) || description?.invalid && (description?.dirty || description?.touched) || checkErrors" class="alert-danger">
         Cannot send data, errors detected
     </div>

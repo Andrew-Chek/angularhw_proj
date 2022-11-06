@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Board } from 'src/app/Board';
 import { AdminService } from 'src/app/features/admin/admin.service';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
@@ -14,15 +13,11 @@ export class DashboardHeaderComponent implements OnInit {
   @Input() headerType:string = ''
   public propertyName:keyof Board = 'name'
   public order: 'asc' | 'desc' = 'asc'
-  public currentRouteId!: string;
 
   @Output() sentSortBoardParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
   @Output() sentFilterData = new EventEmitter<string>();
 
-  constructor(private popupService:PopupService, protected adminService: AdminService, 
-      private router: Router, private route: ActivatedRoute) {
-    const snapshot = route.snapshot;
-    this.currentRouteId = snapshot.paramMap.get('id')!
+  constructor(private popupService:PopupService, protected adminService: AdminService) {
   }
 
   ngOnInit(): void {
@@ -52,7 +47,6 @@ export class DashboardHeaderComponent implements OnInit {
     if(this.headerType == 'Dashboard')
     {
       this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
-      this.router.navigateByUrl('/admin')
       this.popupService.openCreateBoardForm();
     }
     else

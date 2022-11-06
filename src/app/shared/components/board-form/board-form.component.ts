@@ -81,22 +81,19 @@ export class BoardFormComponent implements OnInit {
 
   sendForm()
   {
-    if(this.name?.value != null && this.description?.value != null && this.board != undefined)
-    {
-      this.board.name = this.name.value;
-      this.board.description = this.description.value;
-      if(this.name.errors || this.description.errors ||
-        this.board.name == '' || this.board.description == '')
-        {
-          this.checkErrors = true;
-        }
-      else
+    this.board.name = this.name?.value!;
+    this.board.description = this.description?.value!;
+    if(this.name?.errors || this.description?.errors ||
+      this.board.name == '' || this.board.description == '')
       {
-        this.sentData.emit(this.board)
-        this.board.name = '';
-        this.board.description = '';
-        this.checkErrors = false;
+        this.checkErrors = true;
       }
+    else
+    {
+      this.sentData.emit(this.board)
+      this.board.name = '';
+      this.board.description = '';
+      this.checkErrors = false;
     }
   }
 }

@@ -19,5 +19,4 @@ export class IconListComponent implements OnInit {
   {
     this.authService.logout().pipe(take(1)).subscribe();
   }
-
 }

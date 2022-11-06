@@ -85,32 +85,28 @@ export class TaskFormComponent implements OnInit {
 
   sendForm()
   {
-    if(this.name?.value != null && this.description?.value != null 
-        && this.status?.value != null)
+    this.task.name = this.name!.value!;
+    this.task.description = this.description!.value!;
+    this.task.status = this.status!.value!;
+    const adminSubscription = this.adminService.state$.pipe(
+      tap(value => {
+        if(value.board != undefined)
+        {
+          this.task.board_id = value.board._id;
+        }
+    })).subscribe();
+    if(this.name!.errors || this.description!.errors || this.status!.errors ||
+      this.task.name == '' || this.task.description == '' || this.task.status == '')
     {
-      this.task.name = this.name.value;
-      this.task.description = this.description.value;
-      this.task.status = this.status.value;
-      const adminSubscription = this.adminService.state$.pipe(
-        tap(value => {
-          if(value.board != undefined)
-          {
-            this.task.board_id = value.board._id;
-          }
-      })).subscribe();
-      if(this.name.errors || this.description.errors || this.status.errors ||
-        this.task.name == '' || this.task.description == '' || this.task.status == '')
-      {
-        this.checkErrors = true;
-      }
-      else
-      {
-        this.sentData.emit(this.task)
-        this.task.name = '';
-        this.task.description = '';
-        this.checkErrors = false;
-      }
-      adminSubscription.unsubscribe();
+      this.checkErrors = true;
     }
+    else
+    {
+      this.sentData.emit(this.task)
+      this.task.name = '';
+      this.task.description = '';
+      this.checkErrors = false;
+    }
+    adminSubscription.unsubscribe();
   }
 }

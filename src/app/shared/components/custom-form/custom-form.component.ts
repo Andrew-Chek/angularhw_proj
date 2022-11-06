@@ -14,7 +14,7 @@ import { QuestionControlService } from '../../services/question-control/question
 export class CustomFormComponent implements OnInit {
   @ViewChildren('fieldName') fieldNames!: QueryList<ElementRef>;
 
-  @Input() questions!: QuestionBase<string>[];
+  @Input() questions: QuestionBase<string>[] = [];
   @Input() buttonName: string = '';
   @Input() formName: string = '';
 

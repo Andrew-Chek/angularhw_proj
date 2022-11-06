@@ -86,6 +86,12 @@ export class AuthService {
     this.isDisplayed = !this.isDisplayed;
     this.messageSubject.next({isDisplayed: this.isDisplayed, message: message, error: false})
   }
+
+  closeMessage()
+  {
+    this.isDisplayed = false;
+    this.messageSubject.next({isDisplayed: false, message: '', error: false})
+  }
 }
 
 export interface Token{
