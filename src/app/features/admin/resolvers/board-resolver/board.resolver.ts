@@ -5,17 +5,16 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Task } from 'src/app/Task';
+import { Board } from 'src/app/Board';
 import { AdminService } from '../../admin.service';
 
 @Injectable({ providedIn: 'root' })
-export class TasksResolver implements Resolve<Task[]> {
+export class BoardResolver implements Resolve<Board | undefined> {
   constructor(private service: AdminService) {}
 
   resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<Task[]>|Promise<Task[]>|Task[] {
-    return this.service.getTasks(route.paramMap.get('id')!);
+    route: ActivatedRouteSnapshot
+  ): Observable<Board | undefined>|Promise<Board | undefined>|Board {
+    return this.service.getBoard(route.paramMap.get('id')!);
   }
 }

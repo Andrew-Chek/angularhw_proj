@@ -91,7 +91,6 @@ describe('CustomFormComponent', () => {
   describe('#formWork', () => {
     it('test a form group element count', () => {
       const formElement = fixture.debugElement.nativeElement.querySelector('.custom')
-      console.log(formElement)
       const inputElements = formElement.querySelectorAll('.custom-input')
       expect(inputElements.length).toEqual(2)
     })
@@ -102,7 +101,6 @@ describe('CustomFormComponent', () => {
         email: '',
         password: '',
       }
-      console.log(formGroup.value)
       expect(formGroup.value).toEqual(formValues);
     })
 

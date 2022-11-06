@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 import { BoardsComponent } from './components/boards/boards.component';
 import { TasksComponent } from './components/tasks/tasks.component';
-import { PageNotFoundComponent } from 'src/app/shared/components/page-not-found/page-not-found.component';
 import { TaskPageComponent } from './components/tasks/task-page/task-page.component';
-import { BoardResolver } from './resolvers/board-resolver/board-resolver.resolver';
-import { TasksResolver } from './resolvers/tasks-resolver/tasks-resolver.resolver';
+import { BoardResolver } from './resolvers/board-resolver/board.resolver';
+import { TasksResolver } from './resolvers/tasks-resolver/tasks.resolver';
 
 
 const routes: Routes = [

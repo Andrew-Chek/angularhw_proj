@@ -27,7 +27,7 @@ export class AdminServiceMock {
   }
 
   getBoard(id: string) {
-    return of(boards.find(board => board._id == id));
+    return of(boards[0]);
   }
 
   createBoard(board:Board)
@@ -43,6 +43,7 @@ export class AdminServiceMock {
   }
 
   getTasks(board_id:string) {
+    return of(tasks)
   }
 
   getTask(id: string)

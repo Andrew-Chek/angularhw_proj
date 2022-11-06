@@ -1,9 +1,18 @@
 <article class="task-page">
     <section class="task-page-title">
-        <h3 class="task-page-name">{{task.name}}</h3>
         <p class="task-page-date">{{task.created_date | date:"dd/MM/yyyy"}}</p>
+        <h3 class="task-page-name">{{task.name}}</h3>
+        <div class="task-page-add">
+            <p class="task-page-add-desc">New comment</p>
+            <mat-icon class="task-page-add-icon">add</mat-icon>
+        </div>
     </section>
     <section class="comments">
-
+        <h3 *ngIf="task.comments == null || task.comments.length == 0">You can add some comments to this task</h3>
+        <article class="comment" *ngFor="let comment of task.comments">
+            <h4 class="comment-title">{{comment.title}}</h4>
+            <p class="comment-message">{{comment.message}}</p>
+            <p class="comment-date">{{comment.created_date | date:"dd/MM/yyyy"}}</p>
+        </article>
     </section>
 </article>
