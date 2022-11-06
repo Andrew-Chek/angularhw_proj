@@ -40,7 +40,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.canActivate(childRoute, state);
   }
 
-  private isAuthorized(url: string): boolean {
+  isAuthorized(url: string): boolean {
     if (this.authService.isAuthorized) return true;
 
     this.authService.redirectUrl = url;

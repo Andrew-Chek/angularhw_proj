@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AdminService } from 'src/app/features/admin/admin.service';
 import { AuthService } from 'src/app/features/auth/auth.service';
-import { Message } from 'src/app/Message';
 
 @Component({
   selector: 'app-message',
@@ -16,7 +13,7 @@ export class MessageComponent implements OnInit {
   public error = false;
 
   constructor(private authService:AuthService) {
-   }
+  }
 
    ngOnInit(): void {
     this.authService.messageSubject.subscribe(value => {

@@ -10,8 +10,8 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  public checkRegister:boolean = false;
-  public checkReset:boolean = false;
+  public checkRegister = false;
+  public checkReset = false;
   public message = ''
   public isDisplayed = false;
 
@@ -68,11 +68,6 @@ export class LoginComponent implements OnInit {
   openRegisterPopup()
   {
     this.authService.setRegisterFlag();
-  }
-
-  openResetPopup()
-  {
-    this.authService.setResetFlag();
   }
 
   sendRegisterRequest(user: {email: string, password: string, newPassword: string})
