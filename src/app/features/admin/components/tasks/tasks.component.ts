@@ -20,14 +20,9 @@ export class TasksComponent implements OnInit, OnDestroy {
   public statuses = [{value: 'To do', color: '#ffffff'}, {value: 'In progress', color: '#ffffff'}, {value: 'Done', color: '#ffffff'}];
 
   private adminStateSubscription = new Subscription();
-  protected snapshot! : ActivatedRouteSnapshot;
-  protected currentRouteId!: string;
 
-  constructor(private adminService: AdminService,
-    private popupService: PopupService, private activatedRoute: ActivatedRoute) {
-      this.snapshot = activatedRoute.snapshot;
-      this.currentRouteId = this.snapshot.paramMap.get('id')!;
-    }
+  constructor(private adminService: AdminService) {
+  }
 
   ngOnInit(): void {
     this.adminStateSubscription = this.adminService.state$.subscribe((value) => {
@@ -41,11 +36,6 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.adminStateSubscription.unsubscribe();
-  }
-
-  openCreateTaskForm()
-  {
-    this.popupService.openCreateTaskForm();
   }
 
   filterTasks(value: string)

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { concatMap, Observable, of, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Board } from 'src/app/Board';
-import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { AdminService } from '../../admin.service';
 
 @Component({
@@ -11,10 +10,6 @@ import { AdminService } from '../../admin.service';
   styleUrls: ['./board-menu.component.scss']
 })
 export class BoardMenuComponent implements OnInit, OnDestroy {
-
-  public openTasks = false;
-  public openBoards = false;
-
   public bList = false;
   public tList = false;
 
@@ -25,7 +20,7 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   public boards$:Observable<Board[]> = this.adminService.getBoards();
   private adminStateSubscription = new Subscription();
   
-  constructor(private adminService:AdminService, private popupService:PopupService, private router: Router) {
+  constructor(private adminService:AdminService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,7 +38,6 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   openTaskList()
   {
     this.tList = !this.tList;
-    this.openTasks = !this.openTasks;
   }
 
   setTasks(board:Board)
@@ -54,7 +48,6 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   openBoardList()
   {
     this.bList = !this.bList;
-    this.openBoards = !this.openBoards;
   }
 
   getTasksCount(status:string)

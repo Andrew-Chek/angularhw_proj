@@ -12,6 +12,7 @@ export class TaskPageComponent implements OnInit {
 
   public task!: Task;
   adminSubscription = new Subscription();
+  public isFormOpened = false;
 
   constructor(private adminService: AdminService) { }
 
@@ -19,5 +20,10 @@ export class TaskPageComponent implements OnInit {
     this.adminService.state$.subscribe(value => {
       this.task = value.task
     })
+  }
+
+  openCommentForm()
+  {
+    this.isFormOpened = !this.isFormOpened;
   }
 }

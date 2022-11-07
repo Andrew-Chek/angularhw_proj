@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { concatMap, Observable, of, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Message } from 'src/app/Message';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { Board } from '../../../../../Board'
@@ -40,7 +40,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnDestroy()
   {
     this.adminStateSubscription.unsubscribe();
-    this.adminService.displayMessageSubject.unsubscribe();
   }
   
   setTasks()

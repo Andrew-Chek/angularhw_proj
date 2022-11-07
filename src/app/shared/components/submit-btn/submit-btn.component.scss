@@ -1,6 +1,5 @@
 @import 'src/styles/_mixins';
 .submit {
-    color: red;
     &-btn {
         background-color: var(--obligatory-color);
         @include --btn-params;

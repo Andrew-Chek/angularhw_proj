@@ -1,8 +1,8 @@
 <article class="task-page">
-    <section class="task-page-title">
-        <p class="task-page-date">{{task.created_date | date:"dd/MM/yyyy"}}</p>
+    <section class="task-page-header">
+        <p class="task-page-date">Created date: {{task.created_date | date:"dd/MM/yyyy"}}</p>
         <h3 class="task-page-name">{{task.name}}</h3>
-        <div class="task-page-add">
+        <div class="task-page-add" (click)="openCommentForm()">
             <p class="task-page-add-desc">New comment</p>
             <mat-icon class="task-page-add-icon">add</mat-icon>
         </div>
@@ -15,4 +15,5 @@
             <p class="comment-date">{{comment.created_date | date:"dd/MM/yyyy"}}</p>
         </article>
     </section>
+    <app-comment-form class="task-page-form" [task]="task" [ngClass]="{openForm: isFormOpened}" [isOpened]="isFormOpened" (closedForm)="openCommentForm()"></app-comment-form>
 </article>

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptorService } from './shared/interceptors/http-interceptor';
 
 
@@ -20,7 +20,6 @@ import { AuthInterceptorService } from './shared/interceptors/http-interceptor';
     CoreModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
     SharedModule
   ],
   providers: [
