@@ -2,11 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { boards } from 'src/app/shared/testingData/boardsMock';
-import { tasks } from 'src/app/shared/testingData/tasksMock';
-import { DashboardState } from 'src/app/shared/interfaces/Store';
-import { AdminService } from '../../admin.service';
+import { BoardsStateService } from '../../services/boards-state/boards-state.service';
 
 import { BoardMenuComponent } from './board-menu.component';
 
@@ -14,8 +12,8 @@ describe('BoardMenuComponent', () => {
   let component: BoardMenuComponent;
   let fixture: ComponentFixture<BoardMenuComponent>;
   let router: Router;
-  let serviceMock: Partial<AdminService> = {
-    state$ : of({tasks: [], boards: boards, board: boards[0], task: tasks[0]}),
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
+    state$ : of({ boards: boards, board: boards[0]}),
     getBoards: () => {return of(boards)}
   }
 
@@ -26,7 +24,7 @@ describe('BoardMenuComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {provide: AdminService, useValue: serviceMock}
+        {provide: BoardsStateService, useValue: boardsStateServiceStab}
       ]
     })
     .compileComponents();
@@ -55,7 +53,7 @@ describe('BoardMenuComponent', () => {
     })
   })
 
-  describe('#setTasks', () => {
+  describe('#goToTasks', () => {
     it('should trigger router.navigate method', () => {
       component.goToTasks({_id: '', name: '', created_date: '', description: ''});
       expect(router.navigate).toHaveBeenCalled();

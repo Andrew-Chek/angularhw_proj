@@ -1,24 +1,24 @@
-import { inject, TestBed } from '@angular/core/testing';
-import { AdminService } from '../../admin.service';
-import { AdminServiceMock } from '../../admin.service.mock';
-
+import { TestBed } from '@angular/core/testing';
 import { TasksResolver } from './tasks.resolver';
 import { Task } from 'src/app/shared/interfaces/Task';
 import { tasks } from 'src/app/shared/testingData/tasksMock';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlSegment } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { TasksService } from '../../components/tasks/services/tasksService/tasks.service';
 
 
 describe('TasksResolverResolver', () => {
   let resolver: TasksResolver;
-  let adminServiceMock: AdminServiceMock = new AdminServiceMock()
+  let tasksServiceStab: Partial<TasksService> = {
+    getTasks: (id: string) => {return of(tasks)}
+  }
   let route : ActivatedRouteSnapshot;
 
   beforeEach(() => {
     route = new ActivatedRouteSnapshot();
     TestBed.configureTestingModule({
       providers: [
-        {provide: AdminService, useValue: adminServiceMock}
+        {provide: TasksService, useValue: tasksServiceStab}
       ]
     });
     resolver = TestBed.inject(TasksResolver);

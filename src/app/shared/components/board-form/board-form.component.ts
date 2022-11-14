@@ -17,7 +17,7 @@ export class BoardFormComponent implements OnInit {
   @Output() sentData = new EventEmitter<Board>;
 
   public visible = false;
-  public readonlyFlag:boolean = false;
+  public readonlyFlag = this.submitText == 'Edit Board';
   public checkErrors = false;
   public boardForm = new FormGroup({
     name: new FormControl(this.board?.name, [
@@ -46,7 +46,6 @@ export class BoardFormComponent implements OnInit {
     });
     if(this.submitText == 'Create Board')
     {
-      this.readonlyFlag = false;
       this.popupService.state$.subscribe(value => {
         this.visible = value.openCreateBoard
       })
@@ -55,7 +54,6 @@ export class BoardFormComponent implements OnInit {
     {
       this.boardForm.get('name')?.setValue(this.board?.name);
       this.boardForm.get('description')?.setValue(this.board?.description);
-      this.readonlyFlag = true;
       this.popupService.state$.subscribe(value => {
         this.visible = value.openEditBoard
       })

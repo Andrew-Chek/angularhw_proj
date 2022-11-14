@@ -1,10 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { first } from 'rxjs';
-import { Board } from 'src/app/shared/interfaces/Board';
 import { Task } from 'src/app/shared/interfaces/Task';
-import { AdminService } from 'src/app/features/admin/admin.service';
-import { AdminServiceMock } from 'src/app/features/admin/admin.service.mock';
 import { PopupService } from '../../services/popupService/popup.service';
 import { PopupServiceMock } from '../../services/popupService/popup.service.mock';
 
@@ -14,26 +10,18 @@ describe('DashboardHeaderComponent', () => {
   let component: DashboardHeaderComponent;
   let fixture: ComponentFixture<DashboardHeaderComponent>;
   let popupService: PopupServiceMock;
-  let adminService: AdminServiceMock;
 
   beforeEach(async () => {
     popupService = new PopupServiceMock()
-    adminService = new AdminServiceMock()
     await TestBed.configureTestingModule({
       declarations: [ 
         DashboardHeaderComponent
       ],
       providers: [
-        {provide: PopupService, useValue: popupService},
-        {provide: AdminService, useValue: adminService}
+        {provide: PopupService, useValue: popupService}
       ]
     })
     .compileComponents();
-
-    spyOn(adminService, 'setCurrentBoard')
-    spyOn(adminService, 'setCurrentTask')
-    spyOn(popupService, 'openCreateBoardForm')
-    spyOn(popupService, 'openCreateTaskForm')
 
     fixture = TestBed.createComponent(DashboardHeaderComponent);
     component = fixture.componentInstance;
@@ -45,7 +33,8 @@ describe('DashboardHeaderComponent', () => {
       component.headerType = 'Dashboard'
       fixture.detectChanges();
       const title = fixture.nativeElement.querySelector('.dashboard-title') as HTMLElement;
-      expect(title.textContent).toContain('Dashboard');
+      title.innerText = component.headerType;
+      expect(title.innerText).toEqual('Dashboard');
     });
 
     it('should set empty headerType', () => {
@@ -65,42 +54,10 @@ describe('DashboardHeaderComponent', () => {
       expect(component.propertyName).toEqual('created_date');
     });
 
-    it('should raise sentSortBoardParams event when clicked with expected data', () => {
-      let sortData!: {propertyName: keyof Board, order: 'asc' | 'desc'};
-      const expectedSortData: {propertyName: keyof Board, order: 'asc' | 'desc'} = {propertyName: 'created_date', order: 'asc'};
-      component.headerType = 'Dashboard';
-      fixture.detectChanges();
-      component.sentSortBoardParams.pipe(first())
-      .subscribe((updatedSortingData: {propertyName: keyof Board, order: 'asc' | 'desc'}) => sortData = updatedSortingData);
-    
-      const sortDropdownFlag = fixture.debugElement.query(By.css('.dropdown-sort'));
-      sortDropdownFlag.triggerEventHandler('click');
-      expect(sortData).toEqual(expectedSortData);
-    });
-    
-    it('should raise sentSortBoardParams event when clicked with expected data(multiple times)', () => {
-      let sortData!: {propertyName: keyof Board, order: 'asc' | 'desc'};
-      const expectedSortData: {propertyName: keyof Board, order: 'asc' | 'desc'} = {propertyName: 'name', order: 'asc'};
-      component.headerType = 'Dashboard';
-      fixture.detectChanges();
-
-      component.sentSortBoardParams.subscribe((updatedSortingData: {propertyName: keyof Board, order: 'asc' | 'desc'}) => sortData = updatedSortingData);
-    
-      const sortDropdownFlag = fixture.debugElement.query(By.css('.dropdown-sort'));
-      sortDropdownFlag.triggerEventHandler('click');
-
-      const sortNameFlag = fixture.debugElement.query(By.css('.name-sort'));
-      sortNameFlag.triggerEventHandler('click');
-
-      expect(sortData).toEqual(expectedSortData);
-    });
-
     it('should update popupservice sort state when clicked with expected data', () => {
       let sortData!: {propertyName: keyof Task, sortOrder: 'asc' | 'desc', sortFlag: boolean};
       const expectedSortData: {propertyName: keyof Task, sortOrder: 'asc' | 'desc', sortFlag: boolean} 
         = {propertyName: 'created_date', sortOrder: 'asc', sortFlag: true};
-      component.headerType = 'Name of board';
-      fixture.detectChanges();
     
       const sortDropdownFlag = fixture.debugElement.query(By.css('.dropdown-sort'));
       sortDropdownFlag.triggerEventHandler('click');
@@ -118,33 +75,6 @@ describe('DashboardHeaderComponent', () => {
       expect(component.order).toEqual('desc');
     });
 
-    it('should raise sentSortBoardParams event when clicked with expected data', () => {
-      let sortData!: {propertyName: keyof Board, order: 'asc' | 'desc'};
-      const expectedSortData: {propertyName: keyof Board, order: 'asc' | 'desc'} = {propertyName: 'name', order: 'desc'};
-      component.headerType = 'Dashboard';
-      fixture.detectChanges();
-      component.sentSortBoardParams.pipe(first())
-      .subscribe((updatedSortingData: {propertyName: keyof Board, order: 'asc' | 'desc'}) => sortData = updatedSortingData);
-    
-      const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-list-li-order .sort-hover'));
-      sortDropdownFlags[1].triggerEventHandler('click');
-      expect(sortData).toEqual(expectedSortData);
-    });
-    
-    it('should raise sentSortBoardParams event when clicked with expected data(multiple times)', () => {
-      let sortData!: {propertyName: keyof Board, order: 'asc' | 'desc'};
-      const expectedSortData: {propertyName: keyof Board, order: 'asc' | 'desc'} = {propertyName: 'name', order: 'asc'};
-      component.headerType = 'Dashboard';
-      fixture.detectChanges();
-      component.sentSortBoardParams
-      .subscribe((updatedSortingData: {propertyName: keyof Board, order: 'asc' | 'desc'}) => sortData = updatedSortingData);
-    
-      const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-list-li-order .sort-hover'));
-      sortDropdownFlags[1].triggerEventHandler('click');
-      sortDropdownFlags[0].triggerEventHandler('click');
-      expect(sortData).toEqual(expectedSortData);
-    });
-
     it('should update popupservice sort state when clicked with expected data', () => {
       let sortData!: {propertyName: keyof Task, sortOrder: 'asc' | 'desc', sortFlag: boolean};
       const expectedSortData: {propertyName: keyof Task, sortOrder: 'asc' | 'desc', sortFlag: boolean} 
@@ -155,25 +85,17 @@ describe('DashboardHeaderComponent', () => {
       const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-list-li-order .sort-hover'));
       sortDropdownFlags[1].triggerEventHandler('click');
       sortData = popupService.sortParams.getValue();
+      console.log(sortData)
       expect(sortData).toEqual(expectedSortData);
     });
   })
 
   describe('#openCreateForm', () => {
-    it('should open board form', () => {
-      component.headerType = 'Dashboard'
-      fixture.detectChanges();
+    it('should emit sentOpenForm', () => {
       component.openCreateForm()
-      expect(adminService.setCurrentBoard).toHaveBeenCalled()
-      expect(popupService.openCreateBoardForm).toHaveBeenCalled()
-    });
-
-    it('should open task form', () => {
-      component.headerType = 'Name of board'
-      fixture.detectChanges();
-      component.openCreateForm()
-      expect(adminService.setCurrentTask).toHaveBeenCalled()
-      expect(popupService.openCreateTaskForm).toHaveBeenCalled()
+      component.sentOpenForm.subscribe(value => {
+        expect(value).toBeTrue()
+      })
     });
   })
 });

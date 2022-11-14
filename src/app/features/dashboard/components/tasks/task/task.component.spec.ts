@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AdminService } from '../../../admin.service';
 import { Task } from 'src/app/shared/interfaces/Task';
-
 import { TaskComponent } from './task.component';
 import { of } from 'rxjs';
 import { boards } from 'src/app/shared/testingData/boardsMock';
@@ -11,15 +9,19 @@ import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Board } from 'src/app/shared/interfaces/Board';
+import { TasksStateService } from '../../../services/tasks-state/tasks-state.service';
+import { BoardsStateService } from '../../../services/boards-state/boards-state.service';
 
 describe('TaskComponent', () => {
   let component: TaskComponent;
   let fixture: ComponentFixture<TaskComponent>;
-  let adminServiceStab: Partial<AdminService> = {
+  let tasksStateServiceStab: Partial<TasksStateService> = {
     setCurrentTask: (task: Task) => {},
-    setCurrentBoard: (board: Board) => {},
-    getBoard: (id: string) => {return of(boards[0])},
     updateTask: (task: Task) => {}
+  }
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
+    setCurrentBoard: (board: Board) => {},
+    getBoard: (id: string) => {return of(boards[0])}
   }
   let popupServiceStab: Partial<PopupService> = {
     openEditTaskForm: () => {},
@@ -34,7 +36,8 @@ describe('TaskComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {provide: AdminService, useValue: adminServiceStab},
+        {provide: TasksStateService, useValue: tasksStateServiceStab},
+        {provide: BoardsStateService, useValue: boardsStateServiceStab},
         {provide: PopupService, useValue: popupServiceStab}
       ]
     })
@@ -42,9 +45,9 @@ describe('TaskComponent', () => {
 
     router = TestBed.inject(Router)
     spyOn(router, 'navigate');
-    spyOn<any>(adminServiceStab, 'setCurrentTask');
-    spyOn<any>(adminServiceStab, 'updateTask');
-    spyOn<any>(adminServiceStab, 'getBoard');
+    spyOn<any>(tasksStateServiceStab, 'setCurrentTask');
+    spyOn<any>(tasksStateServiceStab, 'updateTask');
+    spyOn<any>(boardsStateServiceStab, 'getBoard');
 
     fixture = TestBed.createComponent(TaskComponent);
     component = fixture.componentInstance;
@@ -67,24 +70,24 @@ describe('TaskComponent', () => {
 
     it('should trigger editTask service methods', () => {
       elements[0].triggerEventHandler('click');
-      expect(adminServiceStab.getBoard).toHaveBeenCalled()
+      expect(boardsStateServiceStab.getBoard).toHaveBeenCalled()
     })
 
     it('should trigger deleteTask service methods', () => {
       elements[1].triggerEventHandler('click');
-      expect(adminServiceStab.getBoard).toHaveBeenCalled()
+      expect(boardsStateServiceStab.getBoard).toHaveBeenCalled()
     })
 
     it('should trigger openTaskPage service methods', () => {
       const element = fixture.debugElement.query(By.css('.general__name'))
       element.triggerEventHandler('click');
-      expect(adminServiceStab.setCurrentTask).toHaveBeenCalled()
+      expect(tasksStateServiceStab.setCurrentTask).toHaveBeenCalled()
       expect(router.navigate).toHaveBeenCalled()
     })
 
     it('should trigger archiveTask service methods', () => {
       elements[2].triggerEventHandler('click');
-      expect(adminServiceStab.updateTask).toHaveBeenCalled()
+      expect(tasksStateServiceStab.updateTask).toHaveBeenCalled()
     })
   })
 });

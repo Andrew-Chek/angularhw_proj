@@ -1,22 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AdminService } from 'src/app/features/admin/admin.service';
-import { AdminServiceMock } from 'src/app/features/admin/admin.service.mock';
 import { PopupService } from '../../services/popupService/popup.service';
 import { PopupServiceMock } from '../../services/popupService/popup.service.mock';
 
 import { TaskFormComponent } from './task-form.component';
 import { SubmitBtnComponent } from '../../testingData/componentMocks/submitMock';
+import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
+import { BoardsStateService } from 'src/app/features/dashboard/services/boards-state/boards-state.service';
+import { of } from 'rxjs';
+import { tasks } from '../../testingData/tasksMock';
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
   let fixture: ComponentFixture<TaskFormComponent>;
   let popupService: PopupServiceMock;
-  let adminService: AdminServiceMock;
+  let tasksStateServiceStab: Partial<TasksStateService> = {
+    state$: of({tasks: tasks, task: tasks[0]})
+  };
+  let boardsStateServiceStab: Partial<BoardsStateService> = {};
 
   beforeEach(async () => {
     popupService = new PopupServiceMock()
-    adminService = new AdminServiceMock()
     await TestBed.configureTestingModule({
       declarations: [ 
         TaskFormComponent,
@@ -24,7 +28,8 @@ describe('TaskFormComponent', () => {
       ],
       providers: [
         {provide: PopupService, useValue: popupService},
-        {provide: AdminService, useValue: adminService}
+        {provide: TasksStateService, useValue: tasksStateServiceStab},
+        {provide: BoardsStateService, useValue: boardsStateServiceStab}
       ]
     })
     .compileComponents();

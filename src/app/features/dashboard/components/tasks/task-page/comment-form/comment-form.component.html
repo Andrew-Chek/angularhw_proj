@@ -1,6 +1,6 @@
 <form class="comment-form" (ngSubmit)="onSubmit()" [ngClass]="{open__form: isOpened}" #commentForm="ngForm">
     <section class="comment-form-header">
-        <h2 class="comment-title">Add comment</h2>
+        <h2 class="comment-title">{{formTitle}}</h2>
         <mat-icon class="comment-icon icon" (click)="closePopup()">close</mat-icon>
     </section>
     <section class="control-section">
@@ -25,5 +25,5 @@
             Message is required
        </div>
     </section>
-    <button class="comment-form-submit" type="submit" [disabled]="!commentForm.form.valid">Add comment</button>
+    <button class="comment-form-submit" type="submit" [disabled]="!commentForm.form.valid">{{formTitle}}</button>
 </form>

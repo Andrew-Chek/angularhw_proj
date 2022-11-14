@@ -8,6 +8,7 @@ export interface Task{
     created_date:string;
     isArchived: boolean;
     comments: {
+        _id: string | null,
         title:string, 
         message:string,
         created_date: string

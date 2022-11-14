@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { AdminService } from 'src/app/features/admin/admin.service';
+import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
 
 import { CommentFormComponent } from './comment-form.component';
 
 describe('CommentFormComponent', () => {
   let component: CommentFormComponent;
   let fixture: ComponentFixture<CommentFormComponent>;
-  let adminServiceStab: Partial<AdminService> = {
+  let tasksStateServiceStab: Partial<TasksStateService> = {
     updateTask: () => {}
   }
 
@@ -17,12 +17,12 @@ describe('CommentFormComponent', () => {
       declarations: [ CommentFormComponent ],
       imports: [FormsModule],
       providers: [
-        {provide: AdminService, useValue: adminServiceStab}
+        {provide: TasksStateService, useValue: tasksStateServiceStab}
       ]
     })
     .compileComponents();
 
-    spyOn<any>(adminServiceStab, 'updateTask')
+    spyOn<any>(tasksStateServiceStab, 'updateTask')
 
     fixture = TestBed.createComponent(CommentFormComponent);
     component = fixture.componentInstance;
@@ -50,7 +50,7 @@ describe('CommentFormComponent', () => {
       });
       component.task = {_id: '', name: '', comments: [], status: '', created_date: '', board_id: '', assigned_to: '', isArchived: false, description: ''}
       component.onSubmit()
-      expect(adminServiceStab.updateTask).toHaveBeenCalled()
+      expect(tasksStateServiceStab.updateTask).toHaveBeenCalled()
     })
   })
 });

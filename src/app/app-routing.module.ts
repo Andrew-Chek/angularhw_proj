@@ -20,10 +20,15 @@ const routes: Routes = [
     redirectTo: '/dashboard',
   },
   { 
-    path: '**', 
+    path: 'notfound', 
     pathMatch: 'full', 
     component: PageNotFoundComponent 
   },
+  {
+    path: '**', 
+    pathMatch: 'full', 
+    redirectTo: '/notfound'
+  }
 ];
 
 @NgModule({

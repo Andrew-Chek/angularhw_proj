@@ -15,7 +15,7 @@ export class DashboardHeaderComponent implements OnInit {
   @Input() headerType:string = '';
   @Input() addText = 'Add new';
   @Input() isTaskPage = false
-  public propertyName!: keyof Board | keyof Task | keyof Comment;
+  public propertyName: keyof Board | keyof Task | keyof Comment = 'name';
   public order: 'asc' | 'desc' = 'asc'
 
   @Output() sentFilterData = new EventEmitter<string>();

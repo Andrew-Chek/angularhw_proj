@@ -4,16 +4,20 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { boards } from 'src/app/shared/testingData/boardsMock';
 import { tasks } from 'src/app/shared/testingData/tasksMock';
-import { AdminService } from '../../admin.service';
-
+import { BoardsStateService } from '../../services/boards-state/boards-state.service';
+import { TasksStateService } from '../../services/tasks-state/tasks-state.service';
 import { TasksComponent } from './tasks.component';
 
 describe('TasksComponent', () => {
   let component: TasksComponent;
   let fixture: ComponentFixture<TasksComponent>;
   let router: Router
-  let adminServiceStab: Partial<AdminService> = {
+  let tasksStateServiceStab: Partial<TasksStateService> = {
     tasks$: of(tasks),
+    board$ : of(boards[0]),
+    state$ : of({tasks: tasks, boards: boards, board: boards[0], task: tasks[0]})
+  }
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
     board$ : of(boards[0]),
     state$ : of({tasks: tasks, boards: boards, board: boards[0], task: tasks[0]})
   }
@@ -25,7 +29,8 @@ describe('TasksComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {provide: AdminService, useValue: adminServiceStab}
+        {provide: TasksStateService, useValue: tasksStateServiceStab},
+        {provide: BoardsStateService, useValue: boardsStateServiceStab}
       ]
     })
     .compileComponents();
@@ -40,12 +45,12 @@ describe('TasksComponent', () => {
   describe('#filterTasks', () => {
     it('should return unchanged tasks', () => {
       component.filterTasks('');
-      expect(component.tasks$).toEqual(adminServiceStab.tasks$!);
+      expect(component.tasks$).toEqual(tasksStateServiceStab.tasks$!);
     })
 
     it('should return filtered tasks', () => {
       component.filterTasks('to');
-      expect(component.tasks$).not.toEqual(adminServiceStab.tasks$!);
+      expect(component.tasks$).not.toEqual(tasksStateServiceStab.tasks$!);
     })
   })
 });

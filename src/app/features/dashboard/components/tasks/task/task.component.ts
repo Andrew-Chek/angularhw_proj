@@ -9,7 +9,6 @@ import { BoardsStateService } from '../../../services/boards-state/boards-state.
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskComponent implements OnInit, OnDestroy {
 

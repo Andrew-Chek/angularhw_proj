@@ -5,14 +5,13 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Board } from 'src/app/shared/interfaces/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
-import { AdminService } from '../../../admin.service';
-
+import { BoardsStateService } from '../../../services/boards-state/boards-state.service';
 import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
   let component: BoardComponent;
   let fixture: ComponentFixture<BoardComponent>;
-  let adminServiceStab: Partial<AdminService> = {
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
     setCurrentBoard: (board: Board) => {}
   }
   let popupServiceStab: Partial<PopupService> = {
@@ -28,7 +27,7 @@ describe('BoardComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {provide: AdminService, useValue: adminServiceStab},
+        {provide: BoardsStateService, useValue: boardsStateServiceStab},
         {provide: PopupService, useValue: popupServiceStab}
       ]
     })
@@ -36,7 +35,7 @@ describe('BoardComponent', () => {
 
     router = TestBed.inject(Router);
     spyOn(router, 'navigate');
-    spyOn<any>(adminServiceStab, 'setCurrentBoard');
+    spyOn<any>(boardsStateServiceStab, 'setCurrentBoard');
     spyOn<any>(popupServiceStab, 'openEditBoardForm');
     spyOn<any>(popupServiceStab, 'openDeleteBoardForm');
 
@@ -68,13 +67,13 @@ describe('BoardComponent', () => {
     })
     it('should trigger editBoard service methods', () => {
       elements[0].triggerEventHandler('click');
-      expect(adminServiceStab.setCurrentBoard).toHaveBeenCalled()
+      expect(boardsStateServiceStab.setCurrentBoard).toHaveBeenCalled()
       expect(popupServiceStab.openEditBoardForm).toHaveBeenCalled()
     })
 
     it('should trigger deleteBoard service methods', () => {
       elements[1].triggerEventHandler('click');
-      expect(adminServiceStab.setCurrentBoard).toHaveBeenCalled()
+      expect(boardsStateServiceStab.setCurrentBoard).toHaveBeenCalled()
       expect(popupServiceStab.openDeleteBoardForm).toHaveBeenCalled()
     })
   })

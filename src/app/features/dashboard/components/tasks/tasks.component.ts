@@ -31,10 +31,11 @@ export class TasksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const routeSubsription = this.activeRoute.data.pipe(
+    const routeSubsription = this.activeRoute.data
+    .pipe(
       tap(value => {
-      this.boardsStateService.setCurrentBoard(value['board']);
-      this.tasksStateService.setCurrentTasks(value['tasks']);
+        this.boardsStateService.setCurrentBoard(value['board']);
+        this.tasksStateService.setCurrentTasks(value['tasks']);
     })).subscribe()
 
     const boardSubsription = this.boardsStateService.state$.subscribe(value => {

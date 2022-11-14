@@ -1,22 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AdminService } from 'src/app/features/admin/admin.service';
-import { AdminServiceMock } from 'src/app/features/admin/admin.service.mock';
 import { PopupService } from '../../services/popupService/popup.service';
 import { PopupServiceMock } from '../../services/popupService/popup.service.mock';
+import { BoardsStateService } from 'src/app/features/dashboard/services/boards-state/boards-state.service';
 import { SubmitBtnComponent } from '../../testingData/componentMocks/submitMock';
 
 import { BoardFormComponent } from './board-form.component';
+import { of } from 'rxjs';
+import { boards } from '../../testingData/boardsMock';
 
 describe('BoardFormComponent', () => {
   let component: BoardFormComponent;
   let fixture: ComponentFixture<BoardFormComponent>;
   let popupService: PopupServiceMock;
-  let adminService: AdminServiceMock;
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
+    state$: of({boards: boards, board: boards[0]})
+  };
 
   beforeEach(async () => {
     popupService = new PopupServiceMock()
-    adminService = new AdminServiceMock()
     await TestBed.configureTestingModule({
       declarations: [ 
         BoardFormComponent,
@@ -24,7 +26,7 @@ describe('BoardFormComponent', () => {
       ],
       providers: [
         {provide: PopupService, useValue: popupService},
-        {provide: AdminService, useValue: adminService}
+        {provide: BoardsStateService, useValue: boardsStateServiceStab}
       ]
     })
     .compileComponents();

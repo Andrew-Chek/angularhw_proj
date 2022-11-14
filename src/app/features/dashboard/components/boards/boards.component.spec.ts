@@ -1,19 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { boards } from 'src/app/shared/testingData/boardsMock';
 import { BoardComponent } from 'src/app/shared/testingData/componentMocks/boardMock';
 import { DashboardHeaderComponent } from 'src/app/shared/testingData/componentMocks/dashboardHeaderMock';
 import { tasks } from 'src/app/shared/testingData/tasksMock';
-import { AdminService } from '../../admin.service';
 import { SortByPipe } from '../../pipes/sort-by.pipe';
+import { BoardsStateService } from '../../services/boards-state/boards-state.service';
 
 import { BoardsComponent } from './boards.component';
 
 describe('BoardsComponent', () => {
   let component: BoardsComponent;
   let fixture: ComponentFixture<BoardsComponent>;
-  let adminServiceStab: Partial<AdminService> = {
+  let boardsStateServiceStab: Partial<BoardsStateService> = {
     boards$ : of(boards),
     state$ : of({tasks: [], boards: boards, board: boards[0], task: tasks[0]}),
     getBoards: () => {return of(boards)}
@@ -28,7 +27,7 @@ describe('BoardsComponent', () => {
         SortByPipe
       ],
       providers: [
-        {provide: AdminService, useValue: adminServiceStab},
+        {provide: BoardsStateService, useValue: boardsStateServiceStab},
       ]
     })
     .compileComponents();
@@ -41,12 +40,12 @@ describe('BoardsComponent', () => {
   describe('#filterBoards', () => {
     it('should return unchanged boards', () => {
       component.filterBoards('');
-      expect(component.boards$).toEqual(adminServiceStab.boards$!);
+      expect(component.boards$).toEqual(boardsStateServiceStab.boards$!);
     })
 
     it('should return filtered boards', () => {
       component.filterBoards('to');
-      expect(component.boards$).not.toEqual(adminServiceStab.boards$!);
+      expect(component.boards$).not.toEqual(boardsStateServiceStab.boards$!);
     })
   })
 });

@@ -6,6 +6,8 @@ import { TasksService } from './tasks.service';
 import { Task } from 'src/app/shared/interfaces/Task';
 import { tasks } from '../../../../../../shared/testingData/tasksMock'
 import { Message } from 'src/app/shared/interfaces/Message';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('TasksService', () => {
   let service: TasksService;
@@ -13,16 +15,21 @@ describe('TasksService', () => {
   let httpTestingController: HttpTestingController;
   let apiUrl = 'https://n-npb6.onrender.com/api';
   let copiedTasks: Task[] = [...tasks]
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
       providers: [
         TasksService,
         HttpClient
       ]
     });
 
+    router = TestBed.inject(Router)
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
     service = TestBed.inject(TasksService);
@@ -100,10 +107,9 @@ describe('TasksService', () => {
       let errResponse:string = '';
 
       service.getTasks('12')
-      .subscribe({
-      error: error => {
+      .subscribe(error => {
         errResponse = data
-      }})
+      })
       const req = httpTestingController.expectOne(`${apiUrl}/tasks/12`);
       req.flush(data, mockErrorResponse);
       expect(errResponse).toBe(data);
