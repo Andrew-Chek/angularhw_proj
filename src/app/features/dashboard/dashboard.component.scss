@@ -1,0 +1,39 @@
+.dashboard {
+    display: grid;
+    height: 100vh;
+    grid-template-areas: "icons menu main";
+    grid-template-columns: .15fr .7fr 3fr;
+    &-icon {
+        grid-area: icons;
+    }
+    &-menu {
+        grid-area: menu;
+    }
+    &-main {
+        grid-area: main;
+    }
+    &-form {
+        position: fixed;
+        transition: .5s all ease;
+        transform: translate(-500%, 0);
+    }
+    &-message {
+        position: absolute;
+        background-color: #fff;
+        width: 300px;
+        border-radius: 30px;
+        top: 30%;
+        left: 40%;
+        transform: translate(0, -1200%);
+        transition: .5s all ease;
+        border: 1px solid var(--gray);
+    }
+    .create__board, .open__message, 
+    .edit__board, .delete__board,
+    .create__task, .edit__task {
+        transform: translate(0, 0);
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(6px);
+    }
+}

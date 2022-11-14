@@ -1,4 +1,4 @@
-import { Board } from "src/app/Board";
+import { Board } from "src/app/shared/interfaces/Board";
 
 export const descDropdownBoards: Board[] = [
     {name: 'board2', _id: '2', description: 'To do something1', created_date: '24/12/2020'}, 

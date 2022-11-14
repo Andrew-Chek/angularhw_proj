@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BehaviorSubject, of } from 'rxjs';
-import { Message } from 'src/app/Message';
+import { Message } from 'src/app/shared/interfaces/Message';
 import { CustomFormComponent } from 'src/app/shared/testingData/componentMocks/customFormMock';
 import { LoginFormComponent } from 'src/app/shared/testingData/componentMocks/loginFormMock';
 import { MessageComponent } from 'src/app/shared/testingData/componentMocks/messageMock';

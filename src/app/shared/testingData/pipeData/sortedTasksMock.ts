@@ -1,4 +1,4 @@
-import { Task } from "src/app/Task";
+import { Task } from "src/app/shared/interfaces/Task";
 
 export const sortedTasks: Task[] = [
     {

@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AuthService, User, Token } from './auth.service';
 import { HttpClient } from '@angular/common/http';
 import { users } from '../../shared/testingData/usersMock';
-import { Message } from 'src/app/Message';
+import { Message } from 'src/app/shared/interfaces/Message';
 
 describe('AuthService', () => {
   let service: AuthService;

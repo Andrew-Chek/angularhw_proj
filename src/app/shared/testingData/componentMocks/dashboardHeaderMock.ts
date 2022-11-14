@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Board } from "src/app/Board";
+import { Board } from "src/app/shared/interfaces/Board";
 
 @Component({
 	selector: 'app-dashboard-header',

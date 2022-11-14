@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, catchError, delay, Observable, of, tap, throwError} from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Message } from 'src/app/Message';
-import { Board } from 'src/app/Board';
+import { Message } from 'src/app/shared/interfaces/Message';
+import { Board } from 'src/app/shared/interfaces/Board';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Board } from 'src/app/Board';
 
 export class AuthService {
   isAuthorized = false;
-  redirectUrl: string = '/admin';
+  redirectUrl: string = '/dashboard';
   apiUrl = 'https://n-npb6.onrender.com/api'
   resetFlag = false;
   registerFlag = false;

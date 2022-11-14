@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
   selector: 'app-approve-form',
   templateUrl: './approve-form.component.html',
-  styleUrls: ['./approve-form.component.scss']
+  styleUrls: ['./approve-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApproveFormComponent implements OnInit {
 

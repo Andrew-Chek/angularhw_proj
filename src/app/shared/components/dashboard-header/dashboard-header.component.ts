@@ -1,33 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Board } from 'src/app/Board';
-import { AdminService } from 'src/app/features/admin/admin.service';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Board } from 'src/app/shared/interfaces/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
+import { Task } from 'src/app/shared/interfaces/Task';
+import { Comment } from '../../interfaces/Comment';
 
 @Component({
   selector: 'app-dashboard-header',
   templateUrl: './dashboard-header.component.html',
-  styleUrls: ['./dashboard-header.component.scss']
+  styleUrls: ['./dashboard-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardHeaderComponent implements OnInit {
 
-  @Input() headerType:string = ''
-  public propertyName:keyof Board = 'name'
+  @Input() headerType:string = '';
+  @Input() addText = 'Add new';
+  @Input() isTaskPage = false
+  public propertyName!: keyof Board | keyof Task | keyof Comment;
   public order: 'asc' | 'desc' = 'asc'
 
-  @Output() sentSortBoardParams = new EventEmitter<{propertyName: keyof Board, order: 'asc' | 'desc'}>();
   @Output() sentFilterData = new EventEmitter<string>();
+  @Output() sentOpenForm = new EventEmitter<boolean>();
 
-  constructor(private popupService:PopupService, protected adminService: AdminService) {
+  constructor(private popupService:PopupService) {
   }
 
   ngOnInit(): void {
   }
 
-  setPropertyName(value: keyof Board)
+  setPropertyName(value: keyof Board | keyof Task | keyof Comment)
   {
     this.propertyName = value;
-    this.headerType == 'Dashboard' ? this.sentSortBoardParams.emit({propertyName: this.propertyName, order: this.order}) 
-      : this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
+    this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
   }
 
   sendFilterData(value: string)
@@ -38,21 +41,11 @@ export class DashboardHeaderComponent implements OnInit {
   setOrder(value:'asc' | 'desc')
   {
     this.order = value;
-    this.headerType == 'Dashboard' ? this.sentSortBoardParams.emit({propertyName: this.propertyName, order: this.order}) 
-      : this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
+    this.popupService.sortParams.next({sortFlag: true, propertyName: this.propertyName, sortOrder: this.order})
   }
 
   openCreateForm()
   {
-    if(this.headerType == 'Dashboard')
-    {
-      this.adminService.setCurrentBoard({_id: '', name: '', description: '', created_date: ''})
-      this.popupService.openCreateBoardForm();
-    }
-    else
-    {
-      this.adminService.setCurrentTask({_id: '', name: '', description: '', assigned_to: '', board_id: '', isArchived: false, status: 'To do', comments: [], created_date: ''})
-      this.popupService.openCreateTaskForm();
-    }
+    this.sentOpenForm.emit(true)
   }
 }

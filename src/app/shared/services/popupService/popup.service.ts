@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { PopupState, Store } from '../../../Store';
-import { Task } from '../../../Task';
+import { Board } from 'src/app/shared/interfaces/Board';
+import { PopupState, Store } from '../../interfaces/Store';
+import { Task } from '../../interfaces/Task';
+import { Comment } from '../../interfaces/Comment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,9 @@ export class PopupService extends Store<PopupState> {
   public openDelete:boolean = false;
   public isDraged = false;
 
-  public sortParams = new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Task, sortOrder: 'asc' | 'desc'}>({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
+  public sortParams = 
+    new BehaviorSubject<{sortFlag: boolean, propertyName: keyof Board | keyof Task | keyof Comment, sortOrder: 'asc' | 'desc'}>
+        ({sortFlag: false, propertyName: 'name', sortOrder: 'asc'})
   public statusColors = new BehaviorSubject({color1: '#ffffff', color2: '#ffffff', color3: '#ffffff'});
 
   constructor(private router: Router){

@@ -1,7 +1,7 @@
 import { AfterViewInit, Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { fromEvent, map, mergeMap, Observable, of, Subscription, switchMap, take, tap, takeUntil } from 'rxjs';
-import { AdminService } from 'src/app/features/admin/admin.service';
-import { Task } from 'src/app/Task';
+import { fromEvent, map, Observable, of, Subscription, switchMap, take, takeUntil } from 'rxjs';
+import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
+import { Task } from 'src/app/shared/interfaces/Task';
 import { PopupService } from '../services/popupService/popup.service';
 
 @Directive({
@@ -14,7 +14,8 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
   private subscriptions: Subscription[] = [];
 
   constructor(private elementRef: ElementRef, 
-    private adminService: AdminService, private popupService: PopupService) {}
+    private tasksStateService: TasksStateService,
+    private popupService: PopupService) {}
 
   ngOnInit(): void {
     this.element = this.elementRef.nativeElement as HTMLElement;
@@ -23,7 +24,7 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     const element = this.elementRef.nativeElement as HTMLElement
     const id = element.getAttribute('data-task-id')!
-    this.task$ = this.adminService.state$
+    this.task$ = this.tasksStateService.state$
     .pipe(
       map(value => {
       const task = value.tasks.find(task => task._id == id)!
@@ -37,7 +38,6 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
   }
 
   initDrag(): void {
-    // 1
     const dragIcon = this.element.children[0].children[0].children[1].children[0].children[0];
     const dragStart$ = fromEvent<MouseEvent>(dragIcon, "mousedown");
     const dragEnd$ = fromEvent<MouseEvent>(document, "mouseup")
@@ -47,21 +47,21 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
         {
           this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'To do'
-            this.adminService.updateTask({...task});
+            this.tasksStateService.updateTask({...task});
           })
         }
         else if(event.clientX > inProgressWidth.leftX && event.clientX < inProgressWidth.rightX)
         {
           this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'In progress'
-            this.adminService.updateTask({...task});
+            this.tasksStateService.updateTask({...task});
           })
         }
         else if(event.clientX > doneWidth.leftX && event.clientX < doneWidth.rightX)
         {
           this.task$.pipe(take(1)).subscribe(task => {
             task.status = 'Done'
-            this.adminService.updateTask({...task});
+            this.tasksStateService.updateTask({...task});
           })
         }
         initialX = 0;
@@ -74,7 +74,6 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
       takeUntil(dragEnd$)
     );
 
-    // 2
     let initialX: number,
       initialY: number,
       currentX = 0,
@@ -89,7 +88,6 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
     const inProgressWidth = {leftX: todoWidth.rightX, rightX: todoWidth.rightX + statusBoardWidth};
     const doneWidth = {leftX: inProgressWidth.rightX, rightX: inProgressWidth.rightX + statusBoardWidth};
 
-    // 3
     const dragStartSub = dragStart$.pipe(
       switchMap(event => {
         this.popupService.setDragState();
@@ -108,7 +106,6 @@ export class DragAndDropDirective implements OnInit, OnDestroy, AfterViewInit {
         "translate3d(" + currentX + "px, " + currentY + "px, 0)";
     });
 
-    // 6
     this.subscriptions.push.apply(this.subscriptions, [
       dragStartSub,
     ]);

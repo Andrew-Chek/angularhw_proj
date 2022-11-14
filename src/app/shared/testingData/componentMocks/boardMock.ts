@@ -1,7 +1,7 @@
 import { Component, Input} from "@angular/core";
 import { Observable } from "rxjs";
-import { Board } from "src/app/Board";
-import { Message } from "src/app/Message";
+import { Board } from "src/app/shared/interfaces/Board";
+import { Message } from "src/app/shared/interfaces/Message";
 
 @Component({
 	selector: 'app-board',

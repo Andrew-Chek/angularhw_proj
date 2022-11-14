@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Board } from 'src/app/Board';
-import { AdminService } from 'src/app/features/admin/admin.service';
+import { Board } from 'src/app/shared/interfaces/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
+import { BoardsStateService } from 'src/app/features/dashboard/services/boards-state/boards-state.service';
 
 @Component({
   selector: 'app-board-form',
@@ -29,14 +29,14 @@ export class BoardFormComponent implements OnInit {
     ]),
   })
 
-  constructor(private popupService:PopupService, private adminService: AdminService) { }
+  constructor(private popupService:PopupService, private boardsStateService: BoardsStateService) { }
 
   get name() { return this.boardForm.get('name'); }
 
   get description() { return this.boardForm.get('description'); }
 
   ngOnInit(): void {
-    this.adminService.state$.subscribe((value) => {
+    this.boardsStateService.state$.subscribe((value) => {
       this.boardForm.controls['name'].setErrors(null);
       this.boardForm.controls['description'].setErrors(null);
       if(value.board != undefined)

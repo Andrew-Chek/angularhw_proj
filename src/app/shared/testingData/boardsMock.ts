@@ -1,4 +1,4 @@
-import { Board } from "src/app/Board";
+import { Board } from "src/app/shared/interfaces/Board";
 
 export const boards: Board[] = [
     {

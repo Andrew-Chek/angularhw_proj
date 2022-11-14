@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { PopupState } from 'src/app/Store';
-import { Task } from 'src/app/Task';
+import { PopupState } from 'src/app/shared/interfaces/Store';
+import { Task } from 'src/app/shared/interfaces/Task';
 
 @Injectable()
 export class PopupServiceMock {

@@ -1,4 +1,4 @@
-import { Task } from "src/app/Task";
+import { Task } from "src/app/shared/interfaces/Task";
 
 export const descDropdownTasks: Task[] = [
     {_id: '5', name: 'task5', description: 'done', status: 'Done', assigned_to: '1', board_id: '2', created_date: '18/12/2020', isArchived: true,

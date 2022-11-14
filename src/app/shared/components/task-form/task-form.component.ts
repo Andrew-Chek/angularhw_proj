@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { tap } from 'rxjs';
-import { AdminService } from 'src/app/features/admin/admin.service';
-import { Task } from 'src/app/Task';
+import { Subscription, tap } from 'rxjs';
+import { BoardsStateService } from 'src/app/features/dashboard/services/boards-state/boards-state.service';
+import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
+import { Task } from 'src/app/shared/interfaces/Task';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { PopupService } from 'src/app/shared/services/popupService/popup.service
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss']
 })
-export class TaskFormComponent implements OnInit {
+export class TaskFormComponent implements OnInit, OnDestroy {
 
   @Input() submitText = '';
 
@@ -33,6 +34,7 @@ export class TaskFormComponent implements OnInit {
       Validators.required,
     ])
   })
+  private subscriptions: Subscription[] = []
 
   get name() { return this.taskForm.get('name'); }
 
@@ -40,28 +42,41 @@ export class TaskFormComponent implements OnInit {
 
   get status() { return this.taskForm.get('status'); }
   
-  constructor(private popupService: PopupService, private adminService: AdminService) { }
+  constructor(
+    private popupService: PopupService, 
+    private tasksStateService: TasksStateService,
+    private boardsStateService: BoardsStateService
+    ) { }
 
   ngOnInit(): void {
-    this.adminService.state$.subscribe(value => {
+    const taskSubscription = this.tasksStateService.state$.subscribe(value => {
       this.taskForm.controls['name'].setErrors(null);
       this.taskForm.controls['description'].setErrors(null);
       this.taskForm.controls['status'].setErrors(null);
       this.task = value.task;
     })
+    this.subscriptions.push(taskSubscription)
     this.readonlyFlag = (this.submitText == 'Edit Task');
     if(this.submitText == 'Edit Task')
     {
-      this.popupService.state$.subscribe(value => {
+      const popupSubscription = this.popupService.state$.subscribe(value => {
         this.visible = value.openEditTask
       })
+      this.subscriptions.push(popupSubscription)
     }
     else
     {
-      this.popupService.state$.subscribe(value => {
+      const popupSubscription = this.popupService.state$.subscribe(value => {
         this.visible = value.openCreateTask
       })
+      this.subscriptions.push(popupSubscription)
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {
+      subscription.unsubscribe();
+    })
   }
 
   closePopup()
@@ -88,7 +103,7 @@ export class TaskFormComponent implements OnInit {
     this.task.name = this.name!.value!;
     this.task.description = this.description!.value!;
     this.task.status = this.status!.value!;
-    const adminSubscription = this.adminService.state$.pipe(
+    const boardSubscription = this.boardsStateService.state$.pipe(
       tap(value => {
         if(value.board != undefined)
         {
@@ -106,7 +121,8 @@ export class TaskFormComponent implements OnInit {
       this.task.name = '';
       this.task.description = '';
       this.checkErrors = false;
+      this.tasksStateService.setCurrentTask({_id: '', name: '', description: '', status: 'To do', board_id: '', assigned_to: '', comments: [], isArchived: false, created_date: ''});
     }
-    adminSubscription.unsubscribe();
+    this.subscriptions.push(boardSubscription);
   }
 }

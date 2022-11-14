@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { first } from 'rxjs';
-import { Board } from 'src/app/Board';
-import { Task } from 'src/app/Task';
+import { Board } from 'src/app/shared/interfaces/Board';
+import { Task } from 'src/app/shared/interfaces/Task';
 import { AdminService } from 'src/app/features/admin/admin.service';
 import { AdminServiceMock } from 'src/app/features/admin/admin.service.mock';
 import { PopupService } from '../../services/popupService/popup.service';

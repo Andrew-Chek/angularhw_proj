@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-submit-btn',
   templateUrl: './submit-btn.component.html',
-  styleUrls: ['./submit-btn.component.scss']
+  styleUrls: ['./submit-btn.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubmitBtnComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Task } from "src/app/Task"
+import { Task } from "src/app/shared/interfaces/Task"
 
 export const ascDropdownTasks: Task[] = [
     {_id: '7', name: 'task7', description: 'hello there', status: 'Done', assigned_to: '1', board_id: '1', created_date: '06/12/2018', isArchived: true,
