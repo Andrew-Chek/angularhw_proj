@@ -22,7 +22,7 @@ export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() sentTaskItems: EventEmitter<QueryList<ElementRef>> = new EventEmitter();
 
   @Input() board:Board = {_id: '', name:'', description: '', created_date: ''};
-  @Input() status!: {value: string, color: string};
+  @Input() status: {value: string, color: string} = {value: 'To do', color: '#ffffff'}
   @Input()
   set tasksValue$(tasks$:Observable<Task[]>)
   {

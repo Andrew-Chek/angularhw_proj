@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TasksService } from './tasks.service';
 import { Task } from 'src/app/shared/interfaces/Task';
+import { Comment } from 'src/app/shared/interfaces/Comment';
 import { tasks } from '../../../../../../shared/testingData/tasksMock'
 import { Message } from 'src/app/shared/interfaces/Message';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -274,6 +275,50 @@ describe('TasksService', () => {
         errResponse = data
       }})
       const req = httpTestingController.expectOne(`${apiUrl}/tasks/`);
+      req.flush(data, mockErrorResponse);
+      expect(errResponse).toBe(data);
+    })
+  })
+
+  describe('#createComment', () => {
+    const task: Task = tasks[0]
+    const comment: Comment = {_id: '', title: '', message: '', created_date: ''}
+    it('should send proper request', () => {
+      service.createComment(comment, task._id).subscribe({
+        next: data => expect(data).toBeTruthy(),
+        error: fail
+      })
+  
+      const req = httpTestingController.expectOne(`${apiUrl}/tasks/${task._id}`);
+      expect(req.request.method).toEqual('PATCH');
+    })
+
+    it('should return expected message', () => {
+
+      const message:Message = {isDisplayed:false, message: 'Comment created successfully'};
+      service.createComment(comment, task._id).subscribe({
+        next: data => {
+          expect(data).toEqual(message)
+        },
+        error: fail
+      })
+
+      const req = httpTestingController.expectOne(`${apiUrl}/tasks/${task._id}`);
+      req.flush(message)
+    })
+
+    it('should throw error with empty comment', () => {
+      const task: Task = {_id: '', name: '', description: '', board_id: '', assigned_to: '', status: '', created_date: '', comments: [],isArchived: false}
+      const data = `Task values cannot be empty`
+      const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
+      let errResponse:string = '';
+
+      service.createComment(comment, task._id)
+      .subscribe({
+      error: error => {
+        errResponse = data
+      }})
+      const req = httpTestingController.expectOne(`${apiUrl}/tasks/${task._id}`);
       req.flush(data, mockErrorResponse);
       expect(errResponse).toBe(data);
     })

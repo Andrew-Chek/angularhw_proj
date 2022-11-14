@@ -7,8 +7,13 @@
             <router-outlet></router-outlet>
         </div>
     </section>
-    <app-board-form class="dashboard-form" [ngClass]="{create__board: openCreateBoard}" 
-    (sentData)="sendCreateBoardRequest($event)" id="create-board-form" submitText="Create Board"></app-board-form>
+    <app-board-form 
+        class="dashboard-form" 
+        [ngClass]="{create__board: openCreateBoard}" 
+        (sentData)="sendCreateBoardRequest($event)" 
+        id="create-board-form" 
+        submitText="Create Board">
+    </app-board-form>
     <app-board-form 
         class="dashboard-form" 
         (sentData)="sendEditBoardRequest($event)" 
@@ -16,7 +21,19 @@
         id="edit-board-form" 
         submitText="Edit Board">
     </app-board-form>
-    <app-task-form class="dashboard-form" (sentData)="sendCreateTaskRequest($event)" [ngClass]="{create__task: openCreateTask}" submitText="Create Task"></app-task-form>
-    <app-task-form class="dashboard-form" (sentData)="sendEditTaskRequest($event)" [ngClass]="{edit__task: openEditTask}" submitText="Edit Task"></app-task-form>
-    <app-approve-form class="dashboard-form" [ngClass]="{delete__board: openDelete}" (sentData)="deleteItem()"></app-approve-form>
+    <app-task-form 
+        class="dashboard-form" 
+        (sentData)="sendCreateTaskRequest($event)" 
+        [ngClass]="{create__task: openCreateTask}" 
+        submitText="Create Task"></app-task-form>
+    <app-task-form 
+        class="dashboard-form" 
+        (sentData)="sendEditTaskRequest($event)" 
+        [ngClass]="{edit__task: openEditTask}" 
+        submitText="Edit Task"></app-task-form>
+    <app-approve-form 
+        class="dashboard-form" 
+        [ngClass]="{delete__board: openDelete}" 
+        (sentData)="deleteItem()">
+    </app-approve-form>
 </main>

@@ -9,5 +9,8 @@ export const task: Task = {
 	board_id: '1',
 	created_date: '',
 	isArchived: false,
-	comments: []
+	comments: [
+		{_id: '', title: 'new title', message: 'new message', created_date: ''},
+		{_id: '', title: 'tested title', message: 'tested message', created_date: ''}
+	]
 }

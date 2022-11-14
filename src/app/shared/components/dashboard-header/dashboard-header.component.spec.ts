@@ -85,7 +85,6 @@ describe('DashboardHeaderComponent', () => {
       const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-list-li-order .sort-hover'));
       sortDropdownFlags[1].triggerEventHandler('click');
       sortData = popupService.sortParams.getValue();
-      console.log(sortData)
       expect(sortData).toEqual(expectedSortData);
     });
   })

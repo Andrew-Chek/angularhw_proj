@@ -14,18 +14,4 @@
             <a class="link boards-link" (click)="goToTasks(board)" *ngFor="let board of boards$ | async">{{board.name}}</a>
         </div>
     </section>
-    <section class="board-menu-tasks">
-        <div class="board-menu-general tasks-list">
-            <label class="board-menu-label" [ngClass]="{'task__label' : tList}" (click)="openTaskList()">Tasks 
-                <mat-icon class="list-icon" [ngClass]="{task__right: !tList}">keyboard_arrow_right</mat-icon>
-                <mat-icon class="list-icon" [ngClass]="{task__down: tList}">keyboard_arrow_down</mat-icon>
-            </label>
-        </div>
-        <div class="board-menu-tasks-list" [ngClass]="{'t_list' : tList}">
-            <a class="link tasks-link">All tasks({{taskCount}})</a>
-            <a class="link tasks-link">To do({{getTasksCount('To do')}})</a>
-            <a class="link tasks-link">In progress({{getTasksCount('In progress')}})</a>
-            <a class="link tasks-link">Done({{getTasksCount('Done')}})</a>
-        </div>
-    </section>
 </article>

@@ -45,14 +45,6 @@ describe('BoardMenuComponent', () => {
     })
   })
 
-  describe('#openTaskList', () => {
-    it('should open task list and set proper flags', () => {
-      const element = fixture.debugElement.queryAll(By.css('.board-menu-label'));
-      element[1].triggerEventHandler('click');
-      expect(component.tList).toBeTrue();
-    })
-  })
-
   describe('#goToTasks', () => {
     it('should trigger router.navigate method', () => {
       component.goToTasks({_id: '', name: '', created_date: '', description: ''});

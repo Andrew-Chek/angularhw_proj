@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
 import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
+import { Comment } from 'src/app/shared/interfaces/Comment';
+import { Task } from 'src/app/shared/interfaces/Task';
 
 import { CommentFormComponent } from './comment-form.component';
 
@@ -9,7 +12,9 @@ describe('CommentFormComponent', () => {
   let component: CommentFormComponent;
   let fixture: ComponentFixture<CommentFormComponent>;
   let tasksStateServiceStab: Partial<TasksStateService> = {
-    updateTask: () => {}
+    commentSubject: new BehaviorSubject<Comment>({_id: '', title: '', message: '', created_date: ''}),
+    updateTask: () => {},
+    createComment: (comment: Comment, task: Task) => {}
   }
 
   beforeEach(async () => {
@@ -22,10 +27,9 @@ describe('CommentFormComponent', () => {
     })
     .compileComponents();
 
-    spyOn<any>(tasksStateServiceStab, 'updateTask')
-
     fixture = TestBed.createComponent(CommentFormComponent);
     component = fixture.componentInstance;
+    spyOn<any>(component.strategy, 'updateComments')
     fixture.detectChanges();
   });
 
@@ -50,7 +54,7 @@ describe('CommentFormComponent', () => {
       });
       component.task = {_id: '', name: '', comments: [], status: '', created_date: '', board_id: '', assigned_to: '', isArchived: false, description: ''}
       component.onSubmit()
-      expect(tasksStateServiceStab.updateTask).toHaveBeenCalled()
+      expect(component.strategy.updateComments).toHaveBeenCalled()
     })
   })
 });

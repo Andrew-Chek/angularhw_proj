@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Board } from 'src/app/shared/interfaces/Board';
 import { BoardsStateService } from '../../services/boards-state/boards-state.service';
 
@@ -12,9 +12,6 @@ import { BoardsStateService } from '../../services/boards-state/boards-state.ser
 })
 export class BoardMenuComponent implements OnInit, OnDestroy {
   public bList = false;
-  public tList = false;
-
-  public taskCount = 0;
 
   public boards$:Observable<Board[]> = this.boardsStateService.getBoards();
   
@@ -27,11 +24,6 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  openTaskList()
-  {
-    this.tList = !this.tList;
-  }
-
   goToTasks(board:Board)
   {
     this.router.navigate(['dashboard/board', board._id])
@@ -40,11 +32,5 @@ export class BoardMenuComponent implements OnInit, OnDestroy {
   openBoardList()
   {
     this.bList = !this.bList;
-  }
-
-  getTasksCount(status:string)
-  {
-    let count:number = 0;
-    return count;
   }
 }

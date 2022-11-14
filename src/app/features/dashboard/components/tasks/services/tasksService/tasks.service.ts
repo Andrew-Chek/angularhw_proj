@@ -28,7 +28,7 @@ export class TasksService {
           return of(tasksObj.tasks);
         }),
         catchError(error => {
-          this.router.navigateByUrl('notfound')
+          this.router.navigateByUrl('')
           return of(error.message)
         })
       )

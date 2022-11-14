@@ -12,7 +12,7 @@ function fakeRouterState(url: string): RouterStateSnapshot {
 
 describe('AuthGuard', () => {
   const dummyRoute = {} as ActivatedRouteSnapshot;
-  const fakeUrls = ['/', '/admin', '/admin/board/1', '/admin/task/1'];
+  const fakeUrls = ['/', '/dashboard', '/dashboard/board/1', '/dashboard/task/1'];
   let guard: AuthGuard;
   let routerSpy: jasmine.SpyObj<Router>;
   let serviceStub: Partial<AuthService>;

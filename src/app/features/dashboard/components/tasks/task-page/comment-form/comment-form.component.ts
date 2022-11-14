@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TasksStateService } from 'src/app/features/dashboard/services/tasks-state/tasks-state.service';
 import { Task } from 'src/app/shared/interfaces/Task';
 import { Comment } from 'src/app/shared/interfaces/Comment';
@@ -22,7 +22,7 @@ export class CommentFormComponent implements OnInit {
   
 
   model:Comment = {_id: '', title: '', message: '', created_date: ''};
-  strategy!: Strategy;
+  strategy: Strategy = this.injector.get<Strategy>(StrategyMap.get(this.isEdit));
 
   constructor(private tasksStateService: TasksStateService, private injector: Injector) { }
 
