@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
 
   protected openCreateBoard: boolean = false;
   protected openEditBoard:boolean = false;
-  protected openDeleteBoard:boolean = false;
+  public openDeleteBoard:boolean = false;
 
   protected openCreateTask:boolean = false;
   protected openEditTask:boolean = false;
