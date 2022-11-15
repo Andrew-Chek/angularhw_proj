@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { mergeMap, Observable, of, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { mergeMap, Observable, of, Subscription, tap } from 'rxjs';
 import { Board } from 'src/app/shared/interfaces/Board';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { BoardsStateService } from '../../services/boards-state/boards-state.service';
@@ -12,26 +13,37 @@ import { BoardsStateService } from '../../services/boards-state/boards-state.ser
 })
 export class BoardsComponent implements OnInit, OnDestroy {
 
-  public boards$:Observable<Board[]> = this.boardsStateService.boards$;
+  public boards$:Observable<Board[]> = new Observable();
   public propertyName: keyof Board = 'name';
   public sortFlag = false;
   public ascOrder: 'asc' | 'desc' = 'asc';
 
-  private popupSubscription = new Subscription();
+  private subscriptions: Subscription[] = [];
 
-  constructor(private boardsStateService: BoardsStateService, private popupService: PopupService) {
+  constructor(private boardsStateService: BoardsStateService, private popupService: PopupService, private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.popupSubscription = this.popupService.sortParams.subscribe(value => {
+    const routeSubsription = this.activeRoute.data
+    .pipe(
+      tap(value => {
+        this.boardsStateService.setCurrentBoards(value['boards']);
+    })).subscribe()
+
+    this.boards$ = this.boardsStateService.boards$;
+
+    const popupSubscription = this.popupService.sortParams.subscribe(value => {
       this.sortFlag = true;
       this.ascOrder = value.sortOrder;
       this.propertyName = value.propertyName as keyof Board;
     })
+
+    this.subscriptions.push(routeSubsription);
+    this.subscriptions.push(popupSubscription);
   }
 
   ngOnDestroy(): void {
-    this.popupSubscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
   }
 
   filterBoards(value: string)

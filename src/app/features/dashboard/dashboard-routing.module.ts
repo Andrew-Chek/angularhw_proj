@@ -6,13 +6,17 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskPageComponent } from './components/tasks/task-page/task-page.component';
 import { BoardResolver } from './resolvers/board-resolver/board.resolver';
 import { TasksResolver } from './resolvers/tasks-resolver/tasks.resolver';
+import { BoardsResolver } from './resolvers/boards-resolver/boards.resolver';
 
 
 const routes: Routes = [
   {
     path: '',
     component: BoardsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      boards: BoardsResolver,
+    },
   },
   {
     path: 'boards',

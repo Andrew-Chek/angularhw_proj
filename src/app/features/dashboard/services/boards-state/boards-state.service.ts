@@ -83,11 +83,20 @@ export class BoardsStateService extends Store<BoardsState> {
       });
     })
   }
+
   setCurrentBoard(board: Board)
   {
     this.setState({
       ...this.state,
       board: board
+    });
+  }
+  
+  setCurrentBoards(boards: Board[])
+  {
+    this.setState({
+      ...this.state,
+      boards: boards
     });
   }
 }

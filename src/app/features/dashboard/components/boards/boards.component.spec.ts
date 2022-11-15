@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Board } from 'src/app/shared/interfaces/Board';
 import { boards } from 'src/app/shared/testingData/boardsMock';
@@ -27,6 +28,9 @@ describe('BoardsComponent', () => {
         DashboardHeaderComponent,
         BoardComponent,
         SortByPipe
+      ],
+      imports: [
+        RouterTestingModule
       ],
       providers: [
         {provide: BoardsStateService, useValue: boardsStateServiceStab},
