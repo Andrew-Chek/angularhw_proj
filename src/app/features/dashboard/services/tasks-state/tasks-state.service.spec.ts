@@ -8,6 +8,8 @@ import { tasks } from 'src/app/shared/testingData/tasksMock';
 import { TasksStateService } from './tasks-state.service';
 import { BoardsStateService } from '../boards-state/boards-state.service';
 import { of } from 'rxjs';
+import { Comment } from 'src/app/shared/interfaces/Comment';
+import { task } from 'src/app/shared/testingData/taskMock';
 
 describe('TasksStateService', () => {
   let service: TasksStateService;
@@ -183,6 +185,31 @@ describe('TasksStateService', () => {
       updatedTasks != copiedBoards ? getTasksRequest.flush({tasks: updatedTasks}) : getTasksRequest.flush({tasks: copiedTasks})
 
       service.state$.subscribe(value => expect(value.tasks).not.toContain(deletedTask))
+    })
+  })
+
+  describe('#createComment', () => {
+    it('', () => {
+      
+    })
+  })
+
+  describe('#deleteComment', () => {
+    it('should update state as expected', () => {
+      const deletedComment: Comment = {_id: '1', title: 'new title', message: 'new message', created_date: ''};
+      const taskForDeleteComment = {...task}
+      service.deleteComment(deletedComment, taskForDeleteComment)
+      taskForDeleteComment.comments.splice(0, 1);
+
+
+      const deleteRequest = httpTestingController.expectOne(`${apiUrl}/tasks/${taskForDeleteComment._id}/comment/${deletedComment._id}`);
+      expect(deleteRequest.request.method).toBe("DELETE");
+      service.getTask(taskForDeleteComment._id)
+      const getTaskRequest = httpTestingController.expectOne(`${apiUrl}/tasks/single/${taskForDeleteComment._id}`);
+      expect(getTaskRequest.request.method).toBe("GET");
+      getTaskRequest.flush({task: taskForDeleteComment})
+
+      service.state$.subscribe(value => expect(value.task.comments).not.toContain(deletedComment))
     })
   })
 

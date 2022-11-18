@@ -10,7 +10,6 @@ import { TasksStateService } from '../../../services/tasks-state/tasks-state.ser
   selector: 'app-status-board',
   templateUrl: './status-board.component.html',
   styleUrls: ['./status-board.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SortByPipe]
 })
 export class StatusBoardComponent implements OnInit, OnDestroy, AfterViewInit {

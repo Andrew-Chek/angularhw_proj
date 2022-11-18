@@ -177,16 +177,8 @@ describe('PopupService', () => {
       service.closeDeleteForm();
       service.state$.subscribe(value => {
         expect(value.openDeleteBoard).toEqual(false)
-        expect(service.openDeleteBoard).toEqual(false);
-      })
-    })
-
-    it('should close delete task form', () => {
-      service.openDeleteTask = true;
-      service.closeDeleteForm();
-      service.state$.subscribe(value => {
         expect(value.openDeleteTask).toEqual(false)
-        expect(service.openDeleteTask).toEqual(false);
+        expect(service.openDeleteBoard).toEqual(false);
       })
     })
   })

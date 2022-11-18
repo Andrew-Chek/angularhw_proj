@@ -25,7 +25,7 @@ export class TasksStateService extends Store<TasksState> {
   public readonly board$: Observable<Board | undefined> = this.boardsStateService.state$.pipe(map(x => {return x.board}))
 
   public commentSubject: BehaviorSubject<Comment> 
-    = new BehaviorSubject<{_id: string | null, title: string, message: string, created_date: string}>({_id: '', title: '', message: '', created_date: ''})
+    = new BehaviorSubject<{_id: string | null, title: string, message: string, created_date: string}>({_id: '', title: 'test title', message: '', created_date: ''})
 
   getTasks(board_id:string) {
     this.taskApi.getTasks(board_id).subscribe((value => {
@@ -135,6 +135,22 @@ export class TasksStateService extends Store<TasksState> {
       this.setState({
         ...this.state,
         tasks: value
+      });
+    })
+  }
+
+  deleteComment(comment: Comment, task: Task)
+  {
+    this.taskApi.deleteComment(comment, task._id)
+    .pipe(
+      mergeMap(value => {
+        return this.taskApi.getTask(task._id)
+      })
+    )
+    .subscribe(value => {
+      this.setState({
+        ...this.state,
+        task: value
       });
     })
   }

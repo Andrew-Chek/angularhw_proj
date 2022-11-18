@@ -109,14 +109,15 @@ export class PopupService extends Store<PopupState> {
   
   closeDeleteForm()
   {
-    if(this.openDeleteBoard)
-    {
-      this.openDeleteBoardForm()
-    }
-    else if(this.openDeleteTask)
-    {
-      this.openDeleteTaskForm();
-    }
+    this.openDelete = false;
+    this.openDeleteBoard = false;
+    this.openDeleteTask = false;
+    this.setState({
+      ...this.state,
+      openDelete: this.openDelete,
+      openDeleteBoard: this.openDeleteBoard,
+      openDeleteTask: this.openDeleteTask
+    })
   }
 
   setDragState()

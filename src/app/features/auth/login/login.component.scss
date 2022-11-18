@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-areas: "login image";
-    grid-template-columns: 1fr 50%;
+    grid-template-columns: 50% 50%;
     height: 100vh;
     .description {
         -webkit-text-stroke-width: .7px;
@@ -9,7 +9,7 @@
     .login {
         grid-area: login;
         &__content {
-            margin: 0 10vw;
+            margin: 0 5vw;
             text-align: start;
         }
         .general {
@@ -32,6 +32,9 @@
             height: 100vh;
             backdrop-filter: blur(10px);
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             top: 0;
             left: 0;
             transition: .5s;
@@ -71,7 +74,7 @@
         .info {
             position: relative;
             top: 30%;
-            margin: 0 25%;
+            margin: 0 5%;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -84,5 +87,37 @@
                 color: var(--input-color);
             }
         }
+    }
+}
+
+@media (max-width: 1280px) {
+    .register {
+        display: flex;
+        justify-content: unset;
+        flex-direction: column;
+        &-btn {
+            margin: 10px 0 20px 0;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .img-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: baseline;
+        .analysis-image {
+            width: 200px;
+            margin: 0 auto;
+        }
+        .time-image {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 512px) {
+    .analysis-image {
+        max-width: 150px;
     }
 }

@@ -59,3 +59,9 @@
 .drag {
     border: 2.5px dashed var(--gray);
 }
+
+@media (max-width: 1280px) {
+    .status-board {
+        margin: 0 5px;
+    }
+}

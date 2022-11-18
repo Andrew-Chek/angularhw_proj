@@ -63,6 +63,15 @@ export class TasksService {
     })
   }
 
+  deleteComment(comment: Comment, id: string)
+  {
+    return this.http.delete<Message>(
+      `${this.apiUrl}/tasks/${id}/comment/${comment._id}`,
+      {
+        headers: {'Authorization': `Bearer ${window.localStorage.getItem('jwt_token')}`},
+    })
+  }
+
   updateTask(task:Task)
   {
     return this.http.put<Task>(

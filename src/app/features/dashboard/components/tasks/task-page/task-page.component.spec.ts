@@ -10,6 +10,7 @@ import { SortByPipe } from '../../../pipes/sort-by.pipe';
 import { PopupService } from 'src/app/shared/services/popupService/popup.service';
 import { PopupServiceMock } from 'src/app/shared/services/popupService/popup.service.mock';
 import { Comment } from 'src/app/shared/interfaces/Comment';
+import { Task } from 'src/app/shared/interfaces/Task';
 
 @Component({
   selector: 'app-comment-form',
@@ -24,7 +25,8 @@ describe('TaskPageComponent', () => {
   let tasksStateServiceStab: Partial<TasksStateService> = {
     commentSubject: new BehaviorSubject<Comment>({_id: '', title: '', message: '', created_date: ''}),
     state$: of({tasks: tasks, task: task}),
-    task$: of(task)
+    task$: of(task),
+    deleteComment: (comment: Comment, task: Task) => {}
   }
   let popupService: PopupServiceMock;
 
@@ -42,6 +44,8 @@ describe('TaskPageComponent', () => {
       ]
     })
     .compileComponents();
+
+    spyOn(popupService, 'closeDeleteForm')
 
     fixture = TestBed.createComponent(TaskPageComponent);
     component = fixture.componentInstance;
@@ -71,11 +75,17 @@ describe('TaskPageComponent', () => {
   })
 
   describe('#filterComments', () => {
+    beforeEach(() => {
+      component.comments$ = of([
+        {_id: '1', title: 'new title', message: 'new message', created_date: ''},
+        {_id: '2', title: 'tested title', message: 'tested message', created_date: ''}
+      ])
+    })
     it('should set proper comments', () => {
       component.filterComments('new');
       fixture.detectChanges();
       component.comments$.subscribe(comments => {
-        expect(comments).toEqual([{_id: '', title: 'new title', message: 'new message', created_date: ''}])
+        expect(comments).toEqual([{_id: '1', title: 'new title', message: 'new message', created_date: ''}])
       })
     })
 
@@ -85,6 +95,14 @@ describe('TaskPageComponent', () => {
       component.comments$.subscribe(comments => {
         expect(comments).toEqual(task.comments)
       })
+    })
+  })
+
+  describe('#deleteComment', () => {
+    it('should set new subscription', () => {
+      const length = component.subscriptions.length;
+      component.deleteComment();
+      expect(component.subscriptions.length).toEqual(length + 1)
     })
   })
 });

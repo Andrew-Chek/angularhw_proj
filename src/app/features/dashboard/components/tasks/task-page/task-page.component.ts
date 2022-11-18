@@ -15,12 +15,13 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   public task$: Observable<Task> = of(tasks[0]);
   public isFormOpened = false;
+  public openDeleteForm = false;
   public comments$!: Observable<Comment[]>;
   public propertyName: keyof Comment = 'title';
   public sortFlag = false;
   public isFormForEditOpened = false;
   public ascOrder: 'asc' | 'desc' = 'asc';
-  private popupSubscription: Subscription = new Subscription();
+  public subscriptions: Subscription[] = [];
 
   constructor(private tasksStateService: TasksStateService, private popupService: PopupService) { }
 
@@ -31,15 +32,20 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       mergeMap(task => {
         return of(task.comments)
       }))
-    this.popupSubscription = this.popupService.sortParams.subscribe(value => {
+    const popupSubscription1 = this.popupService.sortParams.subscribe(value => {
       this.sortFlag = true;
       this.ascOrder = value.sortOrder;
-      this.propertyName = value.propertyName as keyof Comment;
+      value.propertyName == 'name' ? this.propertyName = 'title' : this.propertyName = 'created_date'
     })
+    const popupSubscription2 = this.popupService.state$.subscribe(value => {
+      this.openDeleteForm = value.openDelete;
+    })
+    this.subscriptions.push(popupSubscription1)
+    this.subscriptions.push(popupSubscription2)
   }
 
   ngOnDestroy(): void {
-    this.popupSubscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   openCommentForm(openInfo: boolean)
@@ -54,6 +60,14 @@ export class TaskPageComponent implements OnInit, OnDestroy {
       this.tasksStateService.commentSubject.next(task.comments.find(comment => {return comment._id == id})!)
     })).subscribe();
     this.isFormForEditOpened = true;
+  }
+
+  openDeleteCommentForm(id: string | null)
+  {
+    this.task$.pipe(tap((task) => {
+      this.tasksStateService.commentSubject.next(task.comments.find(comment => {return comment._id == id})!)
+    })).subscribe();
+    this.openDeleteForm = true;
   }
 
   closeCommentForm()
@@ -83,5 +97,15 @@ export class TaskPageComponent implements OnInit, OnDestroy {
           return of(filteredComments)
         }))
     }
+  }
+
+  deleteComment() {
+    const subscription = this.task$.subscribe(task => {
+      const comment = {...this.tasksStateService.commentSubject.getValue()}
+      this.tasksStateService.deleteComment(comment, task);
+      this.tasksStateService.commentSubject.next({_id: '', title: 'test title', message: '', created_date: ''})
+      this.popupService.closeDeleteForm();
+    })
+    this.subscriptions.push(subscription)
   }
 }

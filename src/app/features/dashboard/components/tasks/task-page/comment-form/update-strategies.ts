@@ -15,6 +15,7 @@ export class AddCommentStrategy extends Strategy {
     super();
   }
   updateComments(task: Task, model: Comment): void {
+    model.created_date = new Date().toDateString();
     this.tasksStateService.createComment(model, task);
   }
 }

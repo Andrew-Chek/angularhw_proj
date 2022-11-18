@@ -16,7 +16,8 @@
             <h4 class="comment-title">{{comment.title}}</h4>
             <p class="comment-message">{{comment.message}}</p>
             <p class="comment-date">{{comment.created_date | date:"dd/MM/yyyy"}}</p>
-            <mat-icon class="comment-edit" title="Edit task" (click)="openEditCommentForm(comment._id)">edit</mat-icon>
+            <mat-icon class="comment-edit" title="Edit comment" (click)="openEditCommentForm(comment._id)">edit</mat-icon>
+            <mat-icon class="comment-delete" title="Delete comment" (click)="openDeleteCommentForm(comment._id)">delete</mat-icon>
         </article>
     </section>
     <app-comment-form 
@@ -37,4 +38,9 @@
         formTitle="Edit comment"
     >
     </app-comment-form>
+    <app-approve-form 
+        class="task-page-form" 
+        [ngClass]="{openForm: openDeleteForm}" 
+        (sentData)="deleteComment()">
+    </app-approve-form>
 </article>

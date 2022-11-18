@@ -10,7 +10,7 @@ export const task: Task = {
 	created_date: '',
 	isArchived: false,
 	comments: [
-		{_id: '', title: 'new title', message: 'new message', created_date: ''},
-		{_id: '', title: 'tested title', message: 'tested message', created_date: ''}
+		{_id: '1', title: 'new title', message: 'new message', created_date: ''},
+		{_id: '2', title: 'tested title', message: 'tested message', created_date: ''}
 	]
 }

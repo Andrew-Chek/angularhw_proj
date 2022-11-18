@@ -56,6 +56,10 @@
 }
 .custom-center {
     position: fixed;
-    top: 40%;
-    left: 30%;
+}
+
+@media (max-width: 768px) {
+    .custom {
+        width: 300px;
+    }
 }

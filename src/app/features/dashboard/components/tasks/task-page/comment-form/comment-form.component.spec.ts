@@ -34,6 +34,11 @@ describe('CommentFormComponent', () => {
   });
 
   describe('#Form logic', () => {
+    beforeEach(() => {
+      const inputElements : HTMLInputElement[] = fixture.debugElement.nativeElement.querySelectorAll('.form-control')
+      inputElements[0].value = ''
+      inputElements[1].value = ''
+    })
     it('test a form group element count', () => {
       const inputElements = fixture.debugElement.nativeElement.querySelectorAll('.form-control')
       expect(inputElements.length).toEqual(2)
@@ -41,15 +46,14 @@ describe('CommentFormComponent', () => {
 
     it('check initial form values', () => {
       const inputElements : HTMLInputElement[] = fixture.debugElement.nativeElement.querySelectorAll('.form-control')
-      inputElements.forEach(element => {
-        expect(element.value).toEqual('');
-      });
+      expect(inputElements[0].value).toEqual('');
+      expect(inputElements[1].value).toEqual('');
     })
 
     it('check updateTrigger after correct submit', () => {
       const inputElements = fixture.debugElement.queryAll(By.css('.form-control'))
       inputElements.forEach(element => {
-        element.nativeElement.value = 'test value';
+        element.nativeElement.value = 'test title';
         fixture.detectChanges();
       });
       component.task = {_id: '', name: '', comments: [], status: '', created_date: '', board_id: '', assigned_to: '', isArchived: false, description: ''}

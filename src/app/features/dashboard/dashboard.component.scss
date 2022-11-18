@@ -15,6 +15,9 @@
     &-form {
         position: fixed;
         transition: .5s all ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         transform: translate(-500%, 0);
     }
     &-message {
@@ -35,5 +38,19 @@
         width: 100vw;
         height: 100vh;
         backdrop-filter: blur(6px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .dashboard {
+        display: grid;
+        grid-template-areas: "icons main";
+        grid-template-columns: .15fr 3.7fr;
+        &-menu {
+            display: none;
+        }
+    }
+    .user-header {
+        width: 100%;
     }
 }

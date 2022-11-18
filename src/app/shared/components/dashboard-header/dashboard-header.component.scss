@@ -36,61 +36,72 @@
     .tools {
         display: flex;
         align-items: flex-end;
-        &-list {
+        &-li {
+            padding: 0 10px;
+            color: var(--gray);
+            transition: .5s all ease;
+            cursor: pointer;
             display: flex;
-            align-items: flex-end;
-            &-li {
-                padding: 0 10px;
-                color: var(--gray);
-                transition: .5s all ease;
-                cursor: pointer;
+            &-order {
                 display: flex;
-                &-order {
-                    display: flex;
-                    align-items: flex-end;
-                    &-icon {
-                        margin-left: 7px;
-                    }
-                }
-                &-params {
-                    opacity: 0;
-                    visibility: hidden;
-                    transition: .5s ease;
-                    padding: 4px;
-                    border: 1px solid var(--gray);
-                    border-radius: 10px;
-                    background-color: #fff;
+                align-items: flex-end;
+                &-icon {
+                    margin-left: 7px;
                 }
             }
-            .filter {
-                padding: 5px 15px;
-                border-radius: 12px;
-                border: .5px solid var(--gray);
-                cursor:text;
+            &-params {
+                opacity: 0;
+                visibility: hidden;
+                transition: .5s ease;
+                padding: 4px;
+                border: 1px solid var(--gray);
+                border-radius: 10px;
+                background-color: #fff;
             }
-            .filter::placeholder{
-                color: var(--gray)
+        }
+        .filter {
+            padding: 5px 15px;
+            border-radius: 12px;
+            border: .5px solid var(--gray);
+            cursor:text;
+        }
+        .filter::placeholder{
+            color: var(--gray)
+        }
+        .sort-tools {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top: 44px;
+        }
+        .sort-tools:hover {
+            .tools-li-params {
+                opacity: 1;
+                visibility: visible;
+                z-index: 1;
             }
-            .sort-tools {
-                display: flex;
-                flex-direction: column;
-                position: relative;
-                top: 44px;
-            }
-            .sort-tools:hover {
-                .tools-list-li-params {
-                    opacity: 1;
-                    visibility: visible;
-                    z-index: 1;
-                }
-            }
-            .sort-hover {
-                transition: .5s all ease;
-                cursor: pointer;
-            }
-            .sort-hover:hover {
-                color: var(--text-color);
-            }
+        }
+        .sort-hover {
+            transition: .5s all ease;
+            cursor: pointer;
+        }
+        .sort-hover:hover {
+            color: var(--text-color);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 5px 10px;
+    }
+    #dashboard-btn {
+        padding: 0;
+        #btn-name {
+            padding-left: 0;
         }
     }
 }

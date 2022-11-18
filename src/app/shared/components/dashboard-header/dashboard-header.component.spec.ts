@@ -82,7 +82,7 @@ describe('DashboardHeaderComponent', () => {
       component.headerType = 'Name of board';
       fixture.detectChanges();
     
-      const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-list-li-order .sort-hover'));
+      const sortDropdownFlags = fixture.debugElement.queryAll(By.css('.tools-li-order .sort-hover'));
       sortDropdownFlags[1].triggerEventHandler('click');
       sortData = popupService.sortParams.getValue();
       expect(sortData).toEqual(expectedSortData);

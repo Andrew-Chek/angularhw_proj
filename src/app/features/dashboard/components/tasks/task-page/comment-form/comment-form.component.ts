@@ -36,7 +36,6 @@ export class CommentFormComponent implements OnInit {
   closePopup()
   {
     this.closedForm.emit(true);
-    this.tasksStateService.commentSubject.next({_id: '', title: '', message: '', created_date: ''})
   }
 
   onSubmit() { 

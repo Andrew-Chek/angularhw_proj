@@ -83,8 +83,15 @@
             }
             &-edit {
                 position: relative;
+                bottom: 76px;
+                left: 93%;
+                cursor: pointer;
+            }
+            &-delete {
+                position: relative;
                 bottom: 100px;
-                left: 98%;
+                left: 97%;
+                cursor: pointer;
             }
         }
     }
@@ -99,6 +106,9 @@
         height: 100vh;
         top: 0;
         left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         backdrop-filter: blur(6px);
     }
 }

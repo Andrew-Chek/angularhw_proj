@@ -73,6 +73,10 @@
 }
 .open__task {
     position: fixed;
-    top: 30%;
-    left: 40%;
+}
+
+@media (max-width:768px) {
+    .task-form {
+        width: 300px;
+    }
 }
