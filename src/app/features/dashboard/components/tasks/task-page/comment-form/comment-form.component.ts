@@ -21,7 +21,7 @@ export class CommentFormComponent implements OnInit {
   @Output() closedForm = new EventEmitter(false)
   
 
-  model:Comment = {_id: '', title: '', message: '', created_date: ''};
+  model:Comment = {_id: '', title: 'test title', message: '', created_date: ''};
   strategy: Strategy = this.injector.get<Strategy>(StrategyMap.get(this.isEdit));
 
   constructor(private tasksStateService: TasksStateService, private injector: Injector) { }
